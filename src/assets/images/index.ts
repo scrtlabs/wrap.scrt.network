@@ -1,9 +1,9 @@
-import arrow from './arrow.svg'
 import grow from './grow.svg'
 import keplr from './keplr.svg'
 import logo from './logo.svg'
 import refresh from './refresh.svg'
 import swap from './swap.svg'
+import copy from './copy.svg'
 
 import network from './social/network.svg'
 import twitter from './social/twitter.svg'
@@ -19,6 +19,6 @@ import osmo from './tokens/osmo.svg'
 import scrt from './tokens/scrt.svg'
 import ust from './tokens/ust.svg'
 
-export const rootIcons = { arrow, grow, keplr, logo, refresh, swap }
+export const rootIcons = { grow, keplr, logo, refresh, swap, copy }
 export const socialIcons = { network, twitter, git }
 export const tokenIcons = { akt, atom, dvpn, huahua, juno, luna, osmo, scrt, ust }

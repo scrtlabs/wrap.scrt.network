@@ -3,20 +3,22 @@ import { StyledAccordionWrapper } from './styled';
 
 interface AccordionProps {
   question: string,
-  children: React.ReactNode,
+  answer: string,
+  idx: number,
+  toggleAccordion: (idx: number) => void,
+  isOpen: boolean,
 }
 
 export const Accordion: FC<AccordionProps> = ({
   question,
-  children,
+  answer,
+  idx,
+  toggleAccordion,
+  isOpen,
 }) => {
 
   const contentRef = useRef<HTMLDivElement>(null);
-
-  const [isOpenAccordion, setIsOpenAccordion] = useState<boolean>(false);
   const [contentHeight, setContentHeight] = useState<number>(0);
-
-  const toggleAccordion = () => setIsOpenAccordion((prevState) => !prevState);
 
   useEffect(() => {
     if (contentRef.current) {
@@ -25,7 +27,7 @@ export const Accordion: FC<AccordionProps> = ({
   }, [])
 
   return (
-    <StyledAccordionWrapper onClick={toggleAccordion} isOpenAccordion={isOpenAccordion} contentHeight={contentHeight}>
+    <StyledAccordionWrapper onClick={() => toggleAccordion(idx)} isOpenAccordion={isOpen} contentHeight={contentHeight}>
       <div className="accordion">
         <div className="question-wrapper">
           <div className="question">
@@ -39,7 +41,7 @@ export const Accordion: FC<AccordionProps> = ({
       <div className="content">
         <span className="divider"/>
         <div className="answer" ref={contentRef}>
-          {children}
+          {answer}
         </div>
       </div>
     </StyledAccordionWrapper>
@@ -50,7 +52,7 @@ export const Accordion: FC<AccordionProps> = ({
 const Arrow = () => {
   return (
     <svg className="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fillRule="evenodd" clipRule="evenodd" d="M11.707 13.8787L4.41415 6.58577L2.99994 7.99999L11.707 16.7071L20.4142 7.99999L18.9999 6.58577L11.707 13.8787Z" fill="black"/>
+      <path fillRule="evenodd" clipRule="evenodd" d="M11.707 13.8787L4.41415 6.58577L2.99994 7.99999L11.707 16.7071L20.4142 7.99999L18.9999 6.58577L11.707 13.8787Z" fill="white"/>
     </svg>
   )
 }

@@ -13,6 +13,12 @@ export const theme = {
     white: '#FFFFFF',
     orange: '#EB8045',
     grow: '#3CDC68',
+  },
+  fonts: {
+    hind_regular: 'Hind Regular',
+    monsterRat_regular: 'Montserrat Regular',
+    monsterRat_semiBold: 'Montserrat SemiBold',
+    monsterRat_Bold: 'Montserrat Bold',
   }
 };
 
@@ -45,11 +51,19 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color: white;
   }
 
+  html{
+    background: ${theme.colors.main_bg};
+  }
+  
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    min-height: 100vh;
   }
 
   #root {
@@ -57,14 +71,28 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   & .App {
-    width: 100vw;
     min-height: 100vh;
-    overflow: hidden;
     position: relative;
     background: ${theme.colors.main_bg};
     @media (min-width: 1440px) {
       width: 1440px;
       margin: 0 auto;
     }
+  }
+  
+  & ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  & ::-webkit-scrollbar-track {
+    background: ${theme.colors.bg};
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  & ::-webkit-scrollbar-thumb {
+    background: ${theme.colors.active_bg};
+    border-radius: 10px;
   }
 `

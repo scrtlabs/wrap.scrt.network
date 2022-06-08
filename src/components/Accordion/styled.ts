@@ -14,15 +14,15 @@ export const StyledAccordionWrapper = styled.div<{
     justify-content: space-between;
     padding: 20px;
     cursor: pointer;
+    white-space: nowrap;
     background: ${({ theme }) => theme.colors.bg};
-    color: ${({ theme }) => theme.colors.white};
 
     & .question-wrapper {
       display: flex;
       flex-direction: column;
 
       & .question {
-        font-family: 'Hind Regular', sans-serif;
+        font-family: ${({ theme }) => theme.fonts.hind_regular};
         font-size: 16px;
         line-height: 24px;
       }
@@ -39,10 +39,6 @@ export const StyledAccordionWrapper = styled.div<{
         margin-left: 5px;
         transition: 0.35s ease-out;
         transform: ${({ isOpenAccordion }) => (isOpenAccordion ? 'rotate(0deg)' : 'rotate(-90deg)')};
-
-        & path {
-          fill: ${({ theme }) => theme.colors.white};
-        }
       }
     }
   }
@@ -50,6 +46,7 @@ export const StyledAccordionWrapper = styled.div<{
   & .content {
     transition: height 0.35s ease-out;
     cursor: pointer;
+    overflow: hidden;
     height: ${({ isOpenAccordion, contentHeight }) => (isOpenAccordion ? `${contentHeight}px` : '0')};
     background: ${({ theme }) => theme.colors.bg};
 
@@ -59,15 +56,11 @@ export const StyledAccordionWrapper = styled.div<{
       max-width: calc(100% - 80px);
       background: ${({ theme }) => `linear-gradient(90deg, #232042 0%, ${theme.colors.orange} 50%, #232042 100%)`};
       margin: 0 auto;
-      @media (max-width: 480px) {
-        max-width: 100%
-      }
     }
 
     & .answer {
       padding: 20px;
-      color: ${({ theme }) => theme.colors.white};
-      font-family: 'Hind Regular', sans-serif;
+      font-family: ${({ theme }) => theme.fonts.hind_regular};
       font-size: 16px;
       line-height: 24px;
     }

@@ -1,42 +1,31 @@
 import { useEffect, useState } from 'react';
 import { StyledBackground } from './styled';
-
-export enum Tokens {
-  SCRT = "SCRT",
-  ATOM = "ATOM",
-  Luna = "Luna",
-  UST = "UST",
-  OSMO = "OSMO",
-  DVPN = "DVPN",
-  HUAHUA = "HUAHUA",
-  JUNO = "JUNO",
-  AKT = "AKT",
-}
+import { Tokens } from '../../types';
 
 const getBackground = (token: string) => {
   switch (token) {
-    case Tokens.SCRT:
+    case Tokens.scrt:
       return "#12161C"
-    case Tokens.ATOM:
+    case Tokens.atom:
       return "#231C28"
-    case Tokens.Luna:
+    case Tokens.luna:
       return "#29230A"
-    case Tokens.UST:
+    case Tokens.ust:
       return "#111D31"
-    case Tokens.OSMO:
+    case Tokens.osmo:
       return "#2D0028"
-    case Tokens.DVPN:
+    case Tokens.dvpn:
       return "#002532"
-    case Tokens.HUAHUA:
+    case Tokens.huahua:
       return "#30220D"
-    case Tokens.JUNO:
+    case Tokens.juno:
       return "#301A19"
-    case Tokens.AKT:
+    case Tokens.akt:
       return "#310F09"
   }
 }
 
-export const BackGround = ({ activeToken = Tokens.SCRT }) => {
+export const BackGround = ({ activeToken = Tokens.scrt }) => {
   const [bgColor, setBgColor] = useState(getBackground(activeToken))
 
   useEffect(() => {
