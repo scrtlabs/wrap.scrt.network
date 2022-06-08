@@ -1,31 +1,31 @@
 import { useEffect, useState } from 'react';
 import { StyledBackground } from './styled';
-import { Tokens } from '../../types';
+import { TokenNames } from '../../config';
 
 const getBackground = (token: string) => {
   switch (token) {
-    case Tokens.scrt:
+    case TokenNames.scrt:
       return "#12161C"
-    case Tokens.atom:
+    case TokenNames.atom:
       return "#231C28"
-    case Tokens.luna:
+    case TokenNames.luna:
       return "#29230A"
-    case Tokens.ust:
+    case TokenNames.ust:
       return "#111D31"
-    case Tokens.osmo:
+    case TokenNames.osmo:
       return "#2D0028"
-    case Tokens.dvpn:
+    case TokenNames.dvpn:
       return "#002532"
-    case Tokens.huahua:
+    case TokenNames.huahua:
       return "#30220D"
-    case Tokens.juno:
+    case TokenNames.juno:
       return "#301A19"
-    case Tokens.akt:
+    case TokenNames.akt:
       return "#310F09"
   }
 }
 
-export const BackGround = ({ activeToken = Tokens.scrt }) => {
+export const BackGround = ({ activeToken = TokenNames.scrt }) => {
   const [bgColor, setBgColor] = useState(getBackground(activeToken))
 
   useEffect(() => {

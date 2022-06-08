@@ -1,3 +1,26 @@
+import { tokenIcons } from './assets/images';
+
+export enum TokenNames {
+  scrt = "SCRT",
+  atom = "ATOM",
+  luna = "Luna",
+  ust = "UST",
+  osmo = "OSMO",
+  dvpn = "DVPN",
+  huahua = "HUAHUA",
+  juno = "JUNO",
+  akt = "AKT",
+}
+
+export interface TokenOptions {
+  name: TokenNames,
+  image: string
+}
+
+type ValueOf<T> = T[keyof T];
+
+export type mergeStateType = (data: keyof TokenOptions | Record<keyof TokenOptions, ValueOf<TokenOptions>>, value?: any) => void
+
 export type Token = {
   /** display name of the token */
   name: string;
@@ -33,11 +56,11 @@ export type Withdraw = {
 
 export const tokens: Token[] = [
   {
-    name: "SCRT",
+    name: TokenNames.scrt,
     address: "secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
     code_hash:
       "af74387e276be8874f07bec3a87023ee49b0e7ebe08178c49d0a49c3c98ed60e",
-    image: "/scrt.svg",
+    image: tokenIcons.scrt,
     decimals: 6,
     coingecko_id: "secret",
     deposits: [
@@ -100,11 +123,11 @@ export const tokens: Token[] = [
     ],
   },
   {
-    name: "ATOM",
+    name: TokenNames.atom,
     address: "secret14mzwd0ps5q277l20ly2q3aetqe3ev4m4260gf4",
     code_hash:
       "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
-    image: "/atom.jpg",
+    image: tokenIcons.atom,
     decimals: 6,
     coingecko_id: "cosmos",
     deposits: [
@@ -122,11 +145,11 @@ export const tokens: Token[] = [
     ],
   },
   {
-    name: "Luna",
+    name: TokenNames.luna,
     address: "secret1ra7avvjh9fhr7dtr3djutugwj59ptctsrakyyw",
     code_hash:
       "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
-    image: "/luna.png",
+    image: tokenIcons.luna,
     decimals: 6,
     coingecko_id: "terra-luna",
     deposits: [
@@ -144,11 +167,11 @@ export const tokens: Token[] = [
     ],
   },
   {
-    name: "UST",
+    name: TokenNames.ust,
     address: "secret129h4vu66y3gry6wzwa24rw0vtqjyn8tujuwtn9",
     code_hash:
       "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
-    image: "/ust.png",
+    image: tokenIcons.ust,
     decimals: 6,
     coingecko_id: "terra-usd",
     deposits: [
@@ -166,11 +189,11 @@ export const tokens: Token[] = [
     ],
   },
   {
-    name: "OSMO",
+    name: TokenNames.osmo,
     address: "secret1zwwealwm0pcl9cul4nt6f38dsy6vzplw8lp3qg",
     code_hash:
       "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
-    image: "/osmo.jpeg",
+    image: tokenIcons.osmo,
     decimals: 6,
     coingecko_id: "osmosis",
     deposits: [
@@ -188,11 +211,11 @@ export const tokens: Token[] = [
     ],
   },
   {
-    name: "DVPN",
+    name: TokenNames.dvpn,
     address: "secret1k8cge73c3nh32d4u0dsd5dgtmk63shtlrfscj5",
     code_hash:
       "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
-    image: "/dvpn.jpeg",
+    image: tokenIcons.dvpn,
     decimals: 6,
     coingecko_id: "sentinel",
     deposits: [
@@ -210,11 +233,11 @@ export const tokens: Token[] = [
     ],
   },
   {
-    name: "HUAHUA",
+    name: TokenNames.huahua,
     address: "secret1ntvxnf5hzhzv8g87wn76ch6yswdujqlgmjh32w",
     code_hash:
       "182d7230c396fa8f548220ff88c34cb0291a00046df9ff2686e407c3b55692e9",
-    image: "/huahua.jpg",
+    image: tokenIcons.huahua,
     decimals: 6,
     coingecko_id: "chihuahua-chain",
     deposits: [
@@ -232,11 +255,11 @@ export const tokens: Token[] = [
     ],
   },
   {
-    name: "JUNO",
+    name: TokenNames.juno,
     address: "", //"secret1smmc5k24lcn4j2j8f3w0yaeafga6wmzl0qct03",
     code_hash:
       "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
-    image: "/juno.svg",
+    image: tokenIcons.juno,
     decimals: 6,
     coingecko_id: "juno-network",
     deposits: [
@@ -254,10 +277,10 @@ export const tokens: Token[] = [
     ],
   },
   {
-    name: "AKT",
+    name: TokenNames.akt,
     address: "",
     code_hash: "",
-    image: "/akt.svg",
+    image: tokenIcons.akt,
     decimals: 6,
     coingecko_id: "akash-network",
     deposits: [

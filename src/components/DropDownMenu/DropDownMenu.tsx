@@ -13,8 +13,8 @@ interface DropDownMenuProps {
 }
 
 export interface DropDownMenuItem {
-  title: string,
-  src?: string,
+  name: string,
+  image?: string,
 }
 
 export const DropDownMenu = ({

@@ -9,8 +9,7 @@ import { TokenList } from './TokenList/TokenList';
 import { DropDownMenu } from '../../DropDownMenu/DropDownMenu';
 import { Exchange } from './Exchange/Exchange';
 
-import { mergeStateType, TokenOptions } from '../../../types';
-import { tokens } from '../../tokens';
+import { mergeStateType, TokenOptions, tokens } from '../../../config';
 import { rootIcons } from '../../../assets/images';
 
 
@@ -29,9 +28,9 @@ export function TokenForm({ tokenOptions, mergeState }: TokenFormProps) {
       <Tabs currentTab={'wrap'}>
         <Tab tabKey={'wrap'} title={wrapTitle}>
           <div className="wrapped-elems">
-            <WrappedToken tokenName={tokenOptions.title} tokenSrc={tokenOptions.src} isWrapped={!isWrapToken}/>
+            <WrappedToken tokenName={tokenOptions.name} tokenSrc={tokenOptions.image} isWrapped={!isWrapToken}/>
             <img className="swap" src={rootIcons.swap} alt="swap" onClick={toggleWrappedTokens}/>
-            <WrappedToken tokenName={tokenOptions.title} tokenSrc={tokenOptions.src} isWrapped={isWrapToken}/>
+            <WrappedToken tokenName={tokenOptions.name} tokenSrc={tokenOptions.image} isWrapped={isWrapToken}/>
           </div>
 
           <PercentOptions/>
@@ -53,8 +52,8 @@ export function TokenForm({ tokenOptions, mergeState }: TokenFormProps) {
                   <DropDownMenu
                     list={tokens}
                     callback={mergeState}
-                    activeItem={tokenOptions.title}
-                    activeIcon={tokenOptions.src}
+                    activeItem={tokenOptions.name}
+                    activeIcon={tokenOptions.image}
                     isUpperCaseTitle={true}
                   />
                   <p>to Secret Network</p>
@@ -71,7 +70,7 @@ export function TokenForm({ tokenOptions, mergeState }: TokenFormProps) {
                 <div className="amount">
                   <span className="title">Amont to Deposit</span>
                   <PercentOptions/>
-                  <img src={tokenOptions.src} alt="amount"/>
+                  <img src={tokenOptions.image} alt="amount"/>
                 </div>
 
                 <Button title={"deposit"}/>
@@ -84,7 +83,11 @@ export function TokenForm({ tokenOptions, mergeState }: TokenFormProps) {
         </Tab>
       </Tabs>
 
-      <TokenList activeTokenName={tokenOptions.title} setTokenOptions={mergeState}/>
+      <TokenList
+        list={tokens}
+        activeTokenName={tokenOptions.name}
+        setTokenOptions={mergeState}
+      />
     </StyledTokenForm>
   )
 }

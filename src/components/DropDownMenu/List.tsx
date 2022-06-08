@@ -23,10 +23,10 @@ export const List: FC<ListProps> = ({
   return (
     <StyledList isUpperCaseTitle={isUpperCaseTitle}>
       <div className="items-list">
-        {list.map(({ title, src }: DropDownMenuItem) => (
-          <div key={title} className="item" onClick={() => itemHandler({title, src})}>
-            {src && <img src={src} alt=""/>}
-            <p className="title">{title}</p>
+        {list.map(({ name, image }: DropDownMenuItem) => (
+          <div key={name} className="item" onClick={() => itemHandler({name, image})}>
+            {image && <img src={image} alt=""/>}
+            <p className="title">{name}</p>
           </div>
         ))}
       </div>

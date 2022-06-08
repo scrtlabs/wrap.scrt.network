@@ -1,13 +1,13 @@
 import { SetStateAction, useState } from 'react';
 import { BackGround } from './components/BackGround/BackGround';
 import { Content } from './components/Content/Content';
-import { mergeStateType, TokenOptions, Tokens } from './types';
+import { mergeStateType, TokenNames, TokenOptions } from './config';
 import { tokenIcons } from './assets/images';
 
 function App() {
   const [tokenOptions, setTokenOptions] = useState<TokenOptions>({
-    title: Tokens.scrt,
-    src: tokenIcons.scrt
+    name: TokenNames.scrt,
+    image: tokenIcons.scrt
   })
 
   const mergeState: mergeStateType = (data, value) => {
@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div className="App">
-      <BackGround activeToken={tokenOptions.title}/>
+      <BackGround activeToken={tokenOptions.name}/>
       <Content tokenOptions={tokenOptions} mergeState={mergeState}/>
     </div>
   )

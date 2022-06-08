@@ -3,7 +3,7 @@ import { Header } from './Header/Header';
 import { GetPrivacy } from './GetPrivacy/GetPrivacy';
 import { TokenForm } from './TokenForm/TokenForm';
 import { Footer } from './Footer/Footer';
-import { mergeStateType, TokenOptions } from '../../types';
+import { mergeStateType, TokenOptions } from '../../config';
 
 interface ContentProps {
   tokenOptions: TokenOptions,
