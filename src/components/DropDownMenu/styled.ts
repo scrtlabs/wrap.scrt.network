@@ -73,6 +73,7 @@ export const StyledList = styled.div<{
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
+  background: ${({ theme }) => theme.colors.active_bg};
 
   & .item {
     display: flex;

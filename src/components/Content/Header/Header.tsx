@@ -1,7 +1,6 @@
 import { StyledHeader } from './styled';
 import { rootIcons } from '../../../assets/images';
-import { DropDownMenu } from '../../DropDownMenu/DropDownMenu';
-import { fakeDDLiST } from '../../../fake';
+import { DropDownMenu, DropDownMenuItem } from '../../DropDownMenu/DropDownMenu';
 import { Keplr, KeplrProps } from './Keplr/Kepl';
 
 export function Header({
@@ -10,11 +9,21 @@ export function Header({
   secretAddress,
   setSecretAddress,
 }: KeplrProps) {
+
+  const list: DropDownMenuItem[] = [
+    {name: "Secret-4"},
+    // {name: "Pulsar-2"},
+  ]
+
   return (
     <StyledHeader>
       <img className="logo" src={rootIcons.logo} alt="logo"/>
       <div className="wallet">
-        <DropDownMenu list={fakeDDLiST} activeItem={fakeDDLiST[0].name} showOnline={true}/>
+        <DropDownMenu
+          list={list}
+          activeItem={list[0].name}
+          showOnline={true}
+        />
         <Keplr
           secretjs={secretjs}
           setSecretjs={setSecretjs}

@@ -32,18 +32,21 @@ export const DropDownMenu = ({
     setIsShowMenu((prev => !prev));
   };
 
+  const withoutActiveItem = list.filter(el => el.name !== activeItem)
+  const isEmptyList = !withoutActiveItem.length
+
   return (
-    <StyledDropDownMenu isShowMenu={isShowMenu} onClick={toggleMenu} isUpperCaseTitle={isUpperCaseTitle}>
+    <StyledDropDownMenu isShowMenu={isShowMenu} onClick={!isEmptyList && toggleMenu} isUpperCaseTitle={isUpperCaseTitle}>
       <div className="items-block">
         <div className="active-item">
           {activeIcon && <img src={activeIcon} alt=""/>}
           {showOnline && <div className="circle"><span className="circle-inner"/></div>}
           <p className="active-item-name">{activeItem && activeItem}</p>
-          <Arrow/>
+          {!isEmptyList && <Arrow/>}
         </div>
         {isShowMenu &&
           <List
-            list={list}
+            list={withoutActiveItem}
             isUpperCaseTitle={isUpperCaseTitle}
             callback={callback}
           />
