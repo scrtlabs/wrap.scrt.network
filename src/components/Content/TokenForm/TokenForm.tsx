@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyledTokenForm } from './styled';
 import { Tab, Tabs } from '../../Tabs/Tabs';
 import { WrappedToken } from './WrappedTokens/WrappedTokens';
@@ -9,19 +9,107 @@ import { TokenList } from './TokenList/TokenList';
 import { DropDownMenu } from '../../DropDownMenu/DropDownMenu';
 import { Exchange } from './Exchange/Exchange';
 
-import { mergeStateType, TokenOptions, tokens } from '../../../config';
+import { mergeStateType, Token, TokenOptions, tokens } from '../../../config';
 import { rootIcons } from '../../../assets/images';
+import { SecretNetworkClient } from 'secretjs';
+import { viewingKeyErrorString } from '../../../commons';
+import { getKeplrViewingKey } from '../../helpers';
 
 
 interface TokenFormProps {
   tokenOptions: TokenOptions,
   mergeState: mergeStateType,
+  secretjs: SecretNetworkClient | null,
+  secretAddress: string,
+  balances: Map<string, string>,
+  prices: Map<string, number>,
+  loadingCoinBalances: boolean,
 }
 
-export function TokenForm({ tokenOptions, mergeState }: TokenFormProps) {
+export function TokenForm({
+  tokenOptions,
+  mergeState,
+  secretjs,
+  secretAddress,
+  balances,
+  prices,
+  loadingCoinBalances,
+}: TokenFormProps) {
   const [isWrapToken, setIsWrapToken] = useState(true)
   const toggleWrappedTokens = () => setIsWrapToken(prev => !prev)
   const wrapTitle = isWrapToken ? 'wrap' : 'unwrap'
+  const [token, setToken] = useState<Token>(getCurrentToken())
+  const [price, setPrice] = useState<number>(getTokenPrice())
+
+  const [loadingWrap, setLoadingWrap] = useState<boolean>(false);
+  const [loadingUnwrap, setLoadingUnwrap] = useState<boolean>(false);
+  const [tokenBalance, setTokenBalance] = useState<string>("");
+  const [loadingTokenBalance, setLoadingTokenBalance] = useState<boolean>(false);
+  const [isDepositWithdrawDialogOpen, setIsDepositWithdrawDialogOpen] = useState<boolean>(false);
+
+  function getCurrentToken (){
+    return tokens.find((token) => token.name === tokenOptions.name)!
+  }
+
+  function getTokenPrice (){
+    return prices.get(token.name) || 0
+  }
+
+  useEffect(() => {
+    setToken(getCurrentToken())
+    setPrice(getTokenPrice())
+  }, [tokenOptions.name])
+
+  const updateTokenBalance = async () => {
+    if (!token.address) {
+      return;
+    }
+
+    if (!secretjs) {
+      return;
+    }
+
+    const key = await getKeplrViewingKey(token.address);
+    if (!key) {
+      setTokenBalance(viewingKeyErrorString);
+      return;
+    }
+
+    try {
+      const result = await secretjs.query.compute.queryContract({
+        address: token.address,
+        codeHash: token.code_hash,
+        query: {
+          balance: { address: secretAddress, key },
+        },
+      });
+
+      if (result.viewing_key_error) {
+        setTokenBalance(viewingKeyErrorString);
+        return;
+      }
+      setTokenBalance(result.balance.amount);
+    } catch (e) {
+      console.error(`Error getting balance for s${token.name}`, e);
+
+      setTokenBalance(viewingKeyErrorString);
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoadingTokenBalance(true);
+        await updateTokenBalance();
+      } finally {
+        setLoadingTokenBalance(false);
+      }
+    })();
+  }, [secretjs]);
+
+  const denomOnSecret = token.withdrawals[0]?.from_denom;
+  let balanceIbcCoin;
+  let balanceToken;
 
   return (
     <StyledTokenForm>
@@ -40,7 +128,7 @@ export function TokenForm({ tokenOptions, mergeState }: TokenFormProps) {
           </div>
 
           <Button title={wrapTitle}/>
-          <Indicators/>
+          <Indicators price={`$${getTokenPrice()}`}/>
         </Tab>
 
         <Tab tabKey={'bridge'} title={'bridge (ibc)'}>
@@ -50,7 +138,7 @@ export function TokenForm({ tokenOptions, mergeState }: TokenFormProps) {
                 <div className="deposit-block">
                   <p>Deposit SCRT from</p>
                   <DropDownMenu
-                    list={tokens}
+                    list={tokens.filter(token => token.address)}
                     callback={mergeState}
                     activeItem={tokenOptions.name}
                     activeIcon={tokenOptions.image}
@@ -68,7 +156,7 @@ export function TokenForm({ tokenOptions, mergeState }: TokenFormProps) {
                 </div>
 
                 <div className="amount">
-                  <span className="title">Amont to Deposit</span>
+                  <span className="title">Amount to Deposit</span>
                   <PercentOptions/>
                   <img src={tokenOptions.image} alt="amount"/>
                 </div>

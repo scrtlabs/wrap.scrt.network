@@ -1,7 +1,13 @@
 import { StyledIndicators } from './styled';
 import { rootIcons } from '../../../../assets/images';
 
-export const Indicators = ({ capitalization = "$320,709.510", price = "$1.96", timeChange = '2.53%' }) => {
+interface IndicatorsProps {
+  capitalization?: string
+  price: string
+  timeChange?: string
+}
+
+export const Indicators = ({ capitalization = "$320,709.510", price = "$1.96", timeChange = '2.53%' }: IndicatorsProps) => {
   return (
     <StyledIndicators>
       <div className="indicator">

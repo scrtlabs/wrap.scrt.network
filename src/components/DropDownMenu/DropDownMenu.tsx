@@ -36,7 +36,7 @@ export const DropDownMenu = ({
   const isEmptyList = !withoutActiveItem.length
 
   return (
-    <StyledDropDownMenu isShowMenu={isShowMenu} onClick={!isEmptyList && toggleMenu} isUpperCaseTitle={isUpperCaseTitle}>
+    <StyledDropDownMenu isShowMenu={isShowMenu} onClick={!isEmptyList ? toggleMenu : () => {}} isUpperCaseTitle={isUpperCaseTitle}>
       <div className="items-block">
         <div className="active-item">
           {activeIcon && <img src={activeIcon} alt=""/>}

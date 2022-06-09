@@ -15,7 +15,6 @@ export const StyledTokenList = styled.ul`
     justify-content: center;
     align-items: center;
     text-transform: uppercase;
-    cursor: pointer;
     margin-right: 12px;
     position: relative;
     width: 40px;
@@ -30,6 +29,9 @@ export const StyledTokenList = styled.ul`
     }
 
     &:hover .name {
+      visibility: visible;
+    }
+    &:hover .soon {
       visibility: visible;
     }
 
@@ -57,6 +59,23 @@ export const StyledTokenList = styled.ul`
         margin-top: 6px;
       }
     }
+    
+    & .soon {
+      position: absolute;
+      visibility: hidden;
+      white-space: nowrap;
+      top: 30px;
+      margin-top: 16px;
+      font-size: 12px;
+      line-height: 24px;
+      font-family: ${({ theme }) => theme.fonts.hind_regular};
+      @media (max-width: 576px) {
+        font-size: 13px;
+        margin-top: 6px;
+      }
+    }
+    
+    
   }
 
   & .token-wrap.active img {
