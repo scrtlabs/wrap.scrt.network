@@ -4,14 +4,14 @@ import { socialIcons } from '../../../assets/images';
 export function Footer() {
   return (
     <StyledFooter>
-      <a href="" target="_blank">
-        <img src={socialIcons.network} alt="network"/>
+      <a href="https://scrt.network/" target="_blank">
+        <img src={socialIcons.network} alt="network" />
       </a>
-      <a href="" target="_blank">
-        <img src={socialIcons.twitter} alt="twitter"/>
+      <a href="https://twitter.com/SecretNetwork" target="_blank">
+        <img src={socialIcons.twitter} alt="twitter" />
       </a>
-      <a href="" target="_blank">
-        <img src={socialIcons.git} alt="git"/>
+      <a href="https://github.com/scrtlabs/" target="_blank">
+        <img src={socialIcons.git} alt="git" />
       </a>
     </StyledFooter>
   )
