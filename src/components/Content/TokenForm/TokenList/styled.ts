@@ -14,7 +14,6 @@ export const StyledTokenList = styled.ul`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-transform: uppercase;
     margin-right: 12px;
     position: relative;
     width: 40px;

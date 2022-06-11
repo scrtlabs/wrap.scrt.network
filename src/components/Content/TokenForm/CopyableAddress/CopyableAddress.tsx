@@ -5,10 +5,11 @@ import copy from '../../../../assets/images/copy.svg';
 
 interface ExchangeProps {
   title: string,
-  id: string
+  address: string
+  prefix: string
 }
 
-export const Exchange = ({ title, id }: ExchangeProps) => {
+export const CopyableAddress = ({ title, address, prefix }: ExchangeProps) => {
 
   const ref = useRef<HTMLSpanElement>(null)
   const [isCopied, setIsCopied] = useState(false);
@@ -16,9 +17,10 @@ export const Exchange = ({ title, id }: ExchangeProps) => {
   return (
     <StyledExchange>
       <span className="title">{title}:</span>
-      <span ref={ref} className="id">{id}</span>
+      <a href={`${prefix}${address}`} className="address" target={'_blank'}>{address}</a>
       <img src={copy} alt="copy" onClick={() => handleCopyClick(ref, setIsCopied)}/>
       {isCopied && <p className="copied-msg">Copied</p>}
+      <span className="copyable" ref={ref}>{address}</span>
     </StyledExchange>
   )
 }

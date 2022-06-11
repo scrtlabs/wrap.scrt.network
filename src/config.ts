@@ -336,7 +336,7 @@ export const chains: { [chain_name: string]: Chain } = {
     bech32_prefix: "secret",
     lcd: "https://api.roninventures.io/",
     rpc: "https://web-rpc.roninventures.io/", // gRPC-web
-    chain_image: "/scrt.svg",
+    chain_image: tokenIcons.scrt,
     explorer_account:
       "https://secretnodes.com/secret/chains/secret-4/accounts/",
   },
@@ -350,7 +350,7 @@ export const chains: { [chain_name: string]: Chain } = {
     bech32_prefix: "cosmos",
     lcd: "https://lcd-cosmoshub.keplr.app",
     rpc: "https://cosmoshub.validator.network/",
-    chain_image: "/atom.jpg",
+    chain_image: tokenIcons.atom,
     explorer_account: "https://www.mintscan.io/cosmos/account/",
   },
   Terra: {
@@ -363,7 +363,7 @@ export const chains: { [chain_name: string]: Chain } = {
     bech32_prefix: "terra",
     lcd: "https://lcd-columbus.keplr.app",
     rpc: "https://rpc-columbus.keplr.app",
-    chain_image: "/terra.jpg",
+    chain_image: tokenIcons.terra,
     explorer_account: "https://finder.terra.money/mainnet/address/",
   },
   Osmosis: {
@@ -376,7 +376,7 @@ export const chains: { [chain_name: string]: Chain } = {
     bech32_prefix: "osmo",
     lcd: "https://lcd-osmosis.blockapsis.com/",
     rpc: "https://osmosis.validator.network/",
-    chain_image: "/osmo.jpeg",
+    chain_image: tokenIcons.osmo,
     explorer_account: "https://www.mintscan.io/osmosis/account/",
   },
   Sentinel: {
@@ -389,7 +389,7 @@ export const chains: { [chain_name: string]: Chain } = {
     bech32_prefix: "sent",
     lcd: "https://lcd-sentinel.keplr.app",
     rpc: "https://rpc-sentinel.keplr.app",
-    chain_image: "/dvpn.jpeg",
+    chain_image: tokenIcons.dvpn,
     explorer_account: "https://www.mintscan.io/sentinel/account/",
   },
   Juno: {
@@ -402,7 +402,7 @@ export const chains: { [chain_name: string]: Chain } = {
     bech32_prefix: "juno",
     lcd: "https://lcd-juno.itastakers.com",
     rpc: "https://rpc-juno.itastakers.com",
-    chain_image: "/juno.svg",
+    chain_image: tokenIcons.juno,
     explorer_account: "https://www.mintscan.io/juno/account/",
   },
   Chihuahua: {
@@ -415,7 +415,7 @@ export const chains: { [chain_name: string]: Chain } = {
     bech32_prefix: "chihuahua",
     lcd: "https://api.chihuahua.wtf/",
     rpc: "https://rpc.chihuahua.wtf/",
-    chain_image: "/huahua.jpg",
+    chain_image: tokenIcons.huahua,
     explorer_account: "https://ping.pub/chihuahua/account/",
   },
 };

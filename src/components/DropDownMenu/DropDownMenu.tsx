@@ -8,12 +8,12 @@ interface DropDownMenuProps {
   activeItem: string,
   activeIcon?: string,
   showOnline?: boolean,
-  isUpperCaseTitle?: boolean,
   callback?: (data: any) => void,
 }
 
 export interface DropDownMenuItem {
   name: string,
+  idx?: number,
   image?: string,
 }
 
@@ -22,7 +22,6 @@ export const DropDownMenu = ({
   activeItem,
   activeIcon = "",
   showOnline = false,
-  isUpperCaseTitle = false,
   callback = () => {},
 }: DropDownMenuProps) => {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
@@ -32,22 +31,19 @@ export const DropDownMenu = ({
     setIsShowMenu((prev => !prev));
   };
 
-  const withoutActiveItem = list.filter(el => el.name !== activeItem)
-  const isEmptyList = !withoutActiveItem.length
 
   return (
-    <StyledDropDownMenu isShowMenu={isShowMenu} onClick={!isEmptyList ? toggleMenu : () => {}} isUpperCaseTitle={isUpperCaseTitle}>
+    <StyledDropDownMenu isShowMenu={isShowMenu} onClick={toggleMenu}>
       <div className="items-block">
         <div className="active-item">
           {activeIcon && <img src={activeIcon} alt=""/>}
           {showOnline && <div className="circle"><span className="circle-inner"/></div>}
           <p className="active-item-name">{activeItem && activeItem}</p>
-          {!isEmptyList && <Arrow/>}
+          <Arrow/>
         </div>
         {isShowMenu &&
           <List
-            list={withoutActiveItem}
-            isUpperCaseTitle={isUpperCaseTitle}
+            list={list}
             callback={callback}
           />
         }

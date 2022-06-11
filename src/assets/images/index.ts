@@ -18,7 +18,8 @@ import luna from './tokens/luna.svg'
 import osmo from './tokens/osmo.svg'
 import scrt from './tokens/scrt.svg'
 import ust from './tokens/ust.svg'
+import terra from './tokens/terra.png'
 
 export const rootIcons = { grow, keplr, logo, refresh, swap, copy }
 export const socialIcons = { network, twitter, git }
-export const tokenIcons = { akt, atom, dvpn, huahua, juno, luna, osmo, scrt, ust }
+export const tokenIcons = { akt, atom, dvpn, huahua, juno, luna, osmo, scrt, ust, terra }

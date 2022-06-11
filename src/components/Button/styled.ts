@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 
-export const StyledButton = styled.button`
+export const StyledButton = styled.button<{
+  isLoading: boolean
+}>`
   max-width: 220px;
   width: 220px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 11px;
+  padding: 10px 11px;
   text-transform: uppercase;
-  background: ${({ theme }) => theme.colors.orange};
+  background: ${({ isLoading, theme }) => (isLoading ? theme.colors.bg : theme.colors.orange )};
   font-family: ${({ theme }) => theme.fonts.monsterRat_semiBold};
   font-size: 16px;
   line-height: 24px;
@@ -16,6 +18,7 @@ export const StyledButton = styled.button`
   margin: 24px auto 0 auto;
   cursor: pointer;
   opacity: .9;
+  border: none;
   @media (max-width: 576px) {
     width: 100%;
     max-width: 100%;

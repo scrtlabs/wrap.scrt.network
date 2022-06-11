@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const StyledDropDownMenu = styled.div<{
   isShowMenu: boolean,
   onClick: any,
-  isUpperCaseTitle: boolean,
 }>` && {
   z-index: 1;
   white-space: nowrap;
@@ -45,11 +44,11 @@ export const StyledDropDownMenu = styled.div<{
 
       & .active-item-name {
         font-family: ${({ theme }) => theme.fonts.monsterRat_regular};
-        margin: 0 8px;
+        margin: 0 7px;
         transition: .2s color;
         font-size: 14px;
         line-height: 150%;
-        text-transform: ${({ isUpperCaseTitle }) => (isUpperCaseTitle ? 'uppercase' : 'capitalize')};
+        text-transform: capitalize;
       }
 
       & .arrow-icon {
@@ -61,9 +60,7 @@ export const StyledDropDownMenu = styled.div<{
   }
 }`;
 
-export const StyledList = styled.div<{
-  isUpperCaseTitle: boolean
-}>` && {
+export const StyledList = styled.div` && {
   display: flex;
   flex-direction: column;
   border-radius: 12px;
@@ -81,7 +78,7 @@ export const StyledList = styled.div<{
     padding: 8px 12px 4px 12px;
     transition: color .2s;
     font-family: ${({ theme }) => theme.fonts.monsterRat_regular};
-    text-transform: ${({ isUpperCaseTitle }) => (isUpperCaseTitle ? 'uppercase' : 'capitalize')};
+    text-transform: capitalize;
     font-size: 14px;
     line-height: 150%;
 

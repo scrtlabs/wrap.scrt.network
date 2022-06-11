@@ -69,10 +69,11 @@ export const StyledWrapElem = styled.div`
       }
     }
 
-    & .cash {
+    & .content {
       font-size: 14px;
       line-height: 22px;
       color: ${({ theme }) => theme.colors.grey};
+      cursor: pointer;
       @media (max-width: 576px) {
         font-size: 12px;
       }

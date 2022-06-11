@@ -106,6 +106,8 @@ export function Content({tokenOptions, mergeState}: ContentProps) {
           balances={balances}
           prices={prices}
           loadingCoinBalances={loadingCoinBalances}
+          setSecretjs={setSecretjs}
+          setSecretAddress={setSecretAddress}
         />
       </div>
       <Footer/>

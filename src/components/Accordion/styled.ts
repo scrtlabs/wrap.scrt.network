@@ -49,7 +49,10 @@ export const StyledAccordionWrapper = styled.div<{
     overflow: hidden;
     height: ${({ isOpenAccordion, contentHeight }) => (isOpenAccordion ? `${contentHeight}px` : '0')};
     background: ${({ theme }) => theme.colors.bg};
-
+    @media (max-width: 992px) {
+      transition: height 0s;
+    }
+    
     & .divider {
       display: block;
       height: 1px;

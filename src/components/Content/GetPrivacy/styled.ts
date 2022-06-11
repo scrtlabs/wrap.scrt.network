@@ -86,15 +86,18 @@ export const StyleGetPrivacy = styled.div`
     & > div{
       margin-bottom: 24px;
       @media (max-width: 992px) {
-        width: 200px;
+        max-width: 250px;
         margin-right: 24px;
       }
       @media (max-width: 820px) {
         flex-shrink: 0;
       }
     }
-    & div:last-child{
+    & > div:last-child{
       margin-bottom: 0;
+      @media (max-width: 820px) {
+        margin-bottom: 24px;
+      }
     }
   }
 `

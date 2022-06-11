@@ -25,6 +25,7 @@ export const StyledTokenForm = styled.div`
   }
 
   & .count {
+    height: 44px;
     width: 220px;
     padding: 9px 0;
     display: flex;
@@ -40,8 +41,14 @@ export const StyledTokenForm = styled.div`
       width: 100%;
     }
 
-    & p {
+    & input {
+      background: ${({ theme }) => theme.colors.bg};
       color: ${({ theme }) => theme.colors.grey};
+      border: none;
+      text-align: center;
+      &:focus, &:hover{
+        outline: none;
+      }
     }
   }
 
@@ -54,7 +61,7 @@ export const StyledTokenForm = styled.div`
         font-size: 16px;
         line-height: 24px;
         font-family: ${({ theme }) => theme.fonts.monsterRat_Bold};
-        margin-right: 24px;
+        margin-right: 34px;
       }
 
       & .tab-list-active {
@@ -68,23 +75,26 @@ export const StyledTokenForm = styled.div`
     
     & .deposit-block{
       display: flex;
-      justify-content: space-between;
       align-items: center;
       margin-bottom: 16px;
       white-space: nowrap;
       flex-wrap: wrap;
-      & p{
+      font-family: ${({ theme }) => theme.fonts.hind_regular};
+      & p {
         color: ${({ theme }) => theme.colors.grey};
-        font-family: ${({ theme }) => theme.fonts.hind_regular};
       }  
+      & .one{
+        color: ${({ theme }) => theme.colors.grey};
+        margin: 0 4px;
+      }
       & .items-block{
         background: ${({ theme }) => theme.colors.bg};
         border-radius: 10px;
-        width: 156px;
         & .active-item{
           width: 100%;
           & .arrow-icon{
             margin-left: auto;
+            flex-shrink: 0;
           }
         }
       }

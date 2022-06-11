@@ -4,10 +4,10 @@ import { rootIcons } from '../../../../assets/images';
 interface IndicatorsProps {
   capitalization?: string
   price: string
-  timeChange?: string
+  changeCoefficient?: string
 }
 
-export const Indicators = ({ capitalization = "$320,709.510", price = "$1.96", timeChange = '2.53%' }: IndicatorsProps) => {
+export const Indicators = ({ capitalization, price = "$1.96", changeCoefficient }: IndicatorsProps) => {
   return (
     <StyledIndicators>
       <div className="indicator">
@@ -22,7 +22,7 @@ export const Indicators = ({ capitalization = "$320,709.510", price = "$1.96", t
 
       <div className="indicator">
         <span className="title">24H</span>
-        <span className="grow">{timeChange}</span>
+        <span className="grow">{changeCoefficient}</span>
         <img className="grow-img" src={rootIcons.grow} alt="grow"/>
       </div>
 

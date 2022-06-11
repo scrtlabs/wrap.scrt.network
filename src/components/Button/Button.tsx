@@ -1,9 +1,16 @@
 import { StyledButton } from './styled';
+import { Loader } from '../Content/Loader/Loader';
 
-export const Button = ({title = ''}) => {
+interface ButtonProps {
+  title: string,
+  action: () => void,
+  isLoading?: boolean,
+}
+
+export const Button = ({title = '', action = () => {}, isLoading = false}: ButtonProps) => {
   return (
-    <StyledButton>
-      <p>{title}</p>
+    <StyledButton onClick={action} isLoading={isLoading}>
+      {isLoading ? <Loader/> : <p>{title}</p>}
     </StyledButton>
   )
 }

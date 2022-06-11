@@ -13,11 +13,12 @@ export const StyledExchange = styled.div` && {
     line-height: 24px;
   }
 
-  & .id {
+  & .address {
     font-family: ${({ theme }) => theme.fonts.monsterRat_regular};
     margin: 0 12px;
     font-size: 14px;
     line-height: 150%;
+    text-decoration: none;
   }
 
   & img {
@@ -29,5 +30,9 @@ export const StyledExchange = styled.div` && {
     right: 0;
     color: ${({ theme }) => theme.colors.grow};
     font-family: ${({ theme }) => theme.fonts.monsterRat_regular};
+  }
+  
+  & .copyable {
+    display: none;
   }
 }`;

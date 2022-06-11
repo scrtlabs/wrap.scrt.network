@@ -4,13 +4,11 @@ import { DropDownMenuItem } from './DropDownMenu';
 
 interface ListProps {
   list: DropDownMenuItem[],
-  isUpperCaseTitle: boolean,
   callback?: (data: any) => void,
 }
 
 export const List: FC<ListProps> = ({
   list,
-  isUpperCaseTitle,
   callback
 }) => {
 
@@ -21,10 +19,10 @@ export const List: FC<ListProps> = ({
   }
 
   return (
-    <StyledList isUpperCaseTitle={isUpperCaseTitle}>
+    <StyledList>
       <div className="items-list">
-        {list.map(({ name, image }: DropDownMenuItem) => (
-          <div key={name} className="item" onClick={() => itemHandler({name, image})}>
+        {list.map(({ name, image }, idx ) => (
+          <div key={name} className="item" onClick={() => itemHandler({idx, name, image})}>
             {image && <img src={image} alt=""/>}
             <p className="title">{name}</p>
           </div>
