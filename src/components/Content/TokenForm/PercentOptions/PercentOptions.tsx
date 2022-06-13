@@ -1,18 +1,17 @@
-import { useState } from 'react';
 import { StyledPercentOptions } from './styled';
+import { Percents } from '../../../../config';
 
-export enum CalcValues {
-  v25 = '25%',
-  v50 = '50%',
-  v75 = '75%',
-  v100 = '100%',
+interface PercentOptionsProps {
+  percent: Percents
+  setPercent: (percents: Percents) => void
+  cb: (v: Percents) => void
 }
 
-export const PercentOptions = ({}) => {
-  const countValues = [CalcValues.v25, CalcValues.v50, CalcValues.v75, CalcValues.v100]
-  const [percent, setPercent] = useState(CalcValues.v100)
+export const PercentOptions = ({percent, setPercent, cb}: PercentOptionsProps) => {
+  const countValues = [Percents.v25, Percents.v50, Percents.v75, Percents.v100]
 
-  const handler = (el: CalcValues) => {
+  const handler = (el: Percents) => {
+    cb(el)
     setPercent(el)
   }
 
@@ -24,7 +23,7 @@ export const PercentOptions = ({}) => {
           onClick={() => handler(el)}
           key={idx}
         >
-          {el === CalcValues.v100 ? 'Max' : el}
+          {el === Percents.v100 ? 'Max' : el}
         </span>
       )}
     </StyledPercentOptions>

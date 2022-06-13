@@ -21,6 +21,13 @@ type ValueOf<T> = T[keyof T];
 
 export type mergeStateType = (data: keyof TokenOptions | Record<keyof TokenOptions, ValueOf<TokenOptions>>, value?: any) => void
 
+export enum Percents {
+  v25 = '25%',
+  v50 = '50%',
+  v75 = '75%',
+  v100 = '100%',
+}
+
 export type Token = {
   /** display name of the token */
   name: string;

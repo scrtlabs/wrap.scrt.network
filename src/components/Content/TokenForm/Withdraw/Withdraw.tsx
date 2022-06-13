@@ -1,5 +1,4 @@
-import { StyledWithdraw } from './styled';
-import { chains, Token, TokenOptions } from '../../../../config';
+import { chains, Percents, Token } from '../../../../config';
 import { SecretNetworkClient, MsgTransfer } from 'secretjs';
 import { DropDownMenu } from '../../../DropDownMenu/DropDownMenu';
 import { CopyableAddress } from '../CopyableAddress/CopyableAddress';
@@ -9,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { sleep, suggestTerraToKeplr } from '../../../../commons';
 import BigNumber from 'bignumber.js';
 import { formatBalance } from '../../../helpers';
+import { Loader } from '../../Loader/Loader';
 
 
 interface WithdrawProps {
@@ -18,7 +18,6 @@ interface WithdrawProps {
   balances: Map<string, string>;
   onSuccess: (txhash: string) => any;
   onFailure: (error: any) => any;
-  tokenOptions: TokenOptions,
 }
 
 export const Withdraw = ({
@@ -28,13 +27,12 @@ export const Withdraw = ({
   balances,
   onSuccess,
   onFailure,
-  tokenOptions,
 }: WithdrawProps) => {
   const [targetAddress, setTargetAddress] = useState<string>("");
   const [loadingTx, setLoading] = useState<boolean>(false);
   const [selectedChainIndex, setSelectedChainIndex] = useState<number>(0);
+  const [percent, setPercent] = useState(Percents.v100)
   const inputRef = useRef<any>();
-  const maxButtonRef = useRef<any>();
 
   const sourceChain = chains["Secret Network"];
   const targetChain = chains[token.withdrawals[selectedChainIndex].target_chain_name];
@@ -132,8 +130,45 @@ export const Withdraw = ({
     }
   }
 
+  const AvailableWithdraw = () => {
+    if (availableBalance === "") {
+      return <Loader/>;
+    }
+
+    const prettyBalance = formatBalance(availableBalance, token.decimals)
+
+    if (prettyBalance === "NaN") {
+      return <>Error</>;
+    }
+
+    return (
+      <span
+        className="available-withdraw"
+        onClick={() => {
+          if (inputRef.current) {
+            inputRef.current.value = prettyBalance
+          }
+          setPercent(Percents.v100)
+        }}>
+        ${prettyBalance} ${token.name}
+      </span>
+    )
+  }
+
+  const calculateBalancePart = (percents: Percents) => {
+    const prettyBalance = formatBalance(availableBalance, token.decimals)
+    const numberPercent = parseInt(percents)
+    const balancePart = Number(prettyBalance) / 100 * numberPercent
+
+    if (prettyBalance === "NaN") {
+      return
+    }
+
+    inputRef.current.value = String(balancePart)
+  }
+
   return (
-    <StyledWithdraw>
+    <div>
       <div className="deposit-block">
         <p>Withdraw {token.name} from Secret Network to</p>
         {token.withdrawals.length === 1
@@ -153,22 +188,17 @@ export const Withdraw = ({
       <div className="available">
         <span className="title">Available to withdraw:</span>
         <span className="cash">
-          {availableBalance &&
-             <>
-              <span>{formatBalance(availableBalance, token.decimals)} </span>
-              <span>{token.name}</span>
-            </>
-          }
+          <AvailableWithdraw/>
         </span>
       </div>
 
       <div className="amount">
-        <span className="title">Amount to Withdraw</span>
-        <PercentOptions/>
-        <img src={tokenOptions.image} alt="amount"/>
+        <input ref={inputRef} placeholder="Amount to Withdraw"/>
+        <PercentOptions percent={percent} setPercent={setPercent} cb={calculateBalancePart}/>
+        <img src={token.image} alt="amount"/>
       </div>
 
       <Button action={withdraw} title={"Withdraw"} isLoading={loadingTx}/>
-    </StyledWithdraw>
+    </div>
   )
 }

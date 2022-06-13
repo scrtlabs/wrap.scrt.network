@@ -112,6 +112,9 @@ export const StyledTokenForm = styled.div`
       }
       & .cash{
         font-family: ${({ theme }) => theme.fonts.monsterRat_Bold};
+        & .available-deposit, & .available-withdraw {
+          cursor: pointer;
+        }
       }
     }
     
@@ -123,13 +126,21 @@ export const StyledTokenForm = styled.div`
       justify-content: space-between;
       align-items: center;
       margin-top: 18px;
-      & .title{
+      & input{
+        background: ${({ theme }) => theme.colors.bg};;
         color: ${({ theme }) => theme.colors.grey};
         font-size: 16px;
         line-height: 24px;
         font-family: ${({ theme }) => theme.fonts.hind_regular};
         margin-right: 12px;
         white-space: nowrap;
+        border: none;
+        &:focus{
+          outline: none;
+        }
+        ::placeholder {
+          color: ${({ theme }) => theme.colors.grey};
+        }
       }
       & div {
         margin: 0 0 0 auto;

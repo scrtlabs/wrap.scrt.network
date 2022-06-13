@@ -1,6 +1,5 @@
-import { StyledDeposit } from './styled';
 import { DropDownMenu } from '../../../DropDownMenu/DropDownMenu';
-import { chains, Token, TokenOptions } from '../../../../config';
+import { Percents, chains, Token, TokenOptions } from '../../../../config';
 import { CopyableAddress } from '../CopyableAddress/CopyableAddress';
 import { PercentOptions } from '../PercentOptions/PercentOptions';
 import { Button } from '../../../Button/Button';
@@ -9,6 +8,7 @@ import { SigningStargateClient } from '@cosmjs/stargate';
 import { gasToFee, sleep, suggestTerraToKeplr } from '../../../../commons';
 import { formatBalance } from '../../../helpers';
 import BigNumber from 'bignumber.js';
+import { Loader } from '../../Loader/Loader';
 
 interface DepositProps {
   token: Token,
@@ -25,8 +25,8 @@ export const Deposit = ({ tokenOptions, token, secretAddress, onSuccess, onFailu
   const [sourceCosmJs, setSourceCosmJs] = useState<SigningStargateClient | null>(null);
   const [selectedChainIndex, setSelectedChainIndex] = useState<number>(0);
   const [fetchBalanceInterval, setFetchBalanceInterval] = useState<any>(null);
+  const [percent, setPercent] = useState(Percents.v100)
   const inputRef = useRef<any>();
-  const maxButtonRef = useRef<any>();
 
   const sourceChain = chains[token.deposits[selectedChainIndex].source_chain_name];
   const targetChain = chains["Secret Network"];
@@ -56,7 +56,6 @@ export const Deposit = ({ tokenOptions, token, secretAddress, onSuccess, onFailu
       setAvailableBalance(balance);
     } catch (e) {
       console.error(`Error while trying to query ${url}:`, e);
-      setAvailableBalance("Error");
     }
   };
 
@@ -160,8 +159,45 @@ export const Deposit = ({ tokenOptions, token, secretAddress, onSuccess, onFailu
     }
   }
 
+  const AvailableDeposit = () => {
+    if (availableBalance === "") {
+      return <Loader/>;
+    }
+
+    const prettyBalance = formatBalance(availableBalance, token.decimals)
+
+    if (prettyBalance === "NaN") {
+      return <>Error</>;
+    }
+
+    return (
+      <span
+        className="available-deposit"
+        onClick={() => {
+          if (inputRef.current) {
+            inputRef.current.value = prettyBalance
+          }
+          setPercent(Percents.v100)
+        }}>
+        ${prettyBalance} ${token.name}
+      </span>
+    )
+  }
+
+  const calculateBalancePart = (percents: Percents) => {
+    const prettyBalance = formatBalance(availableBalance, token.decimals)
+    const numberPercent = parseInt(percents)
+    const balancePart = Number(prettyBalance) / 100 * numberPercent
+
+    if (prettyBalance === "NaN") {
+      return
+    }
+
+    inputRef.current.value = String(balancePart)
+  }
+
   return (
-    <StyledDeposit>
+    <div>
       <div className="deposit-block">
         <p>Deposit {token.name} from</p>
         {token.deposits.length === 1
@@ -183,22 +219,17 @@ export const Deposit = ({ tokenOptions, token, secretAddress, onSuccess, onFailu
       <div className="available">
         <span className="title">Available to deposit:</span>
         <span className="cash">
-          {availableBalance &&
-              <>
-                <span>{formatBalance(availableBalance, token.decimals)} </span>
-                <span>{token.name}</span>
-              </>
-          }
+          <AvailableDeposit/>
         </span>
       </div>
 
       <div className="amount">
-        <span className="title">Amount to Deposit</span>
-        <PercentOptions/>
-        <img src={tokenOptions.image} alt="amount"/>
+        <input ref={inputRef} placeholder="Amount to Deposit"/>
+        <PercentOptions percent={percent} setPercent={setPercent} cb={calculateBalancePart}/>
+        <img src={token.image} alt="amount"/>
       </div>
 
       <Button action={deposit} title={"deposit"} isLoading={loadingTx}/>
-    </StyledDeposit>
+    </div>
   )
 }

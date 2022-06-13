@@ -1,23 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StyledTokenForm } from './styled';
 import { Tab, Tabs } from '../../Tabs/Tabs';
-import { WrappedToken, UnWrappedToken } from './WrappedTokens/WrappedTokens';
+import { UnWrappedToken, WrappedToken } from './WrappedTokens/WrappedTokens';
 import { PercentOptions } from './PercentOptions/PercentOptions';
 import { Button } from '../../Button/Button';
 import { Indicators } from './Indicators/Indicators';
 import { TokenList } from './TokenList/TokenList';
 
-import { mergeStateType, Token, TokenOptions, tokens } from '../../../config';
+import { mergeStateType, Percents, Token, TokenOptions, tokens } from '../../../config';
 import { rootIcons } from '../../../assets/images';
 import { MsgExecuteContract, SecretNetworkClient } from 'secretjs';
 import { sleep, viewingKeyErrorString } from '../../../commons';
-import {
-  fixedBalance,
-  formatBalance,
-  getKeplrViewingKey,
-  setKeplrViewingKey,
-  setupKeplr
-} from '../../helpers';
+import { fixedBalance, formatBalance, getKeplrViewingKey, setKeplrViewingKey, setupKeplr } from '../../helpers';
 import BigNumber from 'bignumber.js';
 import { Loader } from '../Loader/Loader';
 import { Deposit } from './Deposit/Deposit';
@@ -58,6 +52,7 @@ export function TokenForm({
   const [loadingUnwrap, setLoadingUnwrap] = useState<boolean>(false);
   const [tokenBalance, setTokenBalance] = useState<string>("");
   const [loadingTokenBalance, setLoadingTokenBalance] = useState<boolean>(false);
+  const [percent, setPercent] = useState(Percents.v100)
 
   function getCurrentToken (){
     return tokens.find((token) => token.name === tokenOptions.name)!
@@ -248,13 +243,27 @@ export function TokenForm({
     maximumFractionDigits: 2,
   });
 
+  const calculateBalancePart = (balance: string) => {
+    const numberPercent = parseInt(percent)
+    const balancePart = Number(balance) / 100 * numberPercent
+
+    if (balance === "NaN" || !balance) {
+      return ""
+    }
+
+    return String(balancePart)
+  }
+
   if (loadingCoinBalances) {
     balanceIbcCoin = <Loader/>
   } else if (balances.get(denomOnSecret)) {
     balanceIbcCoin = (
       <div>
-        <div onClick={() => {wrapInputRef.current.value = fixedBalance(balances.get(denomOnSecret)!, token.decimals)}}>
-          ${formatBalance(balances.get(denomOnSecret)!, token.decimals)}
+        <div onClick={() => {
+          const balance = fixedBalance(balances.get(denomOnSecret)!, token.decimals)
+          wrapInputRef.current.value = calculateBalancePart(balance)
+        }}>
+          {`Balance: ${formatBalance(balances.get(denomOnSecret)!, token.decimals)}`}
         </div>
         <div>
           {usdString.format(new BigNumber(balances.get(denomOnSecret)!)
@@ -299,7 +308,10 @@ export function TokenForm({
   } else if (Number(tokenBalance) > -1) {
     balanceToken = (
       <div>
-        <div onClick={() => {wrapInputRef.current.value = fixedBalance(tokenBalance, token.decimals)}}>
+        <div onClick={() => {
+          const balance = fixedBalance(tokenBalance, token.decimals)
+          wrapInputRef.current.value = calculateBalancePart(balance)
+        }}>
           {`Balance: ${formatBalance(tokenBalance, token.decimals)}`}
         </div>
         <div>
@@ -334,7 +346,7 @@ export function TokenForm({
             }
           </div>
 
-          <PercentOptions/>
+          <PercentOptions percent={percent} setPercent={setPercent} cb={() => {}} />
 
           <div className="count">
             <input ref={wrapInputRef}/>
@@ -371,7 +383,6 @@ export function TokenForm({
                   balances={balances}
                   onSuccess={(txhash) => {console.log("success", txhash)}}
                   onFailure={(error) => console.error(error)}
-                  tokenOptions={tokenOptions}
                 />
               </Tab>
             </Tabs>

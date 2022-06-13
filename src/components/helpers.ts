@@ -2,7 +2,6 @@ import React from 'react';
 import BigNumber from 'bignumber.js';
 import { SecretNetworkClient } from 'secretjs';
 import { chains } from '../config';
-import { CalcValues } from './Content/TokenForm/PercentOptions/PercentOptions';
 
 export async function copyTextToClipboard(text: string) {
   if ('clipboard' in navigator) {
@@ -99,9 +98,4 @@ export const fixedBalance = (balance: BigNumber.Value, decimals: number) => {
   return new BigNumber(balance)
     .dividedBy(`1e${decimals}`)
     .toFixed()
-}
-
-export const calculateAmount = (amount: number, part: CalcValues) => {
-  const numberPercent = parseInt(part)
-  return amount / 100 * numberPercent
 }
