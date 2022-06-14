@@ -53,6 +53,7 @@ export function TokenForm({
   const [tokenBalance, setTokenBalance] = useState<string>("");
   const [loadingTokenBalance, setLoadingTokenBalance] = useState<boolean>(false);
   const [percent, setPercent] = useState(Percents.v100)
+  const [errorBtnClass, setErrorBtnClass] = useState<string>('')
 
   function getCurrentToken (){
     return tokens.find((token) => token.name === tokenOptions.name)!
@@ -162,6 +163,7 @@ export function TokenForm({
       }
     }
   }
+
   const unwrap = async () => {
     if (!secretjs || !secretAddress || loadingWrap || loadingUnwrap) {
       return;
@@ -274,23 +276,17 @@ export function TokenForm({
       </div>
     );
   } else {
-    balanceIbcCoin = (
-      <div onClick={() => setupKeplr(setSecretjs, setSecretAddress)}>
-        connect wallet
-      </div>
-    );
+    balanceIbcCoin = <></>
   }
+
   if (!secretjs) {
-    balanceToken = (
-      <div onClick={() => setupKeplr(setSecretjs, setSecretAddress)}>
-        connect wallet
-      </div>
-    );
+    balanceToken = <></>
   } else if (loadingTokenBalance) {
     balanceToken = <Loader/>
   } else if (tokenBalance == viewingKeyErrorString) {
     balanceToken = (
       <div
+        className="set-key"
         onClick={async () => {
           await setKeplrViewingKey(token.address);
           try {
@@ -302,7 +298,7 @@ export function TokenForm({
           }
         }}
       >
-        Balance: Set Viewing Key
+        Set Viewing Key
       </div>
     );
   } else if (Number(tokenBalance) > -1) {
@@ -328,7 +324,7 @@ export function TokenForm({
 
   return (
     <StyledTokenForm>
-      <Tabs currentTab={'wrap'}>
+      <Tabs currentTab={'wrap'} disableTabsOnchange={!(!!secretAddress)} setErrorBtnClass={setErrorBtnClass}>
         <Tab tabKey={'wrap'} title={wrapTitle}>
           <div className="wrapped-elems">
             {isWrapToken ?
@@ -352,10 +348,15 @@ export function TokenForm({
             <input ref={wrapInputRef}/>
           </div>
 
-          <Button
-            title={wrapTitle}
-            action={isWrapToken ? wrap : unwrap}
-          />
+          {secretjs
+            ? <Button title={wrapTitle} action={isWrapToken ? wrap : unwrap}/>
+            : <Button
+                errorClass={errorBtnClass}
+                title={'Connect wallet'}
+                action={() => setupKeplr(setSecretjs, setSecretAddress)}
+              />
+          }
+
           <Indicators
             price={`$${getTokenPrice()}`}
             capitalization={'$320,709.510'}

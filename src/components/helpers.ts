@@ -99,3 +99,9 @@ export const fixedBalance = (balance: BigNumber.Value, decimals: number) => {
     .dividedBy(`1e${decimals}`)
     .toFixed()
 }
+
+export const cutString = (str: string, firstCharactersCount: number = 10, lastCharactersCount: number = 4) => {
+  const firstCharacters = str.substring(0, firstCharactersCount);
+  const lastCharacters = str.substring(str.length - lastCharactersCount);
+  return `${firstCharacters}...${lastCharacters}`
+}

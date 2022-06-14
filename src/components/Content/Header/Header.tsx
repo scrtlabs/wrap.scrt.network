@@ -5,9 +5,7 @@ import { Keplr, KeplrProps } from './Keplr/Kepl';
 
 export function Header({
   secretjs,
-  setSecretjs,
   secretAddress,
-  setSecretAddress,
 }: KeplrProps) {
 
   const list: DropDownMenuItem[] = [
@@ -26,9 +24,7 @@ export function Header({
         />
         <Keplr
           secretjs={secretjs}
-          setSecretjs={setSecretjs}
           secretAddress={secretAddress}
-          setSecretAddress={setSecretAddress}
         />
       </div>
     </StyledHeader>

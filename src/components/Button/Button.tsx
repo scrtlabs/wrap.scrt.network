@@ -5,11 +5,12 @@ interface ButtonProps {
   title: string,
   action: () => void,
   isLoading?: boolean,
+  errorClass?: string,
 }
 
-export const Button = ({title = '', action = () => {}, isLoading = false}: ButtonProps) => {
+export const Button = ({title = '', action = () => {}, isLoading = false, errorClass = ''}: ButtonProps) => {
   return (
-    <StyledButton onClick={action} isLoading={isLoading}>
+    <StyledButton onClick={action} isLoading={isLoading} className={errorClass}>
       {isLoading ? <Loader/> : <p>{title}</p>}
     </StyledButton>
   )

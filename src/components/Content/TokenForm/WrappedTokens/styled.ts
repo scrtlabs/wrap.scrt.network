@@ -86,6 +86,10 @@ export const StyledWrapElem = styled.div`
       height: 16px;
       margin-left: auto;
       cursor: pointer;
+    }   
+    
+    & .set-key {
+      color: ${({ theme }) => theme.colors.orange};
     }
   }
 

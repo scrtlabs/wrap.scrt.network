@@ -5,11 +5,22 @@ interface TabsProps {
   children: JSX.Element[],
   currentTab?: string,
   isDivider?: boolean,
+  disableTabsOnchange?: boolean,
+  setErrorBtnClass?: (er: string) => void,
 }
 
-export const Tabs = ({ children, currentTab, isDivider = false }: TabsProps) => {
+export const Tabs = ({ children, currentTab, isDivider = false, disableTabsOnchange = false, setErrorBtnClass = () => {} }: TabsProps) => {
   const [activeTab, setActiveTab] = useState<string>(currentTab || children[0].props.tabKey);
-  const onClickTabItem = (tab: string) => setActiveTab(tab);
+  const onClickTabItem = (tab: string) => {
+    if (disableTabsOnchange){
+      setErrorBtnClass('error')
+      setTimeout(() => {
+        setErrorBtnClass('')
+      }, 500)
+      return
+    }
+    setActiveTab(tab);
+  }
 
   return (
     <StyledTabs>

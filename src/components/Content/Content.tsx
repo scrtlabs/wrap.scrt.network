@@ -92,9 +92,7 @@ export function Content({tokenOptions, mergeState}: ContentProps) {
     <StyledContent>
       <Header
         secretjs={secretjs}
-        setSecretjs={setSecretjs}
         secretAddress={secretAddress}
-        setSecretAddress={setSecretAddress}
       />
       <div className="content-wrap">
         <GetPrivacy/>
