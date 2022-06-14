@@ -5,7 +5,7 @@ import { Header } from './Header/Header';
 import { GetPrivacy } from './GetPrivacy/GetPrivacy';
 import { TokenForm } from './TokenForm/TokenForm';
 import { Footer } from './Footer/Footer';
-import { chains, mergeStateType, TokenOptions, tokens } from '../../config';
+import { chains, mergeStateType, TokenNames, TokenOptions, tokens } from '../../config';
 
 interface ContentProps {
   tokenOptions: TokenOptions,
@@ -18,6 +18,7 @@ export function Content({tokenOptions, mergeState}: ContentProps) {
 
   const [balances, setBalances] = useState<Map<string, string>>(new Map());
   const [prices, setPrices] = useState<Map<string, number>>(new Map());
+  const [tokensData, setTokensData] = useState({});
   const [loadingCoinBalances, setLoadingCoinBalances] = useState<boolean>(false);
 
   const updateCoinBalances = async () => {
@@ -67,6 +68,7 @@ export function Content({tokenOptions, mergeState}: ContentProps) {
       clearInterval(interval);
     };
   }, [secretAddress, secretjs]);
+
   useEffect(() => {
     fetch(
       `https://api.coingecko.com/api/v3/simple/price?ids=${tokens
@@ -88,6 +90,48 @@ export function Content({tokenOptions, mergeState}: ContentProps) {
       });
   }, []);
 
+  useEffect(() => {
+    fetch(
+      `https://api.coingecko.com/api/v3/coins/markets?ids=${tokens
+        .map((t) => t.coingecko_id)
+        .join(",")}&vs_currency=USD`
+    )
+      .then((resp) => resp.json())
+      .then((result) => {
+        let tokensData = {}
+        tokens.map((token) => {
+          const searchingToken = result.find((el: {
+            id: string,
+            market_cap: number,
+            price_change_percentage_24h: number
+          }) => el.id === token.coingecko_id)
+
+          if (token.name === TokenNames.ust) {
+            tokensData = {
+              ...tokensData,
+              [token.name]: {
+                market_cap: 0,
+                price_change_percentage_24h: 0,
+              }
+            }
+            return
+          }
+
+          if (searchingToken) {
+            tokensData = {
+              ...tokensData,
+              [token.name]: {
+                market_cap: searchingToken.market_cap,
+                price_change_percentage_24h: searchingToken.price_change_percentage_24h,
+              }
+            }
+          }
+        })
+
+        setTokensData(tokensData)
+      });
+  }, []);
+
   return (
     <StyledContent>
       <Header
@@ -106,6 +150,7 @@ export function Content({tokenOptions, mergeState}: ContentProps) {
           loadingCoinBalances={loadingCoinBalances}
           setSecretjs={setSecretjs}
           setSecretAddress={setSecretAddress}
+          tokensData={tokensData}
         />
       </div>
       <Footer/>

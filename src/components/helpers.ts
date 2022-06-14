@@ -105,3 +105,20 @@ export const cutString = (str: string, firstCharactersCount: number = 10, lastCh
   const lastCharacters = str.substring(str.length - lastCharactersCount);
   return `${firstCharacters}...${lastCharacters}`
 }
+
+export const usdString = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+});
+
+export function formatNumber(v: number) {
+  if (!v) {
+    return 0
+  } else if (Number.isInteger(v)) {
+    return v
+  } else {
+    return Number(v.toFixed(2))
+  }
+}

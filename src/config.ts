@@ -28,6 +28,13 @@ export enum Percents {
   v100 = '100%',
 }
 
+export type TokensData = {
+  [TokenNames: string]: {
+    market_cap: number,
+    price_change_percentage_24h: number,
+  }
+}
+
 export type Token = {
   /** display name of the token */
   name: string;

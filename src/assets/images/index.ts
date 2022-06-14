@@ -1,4 +1,5 @@
 import grow from './grow.svg'
+import fall from './fall.svg'
 import keplr from './keplr.svg'
 import logo from './logo.svg'
 import refresh from './refresh.svg'
@@ -20,6 +21,6 @@ import scrt from './tokens/scrt.svg'
 import ust from './tokens/ust.svg'
 import terra from './tokens/terra.png'
 
-export const rootIcons = { grow, keplr, logo, refresh, swap, copy }
+export const rootIcons = { grow, fall, keplr, logo, refresh, swap, copy }
 export const socialIcons = { network, twitter, git }
 export const tokenIcons = { akt, atom, dvpn, huahua, juno, luna, osmo, scrt, ust, terra }

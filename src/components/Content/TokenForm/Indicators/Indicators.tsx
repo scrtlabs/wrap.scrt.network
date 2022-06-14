@@ -1,18 +1,47 @@
 import { StyledIndicators } from './styled';
 import { rootIcons } from '../../../../assets/images';
+import { formatNumber } from '../../../helpers';
 
 interface IndicatorsProps {
-  capitalization?: string
+  marketCap?: string
   price: string
-  changeCoefficient?: string
+  priceChange: number
 }
 
-export const Indicators = ({ capitalization, price = "$1.96", changeCoefficient }: IndicatorsProps) => {
+export const Indicators = ({ marketCap, price, priceChange }: IndicatorsProps) => {
+
+  const formattedPrice = formatNumber(priceChange)
+
+  const PriceChangeHour = () => {
+    if (formattedPrice > 0) {
+      return (
+        <>
+          <span className="grow">{`${formattedPrice}%`}</span>
+          <img className="grow-img" src={rootIcons.grow} alt="grow"/>
+        </>
+      )
+    }
+    if (formattedPrice < 0) {
+      return (
+        <>
+          <span className="fall">{`${formattedPrice}%`}</span>
+          <img className="fall-img" src={rootIcons.fall} alt="grow"/>
+        </>
+      )
+    }
+
+    return (
+      <>
+        <span>{`${formattedPrice}%`}</span>
+      </>
+    )
+  }
+
   return (
     <StyledIndicators>
       <div className="indicator">
         <span className="title">Market cap</span>
-        <span>{capitalization}</span>
+        <span>{marketCap}</span>
       </div>
 
       <div className="indicator">
@@ -22,8 +51,7 @@ export const Indicators = ({ capitalization, price = "$1.96", changeCoefficient 
 
       <div className="indicator">
         <span className="title">24H</span>
-        <span className="grow">{changeCoefficient}</span>
-        <img className="grow-img" src={rootIcons.grow} alt="grow"/>
+        <PriceChangeHour/>
       </div>
 
     </StyledIndicators>

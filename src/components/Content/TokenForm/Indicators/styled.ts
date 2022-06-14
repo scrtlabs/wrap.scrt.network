@@ -33,5 +33,15 @@ export const StyledIndicators = styled.div`
       margin-bottom: 1px;
       margin-left: 5px;
     }
+
+    & .fall {
+      color: ${({ theme }) => theme.colors.alert};
+    }
+
+    & .fall-img {
+      margin-bottom: 1px;
+      margin-left: 5px;
+      transform: rotate(180deg);
+    }
   }
 `

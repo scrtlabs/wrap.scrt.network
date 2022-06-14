@@ -13,6 +13,7 @@ export const theme = {
     white: '#FFFFFF',
     orange: '#EB8045',
     grow: '#3CDC68',
+    alert: '#BA363C',
   },
   fonts: {
     hind_regular: 'Hind Regular',

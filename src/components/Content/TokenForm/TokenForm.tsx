@@ -7,11 +7,18 @@ import { Button } from '../../Button/Button';
 import { Indicators } from './Indicators/Indicators';
 import { TokenList } from './TokenList/TokenList';
 
-import { mergeStateType, Percents, Token, TokenOptions, tokens } from '../../../config';
+import { mergeStateType, Percents, Token, TokensData, TokenOptions, tokens } from '../../../config';
 import { rootIcons } from '../../../assets/images';
 import { MsgExecuteContract, SecretNetworkClient } from 'secretjs';
 import { sleep, viewingKeyErrorString } from '../../../commons';
-import { fixedBalance, formatBalance, getKeplrViewingKey, setKeplrViewingKey, setupKeplr } from '../../helpers';
+import {
+  fixedBalance,
+  formatBalance, formatNumber,
+  getKeplrViewingKey,
+  setKeplrViewingKey,
+  setupKeplr,
+  usdString
+} from '../../helpers';
 import BigNumber from 'bignumber.js';
 import { Loader } from '../Loader/Loader';
 import { Deposit } from './Deposit/Deposit';
@@ -28,6 +35,7 @@ interface TokenFormProps {
   loadingCoinBalances: boolean,
   setSecretjs: React.Dispatch<React.SetStateAction<SecretNetworkClient | null>>,
   setSecretAddress: React.Dispatch<React.SetStateAction<string>>,
+  tokensData: TokensData,
 }
 
 export function TokenForm({
@@ -40,6 +48,7 @@ export function TokenForm({
   loadingCoinBalances,
   setSecretjs,
   setSecretAddress,
+  tokensData,
 }: TokenFormProps) {
   const [isWrapToken, setIsWrapToken] = useState(true)
   const toggleWrappedTokens = () => setIsWrapToken(prev => !prev)
@@ -47,7 +56,6 @@ export function TokenForm({
   const [token, setToken] = useState<Token>(getCurrentToken())
   const [price, setPrice] = useState<number>(getTokenPrice())
   const wrapInputRef = useRef<any>();
-
   const [loadingWrap, setLoadingWrap] = useState<boolean>(false);
   const [loadingUnwrap, setLoadingUnwrap] = useState<boolean>(false);
   const [tokenBalance, setTokenBalance] = useState<string>("");
@@ -59,8 +67,10 @@ export function TokenForm({
     return tokens.find((token) => token.name === tokenOptions.name)!
   }
 
-  function getTokenPrice (){
-    return prices.get(token.name) || 0
+  function getTokenPrice() {
+    const price = prices.get(token.name)!
+
+    return formatNumber(price)
   }
 
   useEffect(() => {
@@ -238,13 +248,6 @@ export function TokenForm({
   let balanceIbcCoin;
   let balanceToken;
 
-  const usdString = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  });
-
   const calculateBalancePart = (balance: string) => {
     const numberPercent = parseInt(percent)
     const balancePart = Number(balance) / 100 * numberPercent
@@ -358,9 +361,9 @@ export function TokenForm({
           }
 
           <Indicators
+            marketCap={`${ usdString.format(tokensData[token.name]?.market_cap || 0)}`}
             price={`$${getTokenPrice()}`}
-            capitalization={'$320,709.510'}
-            changeCoefficient={'2.53%'}
+            priceChange={tokensData[token.name]?.price_change_percentage_24h || 0}
           />
         </Tab>
 
