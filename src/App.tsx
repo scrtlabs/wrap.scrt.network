@@ -1,6 +1,6 @@
 import { SetStateAction, useState } from 'react';
 import { Window as KeplrWindow } from "@keplr-wallet/types";
-import { BackGround } from './components/BackGround/BackGround';
+import { Background } from './components/Background/BackGround';
 import { Content } from './components/Content/Content';
 import { mergeStateType, TokenNames, TokenOptions } from './config';
 import { tokenIcons } from './assets/images';
@@ -25,7 +25,7 @@ function App() {
 
   return (
     <div className="App">
-      <BackGround activeToken={tokenOptions.name}/>
+      <Background activeToken={tokenOptions.name}/>
       <Content tokenOptions={tokenOptions} mergeState={mergeState}/>
     </div>
   )

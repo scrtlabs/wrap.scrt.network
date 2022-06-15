@@ -25,7 +25,7 @@ const getBackground = (token: string) => {
   }
 }
 
-export const BackGround = ({ activeToken = TokenNames.scrt }) => {
+export const Background = ({ activeToken = TokenNames.scrt }) => {
   const [bgColor, setBgColor] = useState(getBackground(activeToken))
 
   useEffect(() => {

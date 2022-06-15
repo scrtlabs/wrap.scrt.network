@@ -4,15 +4,20 @@ import { StyledKeplr } from './styled';
 import { rootIcons } from '../../../../assets/images';
 import { cutString, handleCopyClick } from '../../../helpers';
 import copy from '../../../../assets/images/copy.svg';
+import {setupKeplr} from '../../../helpers';
 
 export interface KeplrProps {
   secretjs: SecretNetworkClient | null;
   secretAddress: string;
+  setSecretjs: React.Dispatch<React.SetStateAction<SecretNetworkClient | null>>,
+  setSecretAddress: React.Dispatch<React.SetStateAction<string>>,
 }
 
 export function Keplr({
   secretjs,
   secretAddress,
+  setSecretjs,
+  setSecretAddress,
 }: KeplrProps) {
 
   const ref = useRef<HTMLParagraphElement>(null)
@@ -20,7 +25,7 @@ export function Keplr({
 
   const clickHandler = secretjs
     ? () => handleCopyClick(ref, setIsCopied)
-    : () => {}
+    : () => setupKeplr(setSecretjs, setSecretAddress)
 
 
   return (

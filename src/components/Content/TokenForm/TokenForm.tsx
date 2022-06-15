@@ -348,7 +348,7 @@ export function TokenForm({
           <PercentOptions percent={percent} setPercent={setPercent} cb={() => {}} />
 
           <div className="count">
-            <input ref={wrapInputRef}/>
+            <input type="number" placeholder="Amount" ref={wrapInputRef}/>
           </div>
 
           {secretjs

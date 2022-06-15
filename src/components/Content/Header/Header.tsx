@@ -1,11 +1,16 @@
 import { StyledHeader } from './styled';
 import { rootIcons } from '../../../assets/images';
 import { DropDownMenu, DropDownMenuItem } from '../../DropDownMenu/DropDownMenu';
-import { Keplr, KeplrProps } from './Keplr/Kepl';
+import { Keplr, KeplrProps } from './Keplr/Keplr';
+
+
+
 
 export function Header({
   secretjs,
   secretAddress,
+  setSecretjs,
+  setSecretAddress,
 }: KeplrProps) {
 
   const list: DropDownMenuItem[] = [
@@ -25,6 +30,8 @@ export function Header({
         <Keplr
           secretjs={secretjs}
           secretAddress={secretAddress}
+          setSecretjs={setSecretjs}
+          setSecretAddress={setSecretAddress}
         />
       </div>
     </StyledHeader>
