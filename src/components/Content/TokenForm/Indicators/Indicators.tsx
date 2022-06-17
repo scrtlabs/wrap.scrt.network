@@ -1,41 +1,43 @@
-import { StyledIndicators } from './styled';
-import { rootIcons } from '../../../../assets/images';
-import { formatNumber } from '../../../helpers';
+import { StyledIndicators } from "./styled";
+import { rootIcons } from "../../../../assets/images";
+import { formatNumber } from "../../Helpers/format";
 
 interface IndicatorsProps {
-  marketCap?: string
-  price: string
-  priceChange: number
+  marketCap: number;
+  price: number;
+  priceChange: number;
 }
 
-export const Indicators = ({ marketCap, price, priceChange }: IndicatorsProps) => {
-
-  const formattedPrice = formatNumber(priceChange)
-
+export const Indicators = ({
+  marketCap,
+  price,
+  priceChange,
+}: IndicatorsProps) => {
+  const formattedPrice = formatNumber(priceChange);
   const PriceChangeHour = () => {
     if (formattedPrice > 0) {
       return (
         <>
           <span className="grow">{`${formattedPrice}%`}</span>
-          <img className="grow-img" src={rootIcons.grow} alt="grow"/>
+          <img className="grow-img" src={rootIcons.grow} alt="grow" />
         </>
-      )
+      );
     }
     if (formattedPrice < 0) {
       return (
         <>
           <span className="fall">{`${formattedPrice}%`}</span>
-          <img className="fall-img" src={rootIcons.fall} alt="grow"/>
+          <img className="fall-img" src={rootIcons.fall} alt="grow" />
         </>
-      )
+      );
     }
 
     return (
       <>
         <span>{`${formattedPrice}%`}</span>
       </>
-    )
-  }
+    );
+  };
 
   return (
     <StyledIndicators>
@@ -51,9 +53,8 @@ export const Indicators = ({ marketCap, price, priceChange }: IndicatorsProps) =
 
       <div className="indicator">
         <span className="title">24H</span>
-        <PriceChangeHour/>
+        <PriceChangeHour />
       </div>
-
     </StyledIndicators>
-  )
-}
+  );
+};

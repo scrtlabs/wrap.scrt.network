@@ -7,7 +7,7 @@ import { Button } from '../../../Button/Button';
 import { useEffect, useRef, useState } from 'react';
 import { sleep, suggestTerraToKeplr } from '../../../../commons';
 import BigNumber from 'bignumber.js';
-import { formatBalance } from '../../../helpers';
+import { formatBalance } from '../../Helpers/format';
 import { Loader } from '../../Loader/Loader';
 
 

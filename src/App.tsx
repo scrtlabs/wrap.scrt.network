@@ -1,9 +1,9 @@
-import { SetStateAction, useState } from 'react';
+import { SetStateAction, useState } from "react";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
-import { Background } from './components/Background/BackGround';
-import { Content } from './components/Content/Content';
-import { mergeStateType, TokenNames, TokenOptions } from './config';
-import { tokenIcons } from './assets/images';
+import { Background } from "./components/Background/Background";
+import { Content } from "./components/Content/Content";
+import { mergeStateType, TokenNames, TokenOptions } from "./config";
+import { tokenIcons } from "./assets/images";
 
 declare global {
   interface Window extends KeplrWindow {}
@@ -12,23 +12,28 @@ declare global {
 function App() {
   const [tokenOptions, setTokenOptions] = useState<TokenOptions>({
     name: TokenNames.scrt,
-    image: tokenIcons.scrt
-  })
+    image: tokenIcons.scrt,
+  });
 
   const mergeState: mergeStateType = (data, value) => {
-    if (typeof data === 'object') {
-      setTokenOptions((prevState: SetStateAction<any>) => ({ ...prevState, ...data }))
+    if (typeof data === "object") {
+      console.log("if");
+      setTokenOptions((prevState: SetStateAction<any>) => ({
+        ...prevState,
+        ...data,
+      }));
     } else {
-      setTokenOptions(prevState => ({ ...prevState, [data]: value }))
+      console.log("else");
+      setTokenOptions((prevState) => ({ ...prevState, [data]: value }));
     }
-  }
+  };
 
   return (
     <div className="App">
-      <Background activeToken={tokenOptions.name}/>
-      <Content tokenOptions={tokenOptions} mergeState={mergeState}/>
+      <Background activeToken={tokenOptions.name} />
+      <Content tokenOptions={tokenOptions} mergeState={mergeState} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

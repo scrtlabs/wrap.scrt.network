@@ -6,7 +6,7 @@ import { Button } from '../../../Button/Button';
 import { useEffect, useRef, useState } from 'react';
 import { SigningStargateClient } from '@cosmjs/stargate';
 import { gasToFee, sleep, suggestTerraToKeplr } from '../../../../commons';
-import { formatBalance } from '../../../helpers';
+import { formatBalance } from '../../Helpers/format';
 import BigNumber from 'bignumber.js';
 import { Loader } from '../../Loader/Loader';
 

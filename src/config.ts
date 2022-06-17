@@ -1,10 +1,10 @@
-import { tokenIcons } from './assets/images';
+import { tokenIcons } from "./assets/images";
 
 export enum TokenNames {
   scrt = "SCRT",
   atom = "ATOM",
-  luna = "Luna",
-  ust = "UST",
+  // luna = "Luna",
+  // ust = "UST",
   osmo = "OSMO",
   dvpn = "DVPN",
   huahua = "HUAHUA",
@@ -13,27 +13,30 @@ export enum TokenNames {
 }
 
 export interface TokenOptions {
-  name: TokenNames,
-  image: string
+  name: TokenNames;
+  image: string;
 }
 
 type ValueOf<T> = T[keyof T];
 
-export type mergeStateType = (data: keyof TokenOptions | Record<keyof TokenOptions, ValueOf<TokenOptions>>, value?: any) => void
+export type mergeStateType = (
+  data: keyof TokenOptions | Record<keyof TokenOptions, ValueOf<TokenOptions>>,
+  value?: any
+) => void;
 
 export enum Percents {
-  v25 = '25%',
-  v50 = '50%',
-  v75 = '75%',
-  v100 = '100%',
+  v25 = "25%",
+  v50 = "50%",
+  v75 = "75%",
+  v100 = "100%",
 }
 
 export type TokensData = {
   [TokenNames: string]: {
-    market_cap: number,
-    price_change_percentage_24h: number,
-  }
-}
+    market_cap: number;
+    price_change_percentage_24h: number;
+  };
+};
 
 export type Token = {
   /** display name of the token */
@@ -83,11 +86,11 @@ export const tokens: Token[] = [
         from_denom:
           "ibc/1542F8DC70E7999691E991E1EDEB1B47E65E3A217B1649D347098EE48ACB580F", // SCRT denom on Cosmos
       },
-      {
-        source_chain_name: "Terra",
-        from_denom:
-          "ibc/EB2CED20AB0466F18BE49285E56B31306D4C60438A022EA995BA65D5E3CF7E09", // SCRT denom on Terra
-      },
+      // {
+      //   source_chain_name: "Terra",
+      //   from_denom:
+      //     "ibc/EB2CED20AB0466F18BE49285E56B31306D4C60438A022EA995BA65D5E3CF7E09", // SCRT denom on Terra
+      // },
       {
         source_chain_name: "Osmosis",
         from_denom:
@@ -114,10 +117,10 @@ export const tokens: Token[] = [
         target_chain_name: "Cosmos Hub",
         from_denom: "uscrt",
       },
-      {
-        target_chain_name: "Terra",
-        from_denom: "uscrt",
-      },
+      // {
+      //   target_chain_name: "Terra",
+      //   from_denom: "uscrt",
+      // },
       {
         target_chain_name: "Osmosis",
         from_denom: "uscrt",
@@ -158,50 +161,50 @@ export const tokens: Token[] = [
       },
     ],
   },
-  {
-    name: TokenNames.luna,
-    address: "secret1ra7avvjh9fhr7dtr3djutugwj59ptctsrakyyw",
-    code_hash:
-      "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
-    image: tokenIcons.luna,
-    decimals: 6,
-    coingecko_id: "terra-luna",
-    deposits: [
-      {
-        source_chain_name: "Terra",
-        from_denom: "uluna",
-      },
-    ],
-    withdrawals: [
-      {
-        target_chain_name: "Terra",
-        from_denom:
-          "ibc/D70B0FBF97AEB04491E9ABF4467A7F66CD6250F4382CE5192D856114B83738D2",
-      },
-    ],
-  },
-  {
-    name: TokenNames.ust,
-    address: "secret129h4vu66y3gry6wzwa24rw0vtqjyn8tujuwtn9",
-    code_hash:
-      "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
-    image: tokenIcons.ust,
-    decimals: 6,
-    coingecko_id: "terra-usd",
-    deposits: [
-      {
-        source_chain_name: "Terra",
-        from_denom: "uusd",
-      },
-    ],
-    withdrawals: [
-      {
-        target_chain_name: "Terra",
-        from_denom:
-          "ibc/4294C3DB67564CF4A0B2BFACC8415A59B38243F6FF9E288FBA34F9B4823BA16E",
-      },
-    ],
-  },
+  // {
+  //   name: TokenNames.luna,
+  //   address: "secret1ra7avvjh9fhr7dtr3djutugwj59ptctsrakyyw",
+  //   code_hash:
+  //     "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
+  //   image: tokenIcons.luna,
+  //   decimals: 6,
+  //   coingecko_id: "terra-luna",
+  //   deposits: [
+  //     {
+  //       source_chain_name: "Terra",
+  //       from_denom: "uluna",
+  //     },
+  //   ],
+  //   withdrawals: [
+  //     {
+  //       target_chain_name: "Terra",
+  //       from_denom:
+  //         "ibc/D70B0FBF97AEB04491E9ABF4467A7F66CD6250F4382CE5192D856114B83738D2",
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: TokenNames.ust,
+  //   address: "secret129h4vu66y3gry6wzwa24rw0vtqjyn8tujuwtn9",
+  //   code_hash:
+  //     "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
+  //   image: tokenIcons.ust,
+  //   decimals: 6,
+  //   coingecko_id: "terra-usd",
+  //   deposits: [
+  //     {
+  //       source_chain_name: "Terra",
+  //       from_denom: "uusd",
+  //     },
+  //   ],
+  //   withdrawals: [
+  //     {
+  //       target_chain_name: "Terra",
+  //       from_denom:
+  //         "ibc/4294C3DB67564CF4A0B2BFACC8415A59B38243F6FF9E288FBA34F9B4823BA16E",
+  //     },
+  //   ],
+  // },
   {
     name: TokenNames.osmo,
     address: "secret1zwwealwm0pcl9cul4nt6f38dsy6vzplw8lp3qg",
@@ -367,19 +370,19 @@ export const chains: { [chain_name: string]: Chain } = {
     chain_image: tokenIcons.atom,
     explorer_account: "https://www.mintscan.io/cosmos/account/",
   },
-  Terra: {
-    chain_name: "Terra",
-    deposit_channel_id: "channel-16",
-    deposit_gas: 110_000,
-    withdraw_channel_id: "channel-2",
-    withdraw_gas: 30_000,
-    chain_id: "columbus-5",
-    bech32_prefix: "terra",
-    lcd: "https://lcd-columbus.keplr.app",
-    rpc: "https://rpc-columbus.keplr.app",
-    chain_image: tokenIcons.terra,
-    explorer_account: "https://finder.terra.money/mainnet/address/",
-  },
+  // Terra: {
+  //   chain_name: "Terra",
+  //   deposit_channel_id: "channel-16",
+  //   deposit_gas: 110_000,
+  //   withdraw_channel_id: "channel-2",
+  //   withdraw_gas: 30_000,
+  //   chain_id: "columbus-5",
+  //   bech32_prefix: "terra",
+  //   lcd: "https://lcd-columbus.keplr.app",
+  //   rpc: "https://rpc-columbus.keplr.app",
+  //   chain_image: tokenIcons.terra,
+  //   explorer_account: "https://finder.terra.money/mainnet/address/",
+  // },
   Osmosis: {
     chain_name: "Osmosis",
     deposit_channel_id: "channel-88",

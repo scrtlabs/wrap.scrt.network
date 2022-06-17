@@ -2,9 +2,9 @@ import React, { useRef, useState } from 'react';
 import { SecretNetworkClient } from 'secretjs';
 import { StyledKeplr } from './styled';
 import { rootIcons } from '../../../../assets/images';
-import { cutString, handleCopyClick } from '../../../helpers';
+import { cutString, handleCopyClick } from '../../Helpers/format';
 import copy from '../../../../assets/images/copy.svg';
-import {setupKeplr} from '../../../helpers';
+import {setupKeplr} from '../../Helpers/keplr';
 
 export interface KeplrProps {
   secretjs: SecretNetworkClient | null;
