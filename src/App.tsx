@@ -17,13 +17,11 @@ function App() {
 
   const mergeState: mergeStateType = (data, value) => {
     if (typeof data === "object") {
-      console.log("if");
       setTokenOptions((prevState: SetStateAction<any>) => ({
         ...prevState,
         ...data,
       }));
     } else {
-      console.log("else");
       setTokenOptions((prevState) => ({ ...prevState, [data]: value }));
     }
   };

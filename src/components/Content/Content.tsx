@@ -12,17 +12,9 @@ interface ContentProps {
   mergeState: mergeStateType;
 }
 
-function getCurrentToken(tokenOptions: TokenOptions): Token {
-  return tokens.find((token) => token.name === tokenOptions.name)!;
-}
-
 export function Content({ tokenOptions, mergeState }: ContentProps) {
   const [secretjs, setSecretjs] = useState<SecretNetworkClient | null>(null);
   const [secretAddress, setSecretAddress] = useState<string>("");
-
-  useEffect(() => {
-    console.log("Content Rendered");
-  });
 
   return (
     <StyledContent>
@@ -41,7 +33,6 @@ export function Content({ tokenOptions, mergeState }: ContentProps) {
           secretAddress={secretAddress}
           setSecretjs={setSecretjs}
           setSecretAddress={setSecretAddress}
-          token={getCurrentToken(tokenOptions)}
         />
       </div>
       <Footer />

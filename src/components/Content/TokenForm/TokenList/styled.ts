@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledTokenList = styled.ul`
   list-style-type: none;
   display: flex;
+  justify-content: center;
   margin-top: auto;
   margin-bottom: 50px;
   @media (max-width: 576px) {
@@ -37,7 +38,7 @@ export const StyledTokenList = styled.ul`
     & img {
       width: 32px;
       height: 32px;
-      transition: .1s;
+      transition: 0.1s;
       position: absolute;
       @media (max-width: 576px) {
         width: 24px;
@@ -58,7 +59,7 @@ export const StyledTokenList = styled.ul`
         margin-top: 6px;
       }
     }
-    
+
     & .soon {
       position: absolute;
       visibility: hidden;
@@ -73,8 +74,6 @@ export const StyledTokenList = styled.ul`
         margin-top: 6px;
       }
     }
-    
-    
   }
 
   & .token-wrap.active img {
@@ -89,4 +88,4 @@ export const StyledTokenList = styled.ul`
   & .token-wrap.active span {
     visibility: visible;
   }
-`
+`;

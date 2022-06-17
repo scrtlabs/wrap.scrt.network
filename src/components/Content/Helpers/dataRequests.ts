@@ -3,10 +3,8 @@ import React from "react";
 
 export function getPrice(
   token: Token,
-  setPrice: React.Dispatch<React.SetStateAction<number>>,
-  tokenOptions: TokenOptions
+  setPrice: React.Dispatch<React.SetStateAction<number>>
 ) {
-  console.log(token, tokenOptions);
   fetch(
     `https://api.coingecko.com/api/v3/simple/price?ids=${token.coingecko_id}&vs_currencies=USD`
   )

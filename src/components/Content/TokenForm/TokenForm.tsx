@@ -42,7 +42,6 @@ interface TokenFormProps {
   secretAddress: string;
   setSecretjs: React.Dispatch<React.SetStateAction<SecretNetworkClient | null>>;
   setSecretAddress: React.Dispatch<React.SetStateAction<string>>;
-  token: Token;
 }
 function getCurrentToken(tokenOptions: TokenOptions): Token {
   return tokens.find((token) => token.name === tokenOptions.name)!;
@@ -54,7 +53,6 @@ export function TokenForm({
   secretAddress,
   setSecretjs,
   setSecretAddress,
-  token,
 }: TokenFormProps) {
   let count = 0;
 
@@ -79,8 +77,17 @@ export function TokenForm({
   const toggleWrappedTokens = () => setIsWrapToken((prev) => !prev);
 
   useEffect(() => {
-    getPrice(token, setPrice, tokenOptions);
+    let token = getCurrentToken(tokenOptions);
+    getPrice(token, setPrice);
     getMarketData(token, setMarketData);
+    let interval = setInterval(() => {
+      getPrice(token, setPrice);
+      getMarketData(token, setMarketData);
+    }, 10_000);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, [tokenOptions]);
 
   const updateTokenBalance = async () => {
@@ -123,17 +130,6 @@ export function TokenForm({
       setLoadingTokenBalance(false);
     }
   };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        setLoadingTokenBalance(true);
-        await updateTokenBalance();
-      } finally {
-        setLoadingTokenBalance(false);
-      }
-    })();
-  }, [secretjs]);
 
   return (
     <StyledTokenForm>

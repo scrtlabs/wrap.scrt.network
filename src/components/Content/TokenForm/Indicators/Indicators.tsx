@@ -1,6 +1,6 @@
 import { StyledIndicators } from "./styled";
 import { rootIcons } from "../../../../assets/images";
-import { formatNumber } from "../../Helpers/format";
+import { formatNumber, usdString } from "../../Helpers/format";
 
 interface IndicatorsProps {
   marketCap: number;
@@ -13,20 +13,20 @@ export const Indicators = ({
   price,
   priceChange,
 }: IndicatorsProps) => {
-  const formattedPrice = formatNumber(priceChange);
+  const formattedPriceChange = formatNumber(priceChange);
   const PriceChangeHour = () => {
-    if (formattedPrice > 0) {
+    if (formattedPriceChange > 0) {
       return (
         <>
-          <span className="grow">{`${formattedPrice}%`}</span>
+          <span className="grow">{`${formattedPriceChange}%`}</span>
           <img className="grow-img" src={rootIcons.grow} alt="grow" />
         </>
       );
     }
-    if (formattedPrice < 0) {
+    if (formattedPriceChange < 0) {
       return (
         <>
-          <span className="fall">{`${formattedPrice}%`}</span>
+          <span className="fall">{`${formattedPriceChange}%`}</span>
           <img className="fall-img" src={rootIcons.fall} alt="grow" />
         </>
       );
@@ -34,7 +34,7 @@ export const Indicators = ({
 
     return (
       <>
-        <span>{`${formattedPrice}%`}</span>
+        <span>{`${formattedPriceChange}%`}</span>
       </>
     );
   };
@@ -42,17 +42,17 @@ export const Indicators = ({
   return (
     <StyledIndicators>
       <div className="indicator">
-        <span className="title">Market cap</span>
-        <span>{marketCap}</span>
+        <span className="title">Market Cap:</span>
+        <span>{usdString.format(marketCap)}</span>
       </div>
 
       <div className="indicator">
-        <span className="title">Price</span>
-        <span>{price}</span>
+        <span className="title">Price:</span>
+        <span>{usdString.format(formatNumber(price))}</span>
       </div>
 
       <div className="indicator">
-        <span className="title">24H</span>
+        <span className="title">24H%:</span>
         <PriceChangeHour />
       </div>
     </StyledIndicators>
