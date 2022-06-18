@@ -273,6 +273,28 @@ export const tokens: Token[] = [
       },
     ],
   },
+  {
+    name: "STARS",
+    address: "",
+    code_hash:
+      "",
+    image: "/stars.png",
+    decimals: 6, // guessing at decimals
+    coingecko_id: "stargaze",
+    deposits: [
+      {
+        source_chain_name: "Stargaze",
+        from_denom: "ustars",
+      },
+    ],
+    withdrawals: [
+      {
+        target_chain_name: "Stargaze",
+        from_denom:
+          "ibc/", // STARS denom on Secret
+      },
+    ],
+  },
 ];
 
 export type Chain = {
@@ -394,5 +416,18 @@ export const chains: { [chain_name: string]: Chain } = {
     rpc: "https://rpc.chihuahua.wtf/",
     chain_image: "/huahua.jpg",
     explorer_account: "https://ping.pub/chihuahua/account/",
+  },
+  Stargaze: {
+    chain_name: "Stargaze",
+    deposit_channel_id: "channel-18",
+    deposit_gas: 110_000, // guessing gas value
+    withdraw_channel_id: "channel-10",
+    withdraw_gas: 30_000, // guessing gas value
+    chain_id: "stargaze-1",
+    bech32_prefix: "stars",
+    lcd: "https://rest.stargaze-apis.com/",
+    rpc: "https://rpc.stargaze-apis.com/",
+    chain_image: "/stars.png",
+    explorer_account: "https://www.mintscan.io/stargaze/account",
   },
 };
