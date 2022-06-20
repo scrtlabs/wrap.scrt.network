@@ -1,12 +1,41 @@
 import { rootIcons, tokenIcons } from "../../../../assets/images";
 import { StyledWrapElem } from "./styled";
+import { Token, TokenOptions } from "../../../../config";
+import { useEffect, useState } from "react";
+import { SecretNetworkClient } from "secretjs";
+import { getTokenBalance, getSnipBalance } from "../../Helpers/data";
+import { fixedBalance } from "../../Helpers/format";
+import { getCurrentToken } from "../../../../commons";
 
 interface WrappedTokenProps {
-  tokenOptions: { name: string; image: string };
-  refresh: () => void;
+  tokenOptions: TokenOptions;
+  secretjs: SecretNetworkClient | null;
+  secretAddress: string;
+  price: number;
 }
 
-export const WrappedToken = ({ tokenOptions, refresh }: WrappedTokenProps) => {
+export const UnwrappedToken = ({
+  tokenOptions,
+  secretjs,
+  secretAddress,
+  price,
+}: WrappedTokenProps) => {
+  const [tokenBalance, setTokenBalance] = useState<string>("0");
+
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval>;
+    if (secretjs && secretAddress) {
+      let token = getCurrentToken(tokenOptions);
+      getTokenBalance(token, secretAddress, setTokenBalance);
+      interval = setInterval(() => {
+        getTokenBalance(token, secretAddress, setTokenBalance);
+      }, 6000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [tokenOptions, secretjs, secretAddress]);
   return (
     <StyledWrapElem>
       <div className="img-wrap">
@@ -15,24 +44,54 @@ export const WrappedToken = ({ tokenOptions, refresh }: WrappedTokenProps) => {
 
       <div className="cash-wrap">
         <p className="scrt">
-          0 <span>{tokenOptions.name}</span>
+          {fixedBalance(tokenBalance, getCurrentToken(tokenOptions).decimals)}
+          <span>{` ${tokenOptions.name}`}</span>
         </p>
-        <div className="content"></div>
-        <img
-          className="refresh"
-          src={rootIcons.refresh}
-          alt=""
-          onClick={refresh}
-        />
+        <div className="content">
+          <p></p>
+        </div>
       </div>
     </StyledWrapElem>
   );
 };
 
-export const UnWrappedToken = ({
+export const WrappedToken = ({
   tokenOptions,
-  refresh,
+  secretjs,
+  secretAddress,
+  price,
 }: WrappedTokenProps) => {
+  const [snipBalance, setSnipBalance] = useState<string>("0");
+  const [viewKeyError, setViewKeyError] = useState<boolean>(false);
+
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval>;
+
+    if (secretjs && secretAddress) {
+      let token = getCurrentToken(tokenOptions);
+      getSnipBalance(
+        token,
+        secretjs,
+        secretAddress,
+        setSnipBalance,
+        setViewKeyError
+      );
+      interval = setInterval(() => {
+        getSnipBalance(
+          token,
+          secretjs,
+          secretAddress,
+          setSnipBalance,
+          setViewKeyError
+        );
+      }, 6000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [tokenOptions, secretjs, secretAddress]);
+
   return (
     <StyledWrapElem>
       <div className="img-wrap">
@@ -42,15 +101,10 @@ export const UnWrappedToken = ({
 
       <div className="cash-wrap">
         <p className="scrt">
-          0 s<span>{tokenOptions.name}</span>
+          {fixedBalance(snipBalance, getCurrentToken(tokenOptions).decimals)} s
+          <span>{tokenOptions.name}</span>
         </p>
         <div className="content"></div>
-        <img
-          className="refresh"
-          src={rootIcons.refresh}
-          alt=""
-          onClick={refresh}
-        />
       </div>
     </StyledWrapElem>
   );

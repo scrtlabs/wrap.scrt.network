@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledWrapElem = styled.div`
   padding: 16px;
@@ -7,6 +7,7 @@ export const StyledWrapElem = styled.div`
   display: flex;
   flex-grow: 1;
   max-width: 196px;
+  min-height: 100px;
   @media (max-width: 576px) {
     flex-wrap: wrap;
   }
@@ -86,11 +87,10 @@ export const StyledWrapElem = styled.div`
       height: 16px;
       margin-left: auto;
       cursor: pointer;
-    }   
-    
+    }
+
     & .set-key {
       color: ${({ theme }) => theme.colors.orange};
     }
   }
-
-`
+`;

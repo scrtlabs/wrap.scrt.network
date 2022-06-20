@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { StyledTokenForm } from "./styled";
 import { Tab, Tabs } from "../../Tabs/Tabs";
-import { UnWrappedToken, WrappedToken } from "./WrappedTokens/WrappedTokens";
+import { UnwrappedToken, WrappedToken } from "./WrappedTokens/WrappedTokens";
 import { PercentOptions } from "./PercentOptions/PercentOptions";
 import { Button } from "../../Button/Button";
 import { Indicators } from "./Indicators/Indicators";
@@ -16,13 +16,9 @@ import {
 } from "../../../config";
 import { rootIcons } from "../../../assets/images";
 import { SecretNetworkClient } from "secretjs";
-import { sleep, viewingKeyErrorString } from "../../../commons";
-import {
-  getKeplrViewingKey,
-  setKeplrViewingKey,
-  setupKeplr,
-} from "../Helpers/keplr";
-import { getPrice, getMarketData, getBalance } from "../Helpers/dataRequests";
+import { getCurrentToken } from "../../../commons";
+import { setupKeplr } from "../Helpers/keplr";
+import { getPrice, getMarketData, getTokenBalance } from "../Helpers/data";
 import {
   fixedBalance,
   formatBalance,
@@ -43,9 +39,7 @@ interface TokenFormProps {
   setSecretjs: React.Dispatch<React.SetStateAction<SecretNetworkClient | null>>;
   setSecretAddress: React.Dispatch<React.SetStateAction<string>>;
 }
-function getCurrentToken(tokenOptions: TokenOptions): Token {
-  return tokens.find((token) => token.name === tokenOptions.name)!;
-}
+
 export function TokenForm({
   tokenOptions,
   mergeState,
@@ -54,23 +48,23 @@ export function TokenForm({
   setSecretjs,
   setSecretAddress,
 }: TokenFormProps) {
-  let count = 0;
-
-  const [tokenBalance, setTokenBalance] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [marketData, setMarketData] = useState<{
     market_cap: number;
     price_change_percentage_24h: number;
   }>({ market_cap: 0, price_change_percentage_24h: 0 });
+
   const [isWrapToken, setIsWrapToken] = useState(true);
   const wrapTitle = isWrapToken ? "wrap" : "unwrap";
+
   const wrapInputRef = useRef<any>();
+
   const [loadingWrap, setLoadingWrap] = useState<boolean>(false);
   const [loadingUnwrap, setLoadingUnwrap] = useState<boolean>(false);
+
   const [loadingTokenBalance, setLoadingTokenBalance] =
     useState<boolean>(false);
-  const [loadingCoinBalances, setLoadingCoinBalances] =
-    useState<boolean>(false);
+  const [loadingSnipBalance, setLoadingCoinBalances] = useState<boolean>(false);
   const [percent, setPercent] = useState("");
   const [errorBtnClass, setErrorBtnClass] = useState<string>("");
 
@@ -80,56 +74,16 @@ export function TokenForm({
     let token = getCurrentToken(tokenOptions);
     getPrice(token, setPrice);
     getMarketData(token, setMarketData);
+
     let interval = setInterval(() => {
       getPrice(token, setPrice);
       getMarketData(token, setMarketData);
-    }, 10_000);
+    }, 6_000);
 
     return () => {
       clearInterval(interval);
     };
   }, [tokenOptions]);
-
-  const updateTokenBalance = async () => {
-    if (!secretjs) {
-      return;
-    }
-
-    const key = await getKeplrViewingKey(token.address);
-    if (!key) {
-      setTokenBalance(viewingKeyErrorString);
-      return;
-    }
-
-    try {
-      const result = await secretjs.query.compute.queryContract({
-        address: token.address,
-        codeHash: token.code_hash,
-        query: {
-          balance: { address: secretAddress, key },
-        },
-      });
-
-      if (result.viewing_key_error) {
-        setTokenBalance(viewingKeyErrorString);
-        return;
-      }
-      setTokenBalance(result.balance.amount);
-    } catch (e) {
-      console.error(`Error getting balance for s${token.name}`, e);
-
-      setTokenBalance(viewingKeyErrorString);
-    }
-  };
-
-  const refresh = async () => {
-    try {
-      setLoadingTokenBalance(true);
-      await updateTokenBalance();
-    } finally {
-      setLoadingTokenBalance(false);
-    }
-  };
 
   return (
     <StyledTokenForm>
@@ -142,25 +96,45 @@ export function TokenForm({
           <div className="wrapped-elems">
             {isWrapToken ? (
               <>
-                <WrappedToken refresh={refresh} tokenOptions={tokenOptions} />
+                <UnwrappedToken
+                  tokenOptions={tokenOptions}
+                  secretjs={secretjs}
+                  secretAddress={secretAddress}
+                  price={price}
+                />
                 <img
                   className="swap"
                   src={rootIcons.swap}
                   alt="swap"
                   onClick={toggleWrappedTokens}
                 />
-                <UnWrappedToken refresh={refresh} tokenOptions={tokenOptions} />
+                <WrappedToken
+                  tokenOptions={tokenOptions}
+                  secretjs={secretjs}
+                  secretAddress={secretAddress}
+                  price={price}
+                />
               </>
             ) : (
               <>
-                <UnWrappedToken refresh={refresh} tokenOptions={tokenOptions} />
+                <WrappedToken
+                  tokenOptions={tokenOptions}
+                  secretjs={secretjs}
+                  secretAddress={secretAddress}
+                  price={price}
+                />
                 <img
                   className="swap"
                   src={rootIcons.swap}
                   alt="swap"
                   onClick={toggleWrappedTokens}
                 />
-                <WrappedToken refresh={refresh} tokenOptions={tokenOptions} />
+                <UnwrappedToken
+                  tokenOptions={tokenOptions}
+                  secretjs={secretjs}
+                  secretAddress={secretAddress}
+                  price={price}
+                />
               </>
             )}
           </div>
