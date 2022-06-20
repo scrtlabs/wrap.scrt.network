@@ -6,6 +6,7 @@ import { SecretNetworkClient } from "secretjs";
 import { getTokenBalance, getSnipBalance } from "../../Helpers/data";
 import { fixedBalance, usdString, formatBalance } from "../../Helpers/format";
 import { getCurrentToken } from "../../../../commons";
+import { setKeplrViewingKey } from "../../Helpers/keplr";
 
 interface WrappedTokenProps {
   tokenOptions: TokenOptions;
@@ -33,6 +34,7 @@ export const UnwrappedToken = ({
     }
 
     return () => {
+      setTokenBalance("0");
       clearInterval(interval);
     };
   }, [tokenOptions, secretjs, secretAddress]);
@@ -96,9 +98,15 @@ export const WrappedToken = ({
     }
 
     return () => {
+      setSnipBalance("0");
       clearInterval(interval);
     };
   }, [tokenOptions, secretjs, secretAddress]);
+
+  const viewKeyHandler = (e: React.MouseEvent<HTMLSpanElement>) => {
+    e.preventDefault();
+    setKeplrViewingKey(getCurrentToken(tokenOptions).address, setViewKeyError);
+  };
 
   return (
     <StyledWrapElem>
@@ -113,15 +121,19 @@ export const WrappedToken = ({
           <span>{tokenOptions.name}</span>
         </p>
         <div className="content">
-          <p>
-            {usdString.format(
-              formatBalance(
-                snipBalance,
-                getCurrentToken(tokenOptions).decimals,
-                price
-              )
-            )}
-          </p>
+          {viewKeyError ? (
+            <span onClick={viewKeyHandler}>Set Viewing Key</span>
+          ) : (
+            <span>
+              {usdString.format(
+                formatBalance(
+                  snipBalance,
+                  getCurrentToken(tokenOptions).decimals,
+                  price
+                )
+              )}
+            </span>
+          )}
         </div>
       </div>
     </StyledWrapElem>

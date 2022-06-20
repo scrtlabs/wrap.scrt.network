@@ -81,6 +81,10 @@ export async function getSnipBalance(
 
   const key: any = await getKeplrViewingKey(token.address);
 
+  if (!key) {
+    setViewKeyError(true);
+    return;
+  }
   const result: { balance: { amount: string } } =
     await secretjs.query.compute.queryContract({
       contractAddress: token.address,
@@ -92,6 +96,7 @@ export async function getSnipBalance(
         },
       },
     });
+  console.log(result);
   setSnipBalance(result.balance.amount);
   return;
 }

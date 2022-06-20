@@ -2,20 +2,23 @@ import { SecretNetworkClient } from "secretjs";
 import React from "react";
 import { chains } from "../../../config";
 
-export async function setKeplrViewingKey(token: string) {
+export async function setKeplrViewingKey(
+  token: string,
+  setViewKeyError: React.Dispatch<React.SetStateAction<boolean>>
+) {
   if (!window.keplr) {
-    console.error("Keplr not present");
     return;
   }
 
   await window.keplr.suggestToken(chains["Secret Network"].chain_id, token);
+  setViewKeyError(false);
+  return;
 }
 
 export async function getKeplrViewingKey(
   token: string
 ): Promise<string | null> {
   if (!window.keplr) {
-    console.error("Keplr not present");
     return null;
   }
 
