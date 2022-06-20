@@ -1,17 +1,19 @@
-import BigNumber from 'bignumber.js';
-
+import BigNumber from "bignumber.js";
 
 export async function copyTextToClipboard(text: string) {
-  if ('clipboard' in navigator) {
+  if ("clipboard" in navigator) {
     return await navigator.clipboard.writeText(text);
   } else {
-    return document.execCommand('copy', true, text);
+    return document.execCommand("copy", true, text);
   }
 }
 
-export const handleCopyClick = (ref: any, setIsCopied: (data: boolean) => void ) => {
+export const handleCopyClick = (
+  ref: any,
+  setIsCopied: (data: boolean) => void
+) => {
   if (ref.current) {
-    if (!ref.current.innerText) return
+    if (!ref.current.innerText) return;
     copyTextToClipboard(ref.current.innerText)
       .then(() => {
         setIsCopied(true);
@@ -23,25 +25,32 @@ export const handleCopyClick = (ref: any, setIsCopied: (data: boolean) => void )
         console.log(err);
       });
   }
-}
+};
 
-export const formatBalance = (balance: BigNumber.Value, decimals: number) => {
+export const formatBalance = (
+  balance: BigNumber.Value,
+  decimals: number,
+  price: number
+) => {
   return new BigNumber(balance)
     .dividedBy(`1e${decimals}`)
-    .toFormat()
-}
+    .multipliedBy(price)
+    .toNumber();
+};
 
 export const fixedBalance = (balance: BigNumber.Value, decimals: number) => {
-  return new BigNumber(balance)
-    .dividedBy(`1e${decimals}`)
-    .toFixed()
-}
+  return new BigNumber(balance).dividedBy(`1e${decimals}`).toFixed();
+};
 
-export const cutString = (str: string, firstCharactersCount: number = 10, lastCharactersCount: number = 4) => {
+export const cutString = (
+  str: string,
+  firstCharactersCount: number = 10,
+  lastCharactersCount: number = 4
+) => {
   const firstCharacters = str.substring(0, firstCharactersCount);
   const lastCharacters = str.substring(str.length - lastCharactersCount);
-  return `${firstCharacters}...${lastCharacters}`
-}
+  return `${firstCharacters}...${lastCharacters}`;
+};
 
 export const usdString = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -52,11 +61,10 @@ export const usdString = new Intl.NumberFormat("en-US", {
 
 export function formatNumber(v: number) {
   if (!v) {
-    return 0
+    return 0;
   } else if (Number.isInteger(v)) {
-    return v
+    return v;
   } else {
-    return Number(v.toFixed(2))
+    return Number(v.toFixed(2));
   }
 }
-

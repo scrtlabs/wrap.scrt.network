@@ -4,7 +4,7 @@ import { Token, TokenOptions } from "../../../../config";
 import { useEffect, useState } from "react";
 import { SecretNetworkClient } from "secretjs";
 import { getTokenBalance, getSnipBalance } from "../../Helpers/data";
-import { fixedBalance } from "../../Helpers/format";
+import { fixedBalance, usdString, formatBalance } from "../../Helpers/format";
 import { getCurrentToken } from "../../../../commons";
 
 interface WrappedTokenProps {
@@ -48,7 +48,15 @@ export const UnwrappedToken = ({
           <span>{` ${tokenOptions.name}`}</span>
         </p>
         <div className="content">
-          <p></p>
+          <p>
+            {usdString.format(
+              formatBalance(
+                tokenBalance,
+                getCurrentToken(tokenOptions).decimals,
+                price
+              )
+            )}
+          </p>
         </div>
       </div>
     </StyledWrapElem>
@@ -104,7 +112,17 @@ export const WrappedToken = ({
           {fixedBalance(snipBalance, getCurrentToken(tokenOptions).decimals)} s
           <span>{tokenOptions.name}</span>
         </p>
-        <div className="content"></div>
+        <div className="content">
+          <p>
+            {usdString.format(
+              formatBalance(
+                snipBalance,
+                getCurrentToken(tokenOptions).decimals,
+                price
+              )
+            )}
+          </p>
+        </div>
       </div>
     </StyledWrapElem>
   );
