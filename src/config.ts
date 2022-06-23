@@ -3,7 +3,7 @@ import { tokenIcons } from "./assets/images";
 export enum TokenNames {
   scrt = "SCRT",
   atom = "ATOM",
-  // luna = "Luna",
+  // luna = "LUNA",
   // ust = "UST",
   osmo = "OSMO",
   dvpn = "DVPN",
@@ -24,18 +24,9 @@ export type mergeStateType = (
   value?: any
 ) => void;
 
-export enum Percents {
-  v25 = "25%",
-  v50 = "50%",
-  v75 = "75%",
-  v100 = "100%",
-}
-
-export type TokensData = {
-  [TokenNames: string]: {
-    market_cap: number;
-    price_change_percentage_24h: number;
-  };
+export type TokensMarketData = {
+  market_cap: number;
+  price_change_percentage_24h: number;
 };
 
 export type Token = {
@@ -71,7 +62,7 @@ export type Withdraw = {
   from_denom: string;
 };
 
-export const tokens: Token[] = [
+export const TokensList: Token[] = [
   {
     name: TokenNames.scrt,
     address: "secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek",
@@ -256,7 +247,7 @@ export const tokens: Token[] = [
       "182d7230c396fa8f548220ff88c34cb0291a00046df9ff2686e407c3b55692e9",
     image: tokenIcons.huahua,
     decimals: 6,
-    coingecko_id: "chihuahua-chain",
+    coingecko_id: "chihuahua-token",
     deposits: [
       {
         source_chain_name: "Chihuahua",
@@ -342,7 +333,7 @@ export type Chain = {
   explorer_tx?: string;
 };
 
-export const chains: { [chain_name: string]: Chain } = {
+export const ChainList: { [chain_name: string]: Chain } = {
   "Secret Network": {
     chain_name: "Secret Network",
     deposit_channel_id: "",
@@ -351,7 +342,7 @@ export const chains: { [chain_name: string]: Chain } = {
     withdraw_gas: 0,
     chain_id: "secret-4",
     bech32_prefix: "secret",
-    lcd: "https://api.roninventures.io/",
+    lcd: "https://api.scrt.network/",
     rpc: "https://web-rpc.roninventures.io/", // gRPC-web
     chain_image: tokenIcons.scrt,
     explorer_account:

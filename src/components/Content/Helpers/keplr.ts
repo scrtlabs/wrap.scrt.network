@@ -1,6 +1,6 @@
 import { SecretNetworkClient } from "secretjs";
 import React from "react";
-import { chains } from "../../../config";
+import { ChainList } from "../../../config";
 
 export async function setKeplrViewingKey(
   token: string,
@@ -10,7 +10,7 @@ export async function setKeplrViewingKey(
     return;
   }
 
-  await window.keplr.suggestToken(chains["Secret Network"].chain_id, token);
+  await window.keplr.suggestToken(ChainList["Secret Network"].chain_id, token);
   setViewKeyError(false);
   return;
 }
@@ -24,7 +24,7 @@ export async function getKeplrViewingKey(
 
   try {
     return await window.keplr.getSecret20ViewingKey(
-      chains["Secret Network"].chain_id,
+      ChainList["Secret Network"].chain_id,
       token
     );
   } catch (e) {
@@ -47,21 +47,23 @@ export async function setupKeplr(
     await sleep(50);
   }
 
-  await window.keplr.enable(chains["Secret Network"].chain_id);
+  await window.keplr.enable(ChainList["Secret Network"].chain_id);
 
   const keplrOfflineSigner = window.getOfflineSignerOnlyAmino(
-    chains["Secret Network"].chain_id
+    ChainList["Secret Network"].chain_id
   );
   const accounts = await keplrOfflineSigner.getAccounts();
 
   const secretAddress = accounts[0].address;
 
   const secretjs = await SecretNetworkClient.create({
-    grpcWebUrl: chains["Secret Network"].rpc,
-    chainId: chains["Secret Network"].chain_id,
+    grpcWebUrl: ChainList["Secret Network"].rpc,
+    chainId: ChainList["Secret Network"].chain_id,
     wallet: keplrOfflineSigner,
     walletAddress: secretAddress,
-    encryptionUtils: window.getEnigmaUtils(chains["Secret Network"].chain_id),
+    encryptionUtils: window.getEnigmaUtils(
+      ChainList["Secret Network"].chain_id
+    ),
   });
 
   setSecretAddress(secretAddress);

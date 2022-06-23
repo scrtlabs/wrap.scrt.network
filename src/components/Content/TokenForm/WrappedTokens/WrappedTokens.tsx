@@ -7,29 +7,41 @@ import { getTokenBalance, getSnipBalance } from "../../Helpers/data";
 import { fixedBalance, usdString, formatBalance } from "../../Helpers/format";
 import { getCurrentToken } from "../../../../commons";
 import { setKeplrViewingKey } from "../../Helpers/keplr";
+import { Loader } from "../../Loader/Loader";
 
 interface WrappedTokenProps {
-  tokenOptions: TokenOptions;
+  currentToken: Token;
   secretjs: SecretNetworkClient | null;
   secretAddress: string;
-  price: number;
+  tokenPrice: number;
 }
 
 export const UnwrappedToken = ({
-  tokenOptions,
+  currentToken,
   secretjs,
   secretAddress,
-  price,
+  tokenPrice,
 }: WrappedTokenProps) => {
   const [tokenBalance, setTokenBalance] = useState<string>("0");
+  const [loadingTokenBalance, setLoadingTokenBalance] =
+    useState<boolean>(false);
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
     if (secretjs && secretAddress) {
-      let token = getCurrentToken(tokenOptions);
-      getTokenBalance(token, secretAddress, setTokenBalance);
+      getTokenBalance(
+        currentToken,
+        secretAddress,
+        setTokenBalance,
+        setLoadingTokenBalance
+      );
       interval = setInterval(() => {
-        getTokenBalance(token, secretAddress, setTokenBalance);
+        getTokenBalance(
+          currentToken,
+          secretAddress,
+          setTokenBalance,
+          setLoadingTokenBalance
+        );
       }, 6000);
     }
 
@@ -37,62 +49,64 @@ export const UnwrappedToken = ({
       setTokenBalance("0");
       clearInterval(interval);
     };
-  }, [tokenOptions, secretjs, secretAddress]);
+  }, [currentToken, secretjs, secretAddress]);
   return (
     <StyledWrapElem>
       <div className="img-wrap">
-        <img className="big-img" src={tokenOptions.image} alt="" />
+        <img className="big-img" src={currentToken.image} alt="" />
       </div>
 
-      <div className="cash-wrap">
-        <p className="scrt">
-          {fixedBalance(tokenBalance, getCurrentToken(tokenOptions).decimals)}
-          <span>{` ${tokenOptions.name}`}</span>
-        </p>
-        <div className="content">
-          <p>
-            {usdString.format(
-              formatBalance(
-                tokenBalance,
-                getCurrentToken(tokenOptions).decimals,
-                price
-              )
-            )}
+      {loadingTokenBalance ? (
+        <Loader />
+      ) : (
+        <div className="cash-wrap">
+          <p className="scrt">
+            {fixedBalance(tokenBalance, currentToken.decimals)}
+            <span>{` ${currentToken.name}`}</span>
           </p>
+          <div className="content">
+            <p>
+              {usdString.format(
+                formatBalance(tokenBalance, currentToken.decimals, tokenPrice)
+              )}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
     </StyledWrapElem>
   );
 };
 
 export const WrappedToken = ({
-  tokenOptions,
+  currentToken,
   secretjs,
   secretAddress,
-  price,
+  tokenPrice,
 }: WrappedTokenProps) => {
   const [snipBalance, setSnipBalance] = useState<string>("0");
+  const [loadingSnipBalance, setLoadingSnipBalances] = useState<boolean>(false);
   const [viewKeyError, setViewKeyError] = useState<boolean>(false);
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
 
     if (secretjs && secretAddress) {
-      let token = getCurrentToken(tokenOptions);
       getSnipBalance(
-        token,
+        currentToken,
         secretjs,
         secretAddress,
         setSnipBalance,
-        setViewKeyError
+        setViewKeyError,
+        setLoadingSnipBalances
       );
       interval = setInterval(() => {
         getSnipBalance(
-          token,
+          currentToken,
           secretjs,
           secretAddress,
           setSnipBalance,
-          setViewKeyError
+          setViewKeyError,
+          setLoadingSnipBalances
         );
       }, 6000);
     }
@@ -101,41 +115,40 @@ export const WrappedToken = ({
       setSnipBalance("0");
       clearInterval(interval);
     };
-  }, [tokenOptions, secretjs, secretAddress]);
+  }, [currentToken, secretjs, secretAddress]);
 
   const viewKeyHandler = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.preventDefault();
-    setKeplrViewingKey(getCurrentToken(tokenOptions).address, setViewKeyError);
+    setKeplrViewingKey(currentToken.address, setViewKeyError);
   };
 
   return (
     <StyledWrapElem>
       <div className="img-wrap">
-        <img className="big-img" src={tokenOptions.image} alt="" />
+        <img className="big-img" src={currentToken.image} alt="" />
         <img className="small-img" src={tokenIcons.scrt} alt="" />
       </div>
-
-      <div className="cash-wrap">
-        <p className="scrt">
-          {fixedBalance(snipBalance, getCurrentToken(tokenOptions).decimals)} s
-          <span>{tokenOptions.name}</span>
-        </p>
-        <div className="content">
-          {viewKeyError ? (
-            <span onClick={viewKeyHandler}>Set Viewing Key</span>
-          ) : (
-            <span>
-              {usdString.format(
-                formatBalance(
-                  snipBalance,
-                  getCurrentToken(tokenOptions).decimals,
-                  price
-                )
-              )}
-            </span>
-          )}
+      {loadingSnipBalance ? (
+        <Loader />
+      ) : (
+        <div className="cash-wrap">
+          <p className="scrt">
+            {fixedBalance(snipBalance, currentToken.decimals)} s
+            <span>{currentToken.name}</span>
+          </p>
+          <div className="content">
+            {viewKeyError ? (
+              <span onClick={viewKeyHandler}>Set Viewing Key</span>
+            ) : (
+              <span>
+                {usdString.format(
+                  formatBalance(snipBalance, currentToken.decimals, tokenPrice)
+                )}
+              </span>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </StyledWrapElem>
   );
 };

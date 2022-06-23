@@ -1,9 +1,10 @@
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useState, useEffect } from "react";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
 import { Background } from "./components/Background/Background";
 import { Content } from "./components/Content/Content";
-import { mergeStateType, TokenNames, TokenOptions } from "./config";
+import { mergeStateType, TokenNames, TokenOptions, Token } from "./config";
 import { tokenIcons } from "./assets/images";
+import { getCurrentToken } from "./commons";
 
 declare global {
   interface Window extends KeplrWindow {}
@@ -14,6 +15,14 @@ function App() {
     name: TokenNames.scrt,
     image: tokenIcons.scrt,
   });
+  const [currentToken, setCurrentToken] = useState<Token>(
+    getCurrentToken(tokenOptions)
+  );
+
+  useEffect(
+    () => setCurrentToken(getCurrentToken(tokenOptions)),
+    [tokenOptions]
+  );
 
   const mergeState: mergeStateType = (data, value) => {
     if (typeof data === "object") {
@@ -29,7 +38,7 @@ function App() {
   return (
     <div className="App">
       <Background activeToken={tokenOptions.name} />
-      <Content tokenOptions={tokenOptions} mergeState={mergeState} />
+      <Content currentToken={currentToken} mergeState={mergeState} />
     </div>
   );
 }

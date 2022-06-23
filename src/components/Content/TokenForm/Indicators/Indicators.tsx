@@ -1,19 +1,25 @@
 import { StyledIndicators } from "./styled";
 import { rootIcons } from "../../../../assets/images";
 import { formatNumber, usdString } from "../../Helpers/format";
+import { Loader } from "../../Loader/Loader";
 
 interface IndicatorsProps {
   marketCap: number;
-  price: number;
+  tokenPrice: number;
   priceChange: number;
+  loadingTokenPrice: boolean;
+  loadingMarketData: boolean;
 }
 
 export const Indicators = ({
   marketCap,
-  price,
+  tokenPrice,
   priceChange,
+  loadingMarketData,
+  loadingTokenPrice,
 }: IndicatorsProps) => {
   const formattedPriceChange = formatNumber(priceChange);
+
   const PriceChangeHour = () => {
     if (formattedPriceChange > 0) {
       return (
@@ -43,17 +49,26 @@ export const Indicators = ({
     <StyledIndicators>
       <div className="indicator">
         <span className="title">Market Cap:</span>
-        <span>{usdString.format(marketCap)}</span>
+
+        {loadingMarketData ? (
+          <Loader />
+        ) : (
+          <span>{usdString.format(marketCap)}</span>
+        )}
       </div>
 
       <div className="indicator">
         <span className="title">Price:</span>
-        <span>{usdString.format(formatNumber(price))}</span>
+        {loadingTokenPrice ? (
+          <Loader />
+        ) : (
+          <span>{usdString.format(formatNumber(tokenPrice))}</span>
+        )}
       </div>
 
       <div className="indicator">
         <span className="title">24H%:</span>
-        <PriceChangeHour />
+        {loadingMarketData ? <Loader /> : <PriceChangeHour />}
       </div>
     </StyledIndicators>
   );

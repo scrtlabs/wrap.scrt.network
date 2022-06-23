@@ -1,7 +1,7 @@
 import { StdFee } from "@cosmjs/stargate";
 import { Bech32Address } from "@keplr-wallet/cosmos";
 import { Keplr } from "@keplr-wallet/types";
-import { Token, TokenOptions, tokens } from "./config";
+import { Token, TokenOptions, TokensList } from "./config";
 
 export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -18,7 +18,9 @@ export function gasToFee(gas: number): StdFee {
 }
 
 export function getCurrentToken(tokenOptions: TokenOptions): Token {
-  return tokens.find((token) => token.name === tokenOptions.name)!;
+  return TokensList.find(
+    (TokensList) => TokensList.name === tokenOptions.name
+  )!;
 }
 
 export async function suggestTerraToKeplr(keplr: Keplr) {

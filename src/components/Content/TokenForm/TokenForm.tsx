@@ -2,88 +2,80 @@ import React, { useEffect, useRef, useState } from "react";
 import { StyledTokenForm } from "./styled";
 import { Tab, Tabs } from "../../Tabs/Tabs";
 import { UnwrappedToken, WrappedToken } from "./WrappedTokens/WrappedTokens";
-import { PercentOptions } from "./PercentOptions/PercentOptions";
+
 import { Button } from "../../Button/Button";
 import { Indicators } from "./Indicators/Indicators";
+
 import { TokenList } from "./TokenList/TokenList";
 import {
   mergeStateType,
-  Percents,
-  Token,
-  TokensData,
   TokenOptions,
-  tokens,
+  TokensList,
+  TokensMarketData,
+  Token,
 } from "../../../config";
 import { rootIcons } from "../../../assets/images";
 import { SecretNetworkClient } from "secretjs";
 import { getCurrentToken } from "../../../commons";
 import { setupKeplr } from "../Helpers/keplr";
-import { getPrice, getMarketData, getTokenBalance } from "../Helpers/data";
-import {
-  fixedBalance,
-  formatBalance,
-  formatNumber,
-  usdString,
-} from "..//Helpers/format";
-import BigNumber from "bignumber.js";
-import { Loader } from "../Loader/Loader";
+import { getPrice, getMarketData } from "../Helpers/data";
+
 import { Deposit } from "./Deposit/Deposit";
 import { Withdraw } from "./Withdraw/Withdraw";
-import { wrap, unwrap } from "../Helpers/Tx";
+import { wrap, unwrap } from "../Helpers/tx";
 
 interface TokenFormProps {
-  tokenOptions: TokenOptions;
   mergeState: mergeStateType;
   secretjs: SecretNetworkClient | null;
   secretAddress: string;
   setSecretjs: React.Dispatch<React.SetStateAction<SecretNetworkClient | null>>;
   setSecretAddress: React.Dispatch<React.SetStateAction<string>>;
+  currentToken: Token;
 }
 
 export function TokenForm({
-  tokenOptions,
   mergeState,
   secretjs,
   secretAddress,
   setSecretjs,
   setSecretAddress,
+  currentToken,
 }: TokenFormProps) {
-  const [price, setPrice] = useState<number>(0);
-  const [marketData, setMarketData] = useState<{
-    market_cap: number;
-    price_change_percentage_24h: number;
-  }>({ market_cap: 0, price_change_percentage_24h: 0 });
+  const [tokenPrice, setTokenPrice] = useState<number>(0);
+  const [marketData, setMarketData] = useState<TokensMarketData>({
+    market_cap: 0,
+    price_change_percentage_24h: 0,
+  });
 
   const [isWrapToken, setIsWrapToken] = useState(true);
   const wrapTitle = isWrapToken ? "wrap" : "unwrap";
-
   const wrapInputRef = useRef<any>();
 
   const [loadingWrap, setLoadingWrap] = useState<boolean>(false);
   const [loadingUnwrap, setLoadingUnwrap] = useState<boolean>(false);
 
+  const [loadingMarketData, setLoadingMarketData] = useState<boolean>(false);
+  const [loadingTokenPrice, setLoadingTokenPrice] = useState<boolean>(false);
   const [loadingTokenBalance, setLoadingTokenBalance] =
     useState<boolean>(false);
-  const [loadingSnipBalance, setLoadingCoinBalances] = useState<boolean>(false);
-  const [percent, setPercent] = useState("");
+
   const [errorBtnClass, setErrorBtnClass] = useState<string>("");
 
   const toggleWrappedTokens = () => setIsWrapToken((prev) => !prev);
 
   useEffect(() => {
-    let token = getCurrentToken(tokenOptions);
-    getPrice(token, setPrice);
-    getMarketData(token, setMarketData);
+    getPrice(currentToken, setTokenPrice, setLoadingTokenPrice);
+    getMarketData(currentToken, setMarketData, setLoadingMarketData);
 
     let interval = setInterval(() => {
-      getPrice(token, setPrice);
-      getMarketData(token, setMarketData);
+      getPrice(currentToken, setTokenPrice, setLoadingTokenPrice);
+      getMarketData(currentToken, setMarketData, setLoadingMarketData);
     }, 6_000);
 
     return () => {
       clearInterval(interval);
     };
-  }, [tokenOptions]);
+  }, [currentToken]);
 
   return (
     <StyledTokenForm>
@@ -97,10 +89,10 @@ export function TokenForm({
             {isWrapToken ? (
               <>
                 <UnwrappedToken
-                  tokenOptions={tokenOptions}
+                  currentToken={currentToken}
                   secretjs={secretjs}
                   secretAddress={secretAddress}
-                  price={price}
+                  tokenPrice={tokenPrice}
                 />
                 <img
                   className="swap"
@@ -109,19 +101,19 @@ export function TokenForm({
                   onClick={toggleWrappedTokens}
                 />
                 <WrappedToken
-                  tokenOptions={tokenOptions}
+                  currentToken={currentToken}
                   secretjs={secretjs}
                   secretAddress={secretAddress}
-                  price={price}
+                  tokenPrice={tokenPrice}
                 />
               </>
             ) : (
               <>
                 <WrappedToken
-                  tokenOptions={tokenOptions}
+                  currentToken={currentToken}
                   secretjs={secretjs}
                   secretAddress={secretAddress}
-                  price={price}
+                  tokenPrice={tokenPrice}
                 />
                 <img
                   className="swap"
@@ -130,16 +122,14 @@ export function TokenForm({
                   onClick={toggleWrappedTokens}
                 />
                 <UnwrappedToken
-                  tokenOptions={tokenOptions}
+                  currentToken={currentToken}
                   secretjs={secretjs}
                   secretAddress={secretAddress}
-                  price={price}
+                  tokenPrice={tokenPrice}
                 />
               </>
             )}
           </div>
-
-          <PercentOptions setPercent={setPercent} cb={() => {}} />
 
           <div className="count">
             <input type="number" placeholder="Amount" ref={wrapInputRef} />
@@ -157,8 +147,10 @@ export function TokenForm({
 
           <Indicators
             marketCap={marketData.market_cap}
-            price={price}
+            tokenPrice={tokenPrice}
             priceChange={marketData.price_change_percentage_24h}
+            loadingTokenPrice={loadingTokenPrice}
+            loadingMarketData={loadingMarketData}
           />
         </Tab>
 
@@ -194,8 +186,8 @@ export function TokenForm({
       </Tabs>
 
       <TokenList
-        list={tokens}
-        activeTokenName={tokenOptions.name}
+        list={TokensList}
+        activeTokenName={currentToken.name}
         setTokenOptions={mergeState}
       />
     </StyledTokenForm>

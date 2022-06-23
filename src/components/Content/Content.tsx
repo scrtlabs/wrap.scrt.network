@@ -5,14 +5,14 @@ import { Header } from "./Header/Header";
 import { GetPrivacy } from "./GetPrivacy/GetPrivacy";
 import { TokenForm } from "./TokenForm/TokenForm";
 import { Footer } from "./Footer/Footer";
-import { mergeStateType, TokenOptions, Token, tokens } from "../../config";
+import { mergeStateType, TokenOptions, Token } from "../../config";
 
 interface ContentProps {
-  tokenOptions: TokenOptions;
   mergeState: mergeStateType;
+  currentToken: Token;
 }
 
-export function Content({ tokenOptions, mergeState }: ContentProps) {
+export function Content({ mergeState, currentToken }: ContentProps) {
   const [secretjs, setSecretjs] = useState<SecretNetworkClient | null>(null);
   const [secretAddress, setSecretAddress] = useState<string>("");
 
@@ -27,12 +27,12 @@ export function Content({ tokenOptions, mergeState }: ContentProps) {
       <div className="content-wrap">
         <GetPrivacy />
         <TokenForm
-          tokenOptions={tokenOptions}
           mergeState={mergeState}
           secretjs={secretjs}
           secretAddress={secretAddress}
           setSecretjs={setSecretjs}
           setSecretAddress={setSecretAddress}
+          currentToken={currentToken}
         />
       </div>
       <Footer />

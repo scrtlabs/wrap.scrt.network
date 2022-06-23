@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledTokenForm = styled.div`
   width: 100%;
@@ -28,6 +28,7 @@ export const StyledTokenForm = styled.div`
     height: 44px;
     width: 220px;
     padding: 9px 0;
+    margin-top: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,7 +37,7 @@ export const StyledTokenForm = styled.div`
     font-size: 16px;
     line-height: 26px;
     border-radius: 10px;
-    margin: 0 auto;
+    margin: 24px auto 0px auto;
     @media (max-width: 576px) {
       width: 100%;
     }
@@ -46,7 +47,8 @@ export const StyledTokenForm = styled.div`
       color: ${({ theme }) => theme.colors.grey};
       border: none;
       text-align: center;
-      &:focus, &:hover{
+      &:focus,
+      &:hover {
         outline: none;
       }
     }
@@ -72,8 +74,8 @@ export const StyledTokenForm = styled.div`
         color: ${({ theme }) => theme.colors.orange};
       }
     }
-    
-    & .deposit-block{
+
+    & .deposit-block {
       display: flex;
       align-items: center;
       margin-bottom: 16px;
@@ -82,17 +84,17 @@ export const StyledTokenForm = styled.div`
       font-family: ${({ theme }) => theme.fonts.hind_regular};
       & p {
         color: ${({ theme }) => theme.colors.grey};
-      }  
-      & .one{
+      }
+      & .one {
         color: ${({ theme }) => theme.colors.grey};
         margin: 0 4px;
       }
-      & .items-block{
+      & .items-block {
         background: ${({ theme }) => theme.colors.bg};
         border-radius: 10px;
-        & .active-item{
+        & .active-item {
           width: 100%;
-          & .arrow-icon{
+          & .arrow-icon {
             margin-left: auto;
             flex-shrink: 0;
           }
@@ -103,22 +105,23 @@ export const StyledTokenForm = styled.div`
       }
     }
 
-    & .available{
+    & .available {
       font-size: 16px;
       line-height: 24px;
-      & .title{
+      & .title {
         font-family: ${({ theme }) => theme.fonts.hind_regular};
         margin-right: 12px;
       }
-      & .cash{
+      & .cash {
         font-family: ${({ theme }) => theme.fonts.monsterRat_Bold};
-        & .available-deposit, & .available-withdraw {
+        & .available-deposit,
+        & .available-withdraw {
           cursor: pointer;
         }
       }
     }
-    
-    & .amount{
+
+    & .amount {
       background: ${({ theme }) => theme.colors.bg};
       display: flex;
       border-radius: 10px;
@@ -126,8 +129,8 @@ export const StyledTokenForm = styled.div`
       justify-content: space-between;
       align-items: center;
       margin-top: 18px;
-      & input{
-        background: ${({ theme }) => theme.colors.bg};;
+      & input {
+        background: ${({ theme }) => theme.colors.bg};
         color: ${({ theme }) => theme.colors.grey};
         font-size: 16px;
         line-height: 24px;
@@ -135,7 +138,7 @@ export const StyledTokenForm = styled.div`
         margin-right: 12px;
         white-space: nowrap;
         border: none;
-        &:focus{
+        &:focus {
           outline: none;
         }
         ::placeholder {
@@ -145,7 +148,7 @@ export const StyledTokenForm = styled.div`
       & div {
         margin: 0 0 0 auto;
         text-transform: uppercase;
-        & span{
+        & span {
           margin-right: 16px;
           margin-left: 0;
           margin-bottom: -2px;
@@ -153,18 +156,17 @@ export const StyledTokenForm = styled.div`
             margin-right: 10px;
           }
         }
-      }   
+      }
       & img {
         width: 22px;
         height: 22px;
       }
     }
-    
-    & button{
+
+    & button {
       margin-top: 20px;
       width: 100%;
       max-width: 100%;
     }
   }
-`
-
+`;
