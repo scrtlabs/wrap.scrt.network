@@ -343,7 +343,7 @@ export const ChainList: { [chain_name: string]: Chain } = {
     chain_id: "secret-4",
     bech32_prefix: "secret",
     lcd: "https://api.scrt.network/",
-    rpc: "https://web-rpc.roninventures.io/", // gRPC-web
+    rpc: "https://grpc-web.scrt.network", // gRPC-web
     chain_image: tokenIcons.scrt,
     explorer_account:
       "https://secretnodes.com/secret/chains/secret-4/accounts/",

@@ -14,7 +14,6 @@ export function getPrice(
   )
     .then((resp) => resp.json())
     .then((result: { [coingecko_id: string]: { usd: number } }) => {
-      console.log(result);
       if (result[currentToken.coingecko_id]) {
         setLoadingTokenPrice(false);
         setPrice(result[currentToken.coingecko_id].usd);
