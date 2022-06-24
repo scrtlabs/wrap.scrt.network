@@ -1,17 +1,22 @@
-import { StyledButton } from './styled';
-import { Loader } from '../Content/Loader/Loader';
+import { StyledButton } from "./styled";
+import { Loader } from "../Content/Loader/Loader";
 
 interface ButtonProps {
-  title: string,
-  action: () => void,
-  isLoading?: boolean,
-  errorClass?: string,
+  text: string;
+  action: any;
+  isLoading?: boolean;
+  errorClass?: string;
 }
 
-export const Button = ({title = '', action = () => {}, isLoading = false, errorClass = ''}: ButtonProps) => {
+export const Button = ({
+  text = "",
+  action,
+  isLoading = false,
+  errorClass = "",
+}: ButtonProps) => {
   return (
     <StyledButton onClick={action} isLoading={isLoading} className={errorClass}>
-      {isLoading ? <Loader/> : <p>{title}</p>}
+      {isLoading ? <Loader /> : <p>{text}</p>}
     </StyledButton>
-  )
-}
+  );
+};

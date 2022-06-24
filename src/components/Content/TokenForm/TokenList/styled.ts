@@ -18,7 +18,15 @@ export const StyledTokenList = styled.ul`
     margin-right: 12px;
     position: relative;
     width: 40px;
-
+    cursor: pointer;
+    &:before {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background: grey;
+      z-index: 1000;
+    }
     &:hover img {
       width: 48px;
       height: 48px;
@@ -36,6 +44,7 @@ export const StyledTokenList = styled.ul`
     }
 
     & img {
+      border-radius: 50%;
       width: 32px;
       height: 32px;
       transition: 0.1s;
@@ -73,6 +82,13 @@ export const StyledTokenList = styled.ul`
         font-size: 13px;
         margin-top: 6px;
       }
+    }
+  }
+  & .coming-soon {
+    cursor: not-allowed;
+
+    & img {
+      filter: brightness(0.5);
     }
   }
 

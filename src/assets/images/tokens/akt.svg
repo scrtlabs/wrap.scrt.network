@@ -1,9 +1,24 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g opacity="0.5">
-<circle cx="16" cy="16" r="16" fill="white"/>
-<circle cx="16" cy="16" r="15.5" stroke="white" stroke-opacity="0.2"/>
-<path d="M11.1279 3.08008L25.2254 27.4401L29.9199 19.3192L20.5239 3.08008H11.1279Z" fill="#F34C2D"/>
-<path d="M11.1279 19.7842L16.0034 27.4402H25.7439L20.8754 19.7842H11.1279Z" fill="#BE312D"/>
-<path d="M6.95208 10.7358L2.08008 19.0878L6.95556 27.4398L16.6961 10.7358H6.95208Z" fill="#F34C2D"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 30.4 26.6" style="enable-background:new 0 0 30.4 26.6;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#ED3524;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#AE1E23;}
+</style>
+<title>akash logo</title>
+<desc>Created with Sketch.</desc>
+<g id="Page-1">
+	<g id="R15_Mobile_Home" transform="translate(-172.000000, -62.000000)">
+		<g id="Top">
+			<g id="Group-20" transform="translate(17.000000, 61.000000)">
+				<g id="akash-logo" transform="translate(155.000000, 1.000000)">
+					<polygon id="Fill-11" class="st0" points="9.9,0 25.3,26.6 30.4,17.7 20.1,0 					"/>
+					<polygon id="Fill-12" class="st1" points="9.9,18.2 15.2,26.6 25.8,26.6 20.5,18.2 					"/>
+					<polygon id="Fill-13" class="st0" points="5.3,8.4 0,17.5 5.3,26.6 16,8.4 					"/>
+				</g>
+			</g>
+		</g>
+	</g>
 </g>
 </svg>

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyleGetPrivacy = styled.div`
   display: inline-flex;
@@ -8,6 +8,8 @@ export const StyleGetPrivacy = styled.div`
   max-width: 360px;
   margin-right: 48px;
   border-radius: 10px;
+  max-height: 568px;
+  overflow: auto;
   @media (max-width: 992px) {
     margin-right: 0;
     margin-top: 60px;
@@ -22,12 +24,12 @@ export const StyleGetPrivacy = styled.div`
   }
   @media (max-width: 768px) {
     margin-top: 30px;
-  } 
+  }
   @media (max-width: 576px) {
     padding: 15px;
     margin-top: 15px;
   }
-  & .title-section{
+  & .title-section {
     @media (max-width: 992px) {
       max-width: 296px;
     }
@@ -83,7 +85,7 @@ export const StyleGetPrivacy = styled.div`
       overflow-x: scroll;
       margin-top: 24px;
     }
-    & > div{
+    & > div {
       margin-bottom: 24px;
       @media (max-width: 992px) {
         max-width: 250px;
@@ -93,11 +95,11 @@ export const StyleGetPrivacy = styled.div`
         flex-shrink: 0;
       }
     }
-    & > div:last-child{
+    & > div:last-child {
       margin-bottom: 0;
       @media (max-width: 820px) {
         margin-bottom: 24px;
       }
     }
   }
-`
+`;

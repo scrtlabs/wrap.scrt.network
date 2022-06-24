@@ -18,9 +18,8 @@ export const TokenList = ({
         const active = name === activeTokenName ? "active" : "";
         return (
           <li
-            className={`token-wrap ${active}`}
+            className={`token-wrap ${active} ${address ? "" : "coming-soon"}`}
             key={name}
-            style={{ cursor: address ? "pointer" : "not-allowed" }}
             onClick={
               address ? () => setTokenOptions({ name, image }) : () => {}
             }

@@ -5,7 +5,7 @@ import { TokenNames } from "../../types";
 const getBackground = (token: string) => {
   switch (token) {
     case TokenNames.scrt:
-      return "#12161C";
+      return "#151A20";
     case TokenNames.atom:
       return "#231C28";
     case TokenNames.lunc:
@@ -19,7 +19,7 @@ const getBackground = (token: string) => {
     case TokenNames.huahua:
       return "#30220D";
     case TokenNames.juno:
-      return "#301A19";
+      return "#f0827d";
     case TokenNames.akt:
       return "#310F09";
     case TokenNames.luna:

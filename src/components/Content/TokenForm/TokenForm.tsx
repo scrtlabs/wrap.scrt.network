@@ -50,8 +50,6 @@ export function TokenForm({
 
   const [loadingMarketData, setLoadingMarketData] = useState<boolean>(false);
   const [loadingTokenPrice, setLoadingTokenPrice] = useState<boolean>(false);
-  const [loadingTokenBalance, setLoadingTokenBalance] =
-    useState<boolean>(false);
 
   const [errorBtnClass, setErrorBtnClass] = useState<string>("");
 
@@ -130,11 +128,37 @@ export function TokenForm({
           </div>
 
           {secretjs ? (
-            <Button title={wrapTitle} action={isWrapToken ? wrap : unwrap} />
+            <Button
+              text={wrapTitle}
+              action={() => {
+                isWrapToken
+                  ? wrap({
+                      secretjs,
+                      secretAddress,
+                      currentToken,
+                      wrapInputRef,
+                      loadingWrap,
+                      loadingUnwrap,
+                      setLoadingWrap,
+                      setLoadingUnwrap,
+                    })
+                  : unwrap({
+                      secretjs,
+                      secretAddress,
+                      currentToken,
+                      wrapInputRef,
+                      loadingWrap,
+                      loadingUnwrap,
+                      setLoadingWrap,
+                      setLoadingUnwrap,
+                    });
+              }}
+              isLoading={loadingWrap || loadingUnwrap}
+            />
           ) : (
             <Button
               errorClass={errorBtnClass}
-              title={"Connect wallet"}
+              text={"Connect wallet"}
               action={() => setupKeplr(setSecretjs, setSecretAddress)}
             />
           )}
