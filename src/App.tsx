@@ -2,7 +2,7 @@ import { SetStateAction, useState, useEffect } from "react";
 import { Window as KeplrWindow } from "@keplr-wallet/types";
 import { Background } from "./components/Background/Background";
 import { Content } from "./components/Content/Content";
-import { mergeStateType, TokenNames, TokenOptions, Token } from "./config";
+import { mergeStateType, TokenNames, TokenOptions, Token } from "./types";
 import { tokenIcons } from "./assets/images";
 import { getCurrentToken } from "./commons";
 

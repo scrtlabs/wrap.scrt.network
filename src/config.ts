@@ -1,64 +1,5 @@
 import { tokenIcons } from "./assets/images";
-
-export enum TokenNames {
-  scrt = "SCRT",
-  atom = "ATOM",
-  osmo = "OSMO",
-  dvpn = "DVPN",
-  huahua = "HUAHUA",
-  juno = "JUNO",
-  akt = "AKT",
-}
-
-export interface TokenOptions {
-  name: TokenNames;
-  image: string;
-}
-
-type ValueOf<T> = T[keyof T];
-
-export type mergeStateType = (
-  data: keyof TokenOptions | Record<keyof TokenOptions, ValueOf<TokenOptions>>,
-  value?: any
-) => void;
-
-export type TokensMarketData = {
-  market_cap: number;
-  price_change_percentage_24h: number;
-};
-
-export type Token = {
-  /** display name of the token */
-  name: string;
-  /** secret contract address of the token */
-  address: string;
-  /** secret contract code hash of the token */
-  code_hash: string;
-  /** logo of the token */
-  image: string;
-  /** decimals of the token */
-  decimals: number;
-  /** coingeck id to get usd price */
-  coingecko_id: string;
-  /** how to deposit this token into Secret Network */
-  deposits: Deposit[];
-  /** how to withdraw this token out of Secret Network */
-  withdrawals: Withdraw[];
-};
-
-export type Deposit = {
-  /** display name of the source chain */
-  source_chain_name: string;
-  /** denom on the other chain */
-  from_denom: string;
-};
-
-export type Withdraw = {
-  /** display name of the target chain */
-  target_chain_name: string;
-  /** denom on Secret Network */
-  from_denom: string;
-};
+import { TokenNames, Token, Chain } from "./types";
 
 export const TokensList: Token[] = [
   {
@@ -75,11 +16,11 @@ export const TokensList: Token[] = [
         from_denom:
           "ibc/1542F8DC70E7999691E991E1EDEB1B47E65E3A217B1649D347098EE48ACB580F", // SCRT denom on Cosmos
       },
-      // {
-      //   source_chain_name: "Terra",
-      //   from_denom:
-      //     "ibc/EB2CED20AB0466F18BE49285E56B31306D4C60438A022EA995BA65D5E3CF7E09", // SCRT denom on Terra
-      // },
+      {
+        source_chain_name: "Terra",
+        from_denom:
+          "ibc/EB2CED20AB0466F18BE49285E56B31306D4C60438A022EA995BA65D5E3CF7E09", // SCRT denom on Terra
+      },
       {
         source_chain_name: "Osmosis",
         from_denom:
@@ -106,10 +47,10 @@ export const TokensList: Token[] = [
         target_chain_name: "Cosmos Hub",
         from_denom: "uscrt",
       },
-      // {
-      //   target_chain_name: "Terra",
-      //   from_denom: "uscrt",
-      // },
+      {
+        target_chain_name: "Terra",
+        from_denom: "uscrt",
+      },
       {
         target_chain_name: "Osmosis",
         from_denom: "uscrt",
@@ -152,7 +93,7 @@ export const TokensList: Token[] = [
   },
 
   {
-    name: "OSMO",
+    name: TokenNames.osmo,
     address: "secret1zwwealwm0pcl9cul4nt6f38dsy6vzplw8lp3qg",
     code_hash:
       "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
@@ -218,11 +159,11 @@ export const TokensList: Token[] = [
     ],
   },
   {
-    name: "LUNC",
+    name: TokenNames.lunc,
     address: "secret1ra7avvjh9fhr7dtr3djutugwj59ptctsrakyyw",
     code_hash:
       "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
-    image: "/luna.png",
+    image: tokenIcons.lunc,
     decimals: 6,
     coingecko_id: "terra-luna",
     deposits: [
@@ -240,13 +181,13 @@ export const TokensList: Token[] = [
     ],
   },
   {
-    name: "UST",
+    name: TokenNames.ust,
     address: "secret129h4vu66y3gry6wzwa24rw0vtqjyn8tujuwtn9",
     code_hash:
       "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
-    image: "/ust.png",
+    image: tokenIcons.ust,
     decimals: 6,
-    coingecko_id: "terra-usd",
+    coingecko_id: "terrausd",
     deposits: [
       {
         source_chain_name: "Terra",
@@ -262,7 +203,7 @@ export const TokensList: Token[] = [
     ],
   },
   {
-    name: "JUNO",
+    name: TokenNames.juno,
     address: "", //"secret1smmc5k24lcn4j2j8f3w0yaeafga6wmzl0qct03",
     code_hash:
       "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
@@ -304,10 +245,10 @@ export const TokensList: Token[] = [
     ],
   },
   {
-    name: "EVMOS",
+    name: TokenNames.evmos,
     address: "",
     code_hash: "",
-    image: "/evmos.jpg",
+    image: tokenIcons.evmos,
     decimals: 6,
     coingecko_id: "evmos",
     deposits: [
@@ -323,34 +264,47 @@ export const TokensList: Token[] = [
       },
     ],
   },
+  // {
+  //   name: TokenNames.gravity,
+  //   address: "",
+  //   code_hash: "",
+  //   image: "",
+  //   decimals: 6,
+  //   coingecko_id: "graviton",
+  //   deposits: [
+  //     {
+  //       source_chain_name: "G-Bridge",
+  //       from_denom: "ugraviton",
+  //     },
+  //   ],
+  //   withdrawals: [
+  //     {
+  //       target_chain_name: "G-Bridge",
+  //       from_denom: "ibc/", // Gravity_Bridge denom on Secret
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: TokenNames.luna,
+  //   address: "",
+  //   code_hash: "",
+  //   image: "/luna.png",
+  //   decimals: 6,
+  //   coingecko_id: "terra-luna-2",
+  //   deposits: [
+  //     {
+  //       source_chain_name: "",
+  //       from_denom: "",
+  //     },
+  //   ],
+  //   withdrawals: [
+  //     {
+  //       target_chain_name: "",
+  //       from_denom: "ibc/", // Gravity Bridge denom on Secret
+  //     },
+  //   ],
+  // },
 ];
-
-export type Chain = {
-  /** display name of the chain */
-  chain_name: string;
-  /** channel_id on the chain */
-  deposit_channel_id: string;
-  /** gas limit for ibc transfer from the chain to Secret Network */
-  deposit_gas: number;
-  /** channel_id on Secret Network */
-  withdraw_channel_id: string;
-  /** gas limit for ibc transfer from Secret Network to the chain */
-  withdraw_gas: number;
-  /** bech32 prefix of addresses on the chain */
-  bech32_prefix: string;
-  /** logo of the chain */
-  chain_image: string;
-  /** chain-id of the chain */
-  chain_id: string;
-  /** lcd url of the chain */
-  lcd: string;
-  /** rpc url of the chain */
-  rpc: string;
-  /** explorer link for accounts */
-  explorer_account: string;
-  /** explorer link for txs */
-  explorer_tx?: string;
-};
 
 export const ChainList: { [chain_name: string]: Chain } = {
   "Secret Network": {
@@ -380,19 +334,19 @@ export const ChainList: { [chain_name: string]: Chain } = {
     chain_image: tokenIcons.atom,
     explorer_account: "https://www.mintscan.io/cosmos/account/",
   },
-  // Terra: {
-  //   chain_name: "Terra",
-  //   deposit_channel_id: "channel-16",
-  //   deposit_gas: 110_000,
-  //   withdraw_channel_id: "channel-2",
-  //   withdraw_gas: 30_000,
-  //   chain_id: "columbus-5",
-  //   bech32_prefix: "terra",
-  //   lcd: "https://lcd-columbus.keplr.app",
-  //   rpc: "https://rpc-columbus.keplr.app",
-  //   chain_image: tokenIcons.terra,
-  //   explorer_account: "https://finder.terra.money/mainnet/address/",
-  // },
+  Terra: {
+    chain_name: "Terra",
+    deposit_channel_id: "channel-16",
+    deposit_gas: 110_000,
+    withdraw_channel_id: "channel-2",
+    withdraw_gas: 30_000,
+    chain_id: "columbus-5",
+    bech32_prefix: "terra",
+    lcd: "https://lcd-columbus.keplr.app",
+    rpc: "https://rpc-columbus.keplr.app",
+    chain_image: tokenIcons.terra,
+    explorer_account: "https://finder.terra.money/mainnet/address/",
+  },
   Osmosis: {
     chain_name: "Osmosis",
     deposit_channel_id: "channel-88",

@@ -1,11 +1,10 @@
 import { rootIcons, tokenIcons } from "../../../../assets/images";
 import { StyledWrapElem } from "./styled";
-import { Token, TokenOptions } from "../../../../config";
+import { Token, TokenOptions } from "../../../../types";
 import { useEffect, useState } from "react";
 import { SecretNetworkClient } from "secretjs";
 import { getTokenBalance, getSnipBalance } from "../../Helpers/data";
 import { fixedBalance, usdString, formatBalance } from "../../Helpers/format";
-import { getCurrentToken } from "../../../../commons";
 import { setKeplrViewingKey } from "../../Helpers/keplr";
 import { Loader } from "../../Loader/Loader";
 

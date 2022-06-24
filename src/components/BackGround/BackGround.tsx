@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { StyledBackground } from "./styled";
-import { TokenNames } from "../../config";
+import { TokenNames } from "../../types";
 
 const getBackground = (token: string) => {
   switch (token) {
@@ -8,7 +8,7 @@ const getBackground = (token: string) => {
       return "#12161C";
     case TokenNames.atom:
       return "#231C28";
-    case TokenNames.luna:
+    case TokenNames.lunc:
       return "#29230A";
     case TokenNames.ust:
       return "#111D31";
@@ -22,6 +22,12 @@ const getBackground = (token: string) => {
       return "#301A19";
     case TokenNames.akt:
       return "#310F09";
+    case TokenNames.luna:
+      return "#DF3833";
+    case TokenNames.gravity:
+      return "#012EA7";
+    case TokenNames.evmos:
+      return "#ED4F32";
   }
 };
 

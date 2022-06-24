@@ -5,7 +5,7 @@ import { Header } from "./Header/Header";
 import { GetPrivacy } from "./GetPrivacy/GetPrivacy";
 import { TokenForm } from "./TokenForm/TokenForm";
 import { Footer } from "./Footer/Footer";
-import { mergeStateType, TokenOptions, Token } from "../../config";
+import { mergeStateType, Token } from "../../types";
 
 interface ContentProps {
   mergeState: mergeStateType;

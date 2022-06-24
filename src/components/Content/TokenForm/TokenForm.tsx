@@ -7,16 +7,10 @@ import { Button } from "../../Button/Button";
 import { Indicators } from "./Indicators/Indicators";
 
 import { TokenList } from "./TokenList/TokenList";
-import {
-  mergeStateType,
-  TokenOptions,
-  TokensList,
-  TokensMarketData,
-  Token,
-} from "../../../config";
+import { TokensList } from "../../../config";
+import { mergeStateType, TokensMarketData, Token } from "../../../types";
 import { rootIcons } from "../../../assets/images";
 import { SecretNetworkClient } from "secretjs";
-import { getCurrentToken } from "../../../commons";
 import { setupKeplr } from "../Helpers/keplr";
 import { getPrice, getMarketData } from "../Helpers/data";
 

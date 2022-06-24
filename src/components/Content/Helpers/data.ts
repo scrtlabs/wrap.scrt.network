@@ -1,4 +1,5 @@
-import { Token, Chain, ChainList } from "../../../config";
+import { ChainList } from "../../../config";
+import { Token } from "../../../types";
 import { getKeplrViewingKey } from "./keplr";
 import { SecretNetworkClient } from "secretjs";
 import React from "react";
