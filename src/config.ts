@@ -3,8 +3,6 @@ import { tokenIcons } from "./assets/images";
 export enum TokenNames {
   scrt = "SCRT",
   atom = "ATOM",
-  // luna = "LUNA",
-  // ust = "UST",
   osmo = "OSMO",
   dvpn = "DVPN",
   huahua = "HUAHUA",
@@ -95,7 +93,7 @@ export const TokensList: Token[] = [
       {
         source_chain_name: "Juno",
         from_denom:
-          "ibc/CD78EE5B20682E5A61B4D96C9F4DC39361269B88A6B3462C26A18652F7A90A9A", // SCRT denom on Juno
+          "ibc/B55B08EF3667B0C6F029C2CC9CAA6B00788CF639EBB84B34818C85CBABA33ABD", // SCRT denom on Juno
       },
       {
         source_chain_name: "Chihuahua",
@@ -152,52 +150,9 @@ export const TokensList: Token[] = [
       },
     ],
   },
-  // {
-  //   name: TokenNames.luna,
-  //   address: "secret1ra7avvjh9fhr7dtr3djutugwj59ptctsrakyyw",
-  //   code_hash:
-  //     "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
-  //   image: tokenIcons.luna,
-  //   decimals: 6,
-  //   coingecko_id: "terra-luna",
-  //   deposits: [
-  //     {
-  //       source_chain_name: "Terra",
-  //       from_denom: "uluna",
-  //     },
-  //   ],
-  //   withdrawals: [
-  //     {
-  //       target_chain_name: "Terra",
-  //       from_denom:
-  //         "ibc/D70B0FBF97AEB04491E9ABF4467A7F66CD6250F4382CE5192D856114B83738D2",
-  //     },
-  //   ],
-  // },
-  // {
-  //   name: TokenNames.ust,
-  //   address: "secret129h4vu66y3gry6wzwa24rw0vtqjyn8tujuwtn9",
-  //   code_hash:
-  //     "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
-  //   image: tokenIcons.ust,
-  //   decimals: 6,
-  //   coingecko_id: "terra-usd",
-  //   deposits: [
-  //     {
-  //       source_chain_name: "Terra",
-  //       from_denom: "uusd",
-  //     },
-  //   ],
-  //   withdrawals: [
-  //     {
-  //       target_chain_name: "Terra",
-  //       from_denom:
-  //         "ibc/4294C3DB67564CF4A0B2BFACC8415A59B38243F6FF9E288FBA34F9B4823BA16E",
-  //     },
-  //   ],
-  // },
+
   {
-    name: TokenNames.osmo,
+    name: "OSMO",
     address: "secret1zwwealwm0pcl9cul4nt6f38dsy6vzplw8lp3qg",
     code_hash:
       "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
@@ -263,7 +218,51 @@ export const TokensList: Token[] = [
     ],
   },
   {
-    name: TokenNames.juno,
+    name: "LUNC",
+    address: "secret1ra7avvjh9fhr7dtr3djutugwj59ptctsrakyyw",
+    code_hash:
+      "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
+    image: "/luna.png",
+    decimals: 6,
+    coingecko_id: "terra-luna",
+    deposits: [
+      {
+        source_chain_name: "Terra",
+        from_denom: "uluna",
+      },
+    ],
+    withdrawals: [
+      {
+        target_chain_name: "Terra",
+        from_denom:
+          "ibc/D70B0FBF97AEB04491E9ABF4467A7F66CD6250F4382CE5192D856114B83738D2",
+      },
+    ],
+  },
+  {
+    name: "UST",
+    address: "secret129h4vu66y3gry6wzwa24rw0vtqjyn8tujuwtn9",
+    code_hash:
+      "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
+    image: "/ust.png",
+    decimals: 6,
+    coingecko_id: "terra-usd",
+    deposits: [
+      {
+        source_chain_name: "Terra",
+        from_denom: "uusd",
+      },
+    ],
+    withdrawals: [
+      {
+        target_chain_name: "Terra",
+        from_denom:
+          "ibc/4294C3DB67564CF4A0B2BFACC8415A59B38243F6FF9E288FBA34F9B4823BA16E",
+      },
+    ],
+  },
+  {
+    name: "JUNO",
     address: "", //"secret1smmc5k24lcn4j2j8f3w0yaeafga6wmzl0qct03",
     code_hash:
       "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
@@ -301,6 +300,26 @@ export const TokensList: Token[] = [
       {
         target_chain_name: "Akash",
         from_denom: "ibc/", // AKT denom on Secret
+      },
+    ],
+  },
+  {
+    name: "EVMOS",
+    address: "",
+    code_hash: "",
+    image: "/evmos.jpg",
+    decimals: 6,
+    coingecko_id: "evmos",
+    deposits: [
+      {
+        source_chain_name: "Evmos",
+        from_denom: "uevmos",
+      },
+    ],
+    withdrawals: [
+      {
+        target_chain_name: "Evmos",
+        from_denom: "ibc/", // EVMOS denom on Secret
       },
     ],
   },
