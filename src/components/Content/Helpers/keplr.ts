@@ -36,15 +36,12 @@ export async function setupKeplr(
   setSecretjs: React.Dispatch<React.SetStateAction<SecretNetworkClient | null>>,
   setSecretAddress: React.Dispatch<React.SetStateAction<string>>
 ) {
-  const sleep = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-
-  while (
+  if (
     !window.keplr ||
     !window.getEnigmaUtils ||
     !window.getOfflineSignerOnlyAmino
   ) {
-    await sleep(50);
+    return;
   }
 
   await window.keplr.enable(ChainList["Secret Network"].chain_id);

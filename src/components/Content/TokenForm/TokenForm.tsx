@@ -14,9 +14,9 @@ import { SecretNetworkClient } from "secretjs";
 import { setupKeplr } from "../Helpers/keplr";
 import { getPrice, getMarketData } from "../Helpers/data";
 
-import { Deposit } from "./Deposit/Deposit";
-import { Withdraw } from "./Withdraw/Withdraw";
-import { wrap, unwrap } from "../Helpers/tx";
+import { DepositIBC } from "./DepositIBC/DepositIBC";
+import { WithdrawIBC } from "./WithdrawIBC/WithdrawIBC";
+import { wrap, unwrap } from "./WrappedTokens/wrapTx";
 
 interface TokenFormProps {
   mergeState: mergeStateType;
@@ -58,22 +58,13 @@ export function TokenForm({
   useEffect(() => {
     getPrice(currentToken, setTokenPrice, setLoadingTokenPrice);
     getMarketData(currentToken, setMarketData, setLoadingMarketData);
-
-    let interval = setInterval(() => {
-      getPrice(currentToken, setTokenPrice, setLoadingTokenPrice);
-      getMarketData(currentToken, setMarketData, setLoadingMarketData);
-    }, 6_000);
-
-    return () => {
-      clearInterval(interval);
-    };
   }, [currentToken]);
 
   return (
     <StyledTokenForm>
       <Tabs
         currentTab={"wrap"}
-        disableTabsOnchange={!!secretAddress}
+        disableTabsOnchange={!secretAddress}
         setErrorBtnClass={setErrorBtnClass}
       >
         <Tab tabKey={"wrap"} title={wrapTitle}>
@@ -85,6 +76,8 @@ export function TokenForm({
                   secretjs={secretjs}
                   secretAddress={secretAddress}
                   tokenPrice={tokenPrice}
+                  loadingWrap={loadingWrap}
+                  loadingUnwrap={loadingUnwrap}
                 />
                 <img
                   className="swap"
@@ -97,6 +90,8 @@ export function TokenForm({
                   secretjs={secretjs}
                   secretAddress={secretAddress}
                   tokenPrice={tokenPrice}
+                  loadingWrap={loadingWrap}
+                  loadingUnwrap={loadingUnwrap}
                 />
               </>
             ) : (
@@ -106,6 +101,8 @@ export function TokenForm({
                   secretjs={secretjs}
                   secretAddress={secretAddress}
                   tokenPrice={tokenPrice}
+                  loadingWrap={loadingWrap}
+                  loadingUnwrap={loadingUnwrap}
                 />
                 <img
                   className="swap"
@@ -118,6 +115,8 @@ export function TokenForm({
                   secretjs={secretjs}
                   secretAddress={secretAddress}
                   tokenPrice={tokenPrice}
+                  loadingWrap={loadingWrap}
+                  loadingUnwrap={loadingUnwrap}
                 />
               </>
             )}
@@ -173,33 +172,23 @@ export function TokenForm({
         </Tab>
 
         <Tab tabKey={"bridge"} title={"bridge (ibc)"}>
-          {/* <div className="deposit-withdraw-tabs">
-            <Tabs currentTab={"deposit"} isDivider>
+          <div className="deposit-withdraw-tabs">
+            <Tabs currentTab={"deposit"}>
               <Tab tabKey={"deposit"} title={"deposit"}>
-                <Deposit
-                  tokenOptions={tokenOptions}
-                  token={token}
+                <DepositIBC
                   secretAddress={secretAddress}
-                  onSuccess={(txhash) => {
-                    console.log("success", txhash);
-                  }}
-                  onFailure={(error) => console.error(error)}
+                  currentToken={currentToken}
                 />
               </Tab>
               <Tab tabKey={"withdraw"} title={"withdraw"}>
-                <Withdraw
-                  token={token}
+                <WithdrawIBC
+                  currentToken={currentToken}
                   secretjs={secretjs}
                   secretAddress={secretAddress}
-                  balances={balances}
-                  onSuccess={(txhash) => {
-                    console.log("success", txhash);
-                  }}
-                  onFailure={(error) => console.error(error)}
                 />
               </Tab>
             </Tabs>
-          </div> */}
+          </div>
         </Tab>
       </Tabs>
 

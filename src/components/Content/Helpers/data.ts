@@ -135,3 +135,32 @@ export async function getSnipBalance(
 
   return;
 }
+
+export async function getIBCBalance(
+  addressIBC: string,
+  currentToken: Token,
+  selectedChainIndex: number,
+  setBalanceIBC: React.Dispatch<React.SetStateAction<string>>,
+  setLoadingIBC: React.Dispatch<React.SetStateAction<boolean>>
+) {
+  setLoadingIBC(true);
+  const url = `${
+    ChainList[currentToken.deposits[selectedChainIndex].source_chain_name].lcd
+  }/bank/balances/${addressIBC}`;
+  try {
+    const response = await fetch(url);
+    const result: {
+      height: string;
+      result: Array<{ denom: string; amount: string }>;
+    } = await response.json();
+
+    const balance =
+      result.result.find(
+        (c) => c.denom === currentToken.deposits[selectedChainIndex].from_denom
+      )?.amount || "0";
+    setBalanceIBC(balance);
+    setLoadingIBC(false);
+  } catch (e) {
+    console.error(`Error while trying to query ${url}:`, e);
+  }
+}

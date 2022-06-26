@@ -72,7 +72,12 @@ export async function unwrap({
   loadingUnwrap,
   setLoadingUnwrap,
 }: wrappedProps) {
-  if (loadingWrap || loadingUnwrap || wrapInputRef?.current?.value === "") {
+  if (
+    !secretjs ||
+    loadingWrap ||
+    loadingUnwrap ||
+    wrapInputRef?.current?.value === ""
+  ) {
     return;
   }
   const baseAmount = wrapInputRef?.current?.value;

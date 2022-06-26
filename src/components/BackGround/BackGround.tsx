@@ -10,7 +10,7 @@ const getBackground = (token: string) => {
       return "#231C28";
     case TokenNames.lunc:
       return "#29230A";
-    case TokenNames.ust:
+    case TokenNames.ustc:
       return "#111D31";
     case TokenNames.osmo:
       return "#2D0028";
@@ -19,7 +19,7 @@ const getBackground = (token: string) => {
     case TokenNames.huahua:
       return "#30220D";
     case TokenNames.juno:
-      return "#f0827d";
+      return "#683936";
     case TokenNames.akt:
       return "#310F09";
     case TokenNames.luna:
@@ -28,6 +28,8 @@ const getBackground = (token: string) => {
       return "#012EA7";
     case TokenNames.evmos:
       return "#ED4F32";
+    default:
+      return "#151A20";
   }
 };
 

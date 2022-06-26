@@ -1,7 +1,7 @@
 import { StdFee } from "@cosmjs/stargate";
 import { Bech32Address } from "@keplr-wallet/cosmos";
-import { Keplr } from "@keplr-wallet/types";
-import { Token, TokenOptions, TokensList } from "./config";
+import { TokensList } from "./config";
+import { Token, TokenOptions, SuggestedChain } from "./types";
 
 export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -23,8 +23,8 @@ export function getCurrentToken(tokenOptions: TokenOptions): Token {
   )!;
 }
 
-export async function suggestTerraToKeplr(keplr: Keplr) {
-  await keplr.experimentalSuggestChain({
+export const SuggestedChains: { [chain_name: string]: SuggestedChain } = {
+  TERRA: {
     rpc: "https://rpc-columbus.keplr.app",
     rest: "https://lcd-columbus.keplr.app",
     chainId: "columbus-5",
@@ -73,5 +73,43 @@ export async function suggestTerraToKeplr(keplr: Keplr) {
       high: 0.015,
     },
     features: ["stargate", "ibc-transfer", "no-legacy-stdTx"],
-  });
-}
+  },
+  HUAHUA: {
+    rpc: "https://rpc.chihuahua.wtf/",
+    rest: "https://api.chihuahua.wtf/",
+    chainId: "chihuahua-1",
+    chainName: "Chihuahua",
+    stakeCurrency: {
+      coinDenom: "HUAHUA",
+      coinMinimalDenom: "uhuahua",
+      coinDecimals: 6,
+      coinGeckoId: "chihuahua-chain",
+    },
+    bip44: {
+      coinType: 118,
+    },
+    bech32Config: Bech32Address.defaultBech32Config("chihuahua"),
+    currencies: [
+      {
+        coinDenom: "HUAHUA",
+        coinMinimalDenom: "uhuahua",
+        coinDecimals: 6,
+        coinGeckoId: "pool:uhuahua",
+      },
+    ],
+    feeCurrencies: [
+      {
+        coinDenom: "HUAHUA",
+        coinMinimalDenom: "uhuahua",
+        coinDecimals: 6,
+        coinGeckoId: "pool:uhuahua",
+      },
+    ],
+    gasPriceStep: {
+      low: 0.025,
+      average: 0.03,
+      high: 0.035,
+    },
+    features: ["stargate", "ibc-transfer", "no-legacy-stdTx"],
+  },
+};

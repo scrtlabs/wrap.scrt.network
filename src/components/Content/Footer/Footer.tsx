@@ -1,5 +1,5 @@
-import { StyledFooter } from './styled';
-import { socialIcons } from '../../../assets/images';
+import { StyledFooter } from "./styled";
+import { socialIcons } from "../../../assets/images";
 
 export function Footer() {
   return (
@@ -10,9 +10,9 @@ export function Footer() {
       <a href="https://twitter.com/SecretNetwork" target="_blank">
         <img src={socialIcons.twitter} alt="twitter" />
       </a>
-      <a href="https://github.com/scrtlabs/" target="_blank">
+      <a href="https://github.com/scrtlabs/wrap.scrt.network" target="_blank">
         <img src={socialIcons.git} alt="git" />
       </a>
     </StyledFooter>
-  )
+  );
 }

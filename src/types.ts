@@ -1,14 +1,15 @@
 export enum TokenNames {
   scrt = "SCRT",
   atom = "ATOM",
+  lunc = "LUNC",
+  ustc = "USTC",
   osmo = "OSMO",
   dvpn = "DVPN",
-  huahua = "HUAHUA",
   juno = "JUNO",
+  huahua = "HUAHUA",
   akt = "AKT",
-  lunc = "LUNC",
-  ust = "UST",
   evmos = "EVMOS",
+  stars = "STARS",
   gravity = "GRAV",
   luna = "LUNA",
 }
@@ -89,4 +90,45 @@ export type Chain = {
   explorer_account: string;
   /** explorer link for txs */
   explorer_tx?: string;
+};
+
+export type SuggestedChain = {
+  /** rpc url of the chain */
+  rpc: string;
+  /** lcd url of the chain */
+  rest: string;
+  /** chain-id of the chain */
+  chainId: string;
+  /** display name of the chain */
+  chainName: string;
+  /** Information on the staking token of the chain */
+  stakeCurrency: {
+    coinDenom: string;
+    coinMinimalDenom: string;
+    coinDecimals: number;
+    coinGeckoId: string;
+  };
+  /** BIP44 coin type for address derivation */
+  bip44: {
+    coinType: number;
+  };
+  bech32Config: object;
+  currencies: {
+    coinDenom: string;
+    coinMinimalDenom: string;
+    coinDecimals: number;
+    coinGeckoId: string;
+  }[];
+  feeCurrencies: {
+    coinDenom: string;
+    coinMinimalDenom: string;
+    coinDecimals: number;
+    coinGeckoId: string;
+  }[];
+  gasPriceStep: {
+    low: number;
+    average: number;
+    high: number;
+  };
+  features: string[];
 };

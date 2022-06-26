@@ -13,6 +13,8 @@ interface WrappedTokenProps {
   secretjs: SecretNetworkClient | null;
   secretAddress: string;
   tokenPrice: number;
+  loadingWrap: boolean;
+  loadingUnwrap: boolean;
 }
 
 export const UnwrappedToken = ({
@@ -20,13 +22,15 @@ export const UnwrappedToken = ({
   secretjs,
   secretAddress,
   tokenPrice,
+  loadingWrap,
+  loadingUnwrap,
 }: WrappedTokenProps) => {
   const [tokenBalance, setTokenBalance] = useState<string>("0");
   const [loadingTokenBalance, setLoadingTokenBalance] =
     useState<boolean>(false);
 
   useEffect(() => {
-    let interval: ReturnType<typeof setInterval>;
+    // let interval: ReturnType<typeof setInterval>;
     if (secretjs && secretAddress) {
       getTokenBalance(
         currentToken,
@@ -34,21 +38,21 @@ export const UnwrappedToken = ({
         setTokenBalance,
         setLoadingTokenBalance
       );
-      interval = setInterval(() => {
-        getTokenBalance(
-          currentToken,
-          secretAddress,
-          setTokenBalance,
-          setLoadingTokenBalance
-        );
-      }, 6000);
+      // interval = setInterval(() => {
+      //   getTokenBalance(
+      //     currentToken,
+      //     secretAddress,
+      //     setTokenBalance,
+      //     setLoadingTokenBalance
+      //   );
+      // }, 6000);
     }
 
     return () => {
       setTokenBalance("0");
-      clearInterval(interval);
+      // clearInterval(interval);
     };
-  }, [currentToken, secretjs, secretAddress]);
+  }, [currentToken, secretjs, secretAddress, loadingWrap, loadingUnwrap]);
   return (
     <StyledWrapElem>
       <div className="img-wrap">
@@ -81,13 +85,15 @@ export const WrappedToken = ({
   secretjs,
   secretAddress,
   tokenPrice,
+  loadingWrap,
+  loadingUnwrap,
 }: WrappedTokenProps) => {
   const [snipBalance, setSnipBalance] = useState<string>("0");
   const [loadingSnipBalance, setLoadingSnipBalances] = useState<boolean>(false);
   const [viewKeyError, setViewKeyError] = useState<boolean>(false);
 
   useEffect(() => {
-    let interval: ReturnType<typeof setInterval>;
+    // let interval: ReturnType<typeof setInterval>;
 
     if (secretjs && secretAddress) {
       getSnipBalance(
@@ -98,23 +104,23 @@ export const WrappedToken = ({
         setViewKeyError,
         setLoadingSnipBalances
       );
-      interval = setInterval(() => {
-        getSnipBalance(
-          currentToken,
-          secretjs,
-          secretAddress,
-          setSnipBalance,
-          setViewKeyError,
-          setLoadingSnipBalances
-        );
-      }, 6000);
+      // interval = setInterval(() => {
+      //   getSnipBalance(
+      //     currentToken,
+      //     secretjs,
+      //     secretAddress,
+      //     setSnipBalance,
+      //     setViewKeyError,
+      //     setLoadingSnipBalances
+      //   );
+      // }, 6000);
     }
 
     return () => {
       setSnipBalance("0");
-      clearInterval(interval);
+      // clearInterval(interval);
     };
-  }, [currentToken, secretjs, secretAddress]);
+  }, [currentToken, secretjs, secretAddress, loadingWrap, loadingUnwrap]);
 
   const viewKeyHandler = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.preventDefault();
