@@ -55,13 +55,15 @@ export const DepositIBC = ({ secretAddress, currentToken }: DepositProps) => {
   }, [currentToken, targetChain]);
 
   useEffect(() => {
-    getIBCBalance(
-      addressIBC,
-      currentToken,
-      selectedChainIndex,
-      setBalanceIBC,
-      setLoadingBalanceIBC
-    );
+    if (addressIBC) {
+      getIBCBalance(
+        addressIBC,
+        currentToken,
+        selectedChainIndex,
+        setBalanceIBC,
+        setLoadingBalanceIBC
+      );
+    }
   }, [addressIBC]);
 
   return (

@@ -5,6 +5,8 @@ import { Content } from "./components/Content/Content";
 import { mergeStateType, TokenNames, TokenOptions, Token } from "./types";
 import { tokenIcons } from "./assets/images";
 import { getCurrentToken } from "./commons";
+import "react-toastify/dist/ReactToastify.min.css";
+import { ToastContainer, toast } from "react-toastify";
 
 declare global {
   interface Window extends KeplrWindow {}
@@ -39,6 +41,7 @@ function App() {
     <div className="App">
       <Background activeToken={tokenOptions.name} />
       <Content currentToken={currentToken} mergeState={mergeState} />
+      <ToastContainer theme="colored" />
     </div>
   );
 }

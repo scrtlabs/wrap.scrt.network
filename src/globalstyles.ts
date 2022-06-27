@@ -1,26 +1,27 @@
-import { createGlobalStyle } from "styled-components"
-import MonsterRatRegular from './assets/fonts/Montserrat-Regular.ttf'
-import MonsterRatSemiBold from './assets/fonts/Montserrat-SemiBold.ttf'
-import MonsterRatBold from './assets/fonts/Montserrat-Bold.ttf'
-import Hind from './assets/fonts/Hind-Regular.ttf'
+import { createGlobalStyle } from "styled-components";
+import MonsterRatRegular from "./assets/fonts/Montserrat-Regular.ttf";
+import MonsterRatSemiBold from "./assets/fonts/Montserrat-SemiBold.ttf";
+import MonsterRatBold from "./assets/fonts/Montserrat-Bold.ttf";
+import Hind from "./assets/fonts/Hind-Regular.ttf";
 
 export const theme = {
   colors: {
-    main_bg: '#040506',
-    bg: '#1A2128',
-    active_bg: '#303C4A',
-    grey: '#B2BFCD',
-    white: '#FFFFFF',
-    orange: '#EB8045',
-    grow: '#3CDC68',
-    alert: '#BA363C',
+    main_bg: "#040506",
+    bg: "#1A2128",
+    active_bg: "#303C4A",
+    grey: "#B2BFCD",
+    white: "#FFFFFF",
+    orange: "#EB8045",
+    grow: "#3CDC68",
+    alert: "#BA363C",
+    blue: "#60A0DC",
   },
   fonts: {
-    hind_regular: 'Hind Regular',
-    monsterRat_regular: 'Montserrat Regular',
-    monsterRat_semiBold: 'Montserrat SemiBold',
-    monsterRat_Bold: 'Montserrat Bold',
-  }
+    hind_regular: "Hind Regular",
+    monsterRat_regular: "Montserrat Regular",
+    monsterRat_semiBold: "Montserrat SemiBold",
+    monsterRat_Bold: "Montserrat Bold",
+  },
 };
 
 export const GlobalStyle = createGlobalStyle`
@@ -96,4 +97,16 @@ export const GlobalStyle = createGlobalStyle`
     background: ${theme.colors.active_bg};
     border-radius: 10px;
   }
-`
+  
+  :root{
+    --toastify-color-info: ${theme.colors.active_bg};
+    --toastify-color-success: ${theme.colors.blue};
+    --toastify-color-error: ${theme.colors.orange};
+  }
+
+  p.toastify-err{
+    background: ${theme.colors.white}
+    color: ${theme.colors.active_bg}
+
+  }
+`;

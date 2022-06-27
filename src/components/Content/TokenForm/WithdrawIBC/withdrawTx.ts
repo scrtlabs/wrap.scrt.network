@@ -4,6 +4,7 @@ import { Token, Chain } from "../../../../types";
 import { gasToFee } from "../../../../commons";
 import { getIBCBalance, getTokenBalance } from "../../Helpers/data";
 import React from "react";
+import { notification } from "../../../../commons";
 
 export async function withdrawTx(
   secretjs: SecretNetworkClient | null,
@@ -56,16 +57,30 @@ export async function withdrawTx(
     );
     if (tx.code === 0) {
       inputRef.current.value = "";
+
+      getTokenBalance(
+        currentToken,
+        secretAddress,
+        setTokenBalance,
+        setLoadingTokenBalance
+      );
+      notification(`Succesfully withdrew ${currentToken.name}`, "success");
+      return;
+    } else {
+      inputRef.current.value = "";
+      getTokenBalance(
+        currentToken,
+        secretAddress,
+        setTokenBalance,
+        setLoadingTokenBalance
+      );
+      notification(`Succesfully withdrew ${currentToken.name}`, "success");
+      return;
     }
+  } catch (err) {
+    notification(`Error withdrawing ${currentToken.name}`, "error");
+    return;
   } finally {
     setLoadingWithdrawal(false);
-    getTokenBalance(
-      currentToken,
-      secretAddress,
-      setTokenBalance,
-      setLoadingTokenBalance
-    );
-
-    return;
   }
 }

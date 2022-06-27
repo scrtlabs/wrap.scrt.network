@@ -2,11 +2,29 @@ import { StdFee } from "@cosmjs/stargate";
 import { Bech32Address } from "@keplr-wallet/cosmos";
 import { TokensList } from "./config";
 import { Token, TokenOptions, SuggestedChain } from "./types";
-
+import { toast, ToastOptions, ToastContent } from "react-toastify";
+import React from "react";
 export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
 export const gasPriceUscrt = 0.25;
+
+export const notification = (msg: string, type: "success" | "error") => {
+  const config: ToastOptions = {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: false,
+    progress: undefined,
+  };
+  if (type === "error") {
+    toast.error(msg, config);
+  } else {
+    toast.success(msg, config);
+  }
+};
 
 export function gasToFee(gas: number): StdFee {
   return {

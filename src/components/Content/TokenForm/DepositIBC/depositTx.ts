@@ -4,6 +4,7 @@ import { Token, Chain } from "../../../../types";
 import { gasToFee } from "../../../../commons";
 import { getIBCBalance } from "../../Helpers/data";
 import React from "react";
+import { notification } from "../../../../commons";
 
 export async function depositTx(
   cosmjs: SigningStargateClient | null,
@@ -18,13 +19,24 @@ export async function depositTx(
   setBalanceIBC: React.Dispatch<React.SetStateAction<string>>,
   setLoadingBalanceIBC: React.Dispatch<React.SetStateAction<boolean>>
 ) {
-  if (!cosmjs || loadingDeposit || inputRef?.current?.value === "") {
+  if (!cosmjs) {
+    notification(`Error no ${currentToken.name} client found.`, "error");
+    return;
+  }
+  if (loadingDeposit) {
+    notification("Waiting for prior Tx to finish.", "error");
+    return;
+  }
+
+  if (inputRef?.current?.value === "") {
+    notification("Amount field is empty.", "error");
     return;
   }
 
   const normalizedAmount = (inputRef.current.value as string).replace(/,/g, "");
   if (!(Number(normalizedAmount) > 0)) {
-    console.error(`${normalizedAmount} not bigger than 0`);
+    console.error();
+    notification(`${normalizedAmount} not bigger than 0`, "error");
     return;
   }
   setLoadingDeposit(true);
@@ -32,10 +44,11 @@ export async function depositTx(
   const amount = new BigNumber(normalizedAmount)
     .multipliedBy(`1e${currentToken.decimals}`)
     .toFixed(0, BigNumber.ROUND_DOWN);
+
   const { deposit_channel_id, deposit_gas } = targetChain;
 
   try {
-    const { transactionHash } = await cosmjs.sendIbcTokens(
+    const tx = await cosmjs.sendIbcTokens(
       addressIBC,
       secretAddress,
       {
@@ -48,9 +61,21 @@ export async function depositTx(
       Math.floor(Date.now() / 1000) + 15 * 60, // 15 minute timeout
       gasToFee(deposit_gas)
     );
-    inputRef.current.value = "";
+
+    if (tx.code === 0) {
+      inputRef.current.value = "";
+      notification(`Succesfully deposited ${currentToken.name}`, "success");
+      return;
+    } else {
+      notification(
+        ` Failed to execute deposit Tx for ${currentToken.name}`,
+        "error"
+      );
+    }
+  } catch (err) {
+    notification(`Error depositing ${currentToken.name}`, "error");
+    return;
   } finally {
-    setLoadingDeposit(false);
     getIBCBalance(
       addressIBC,
       currentToken,
@@ -58,6 +83,6 @@ export async function depositTx(
       setBalanceIBC,
       setLoadingBalanceIBC
     );
-    return;
+    setLoadingDeposit(false);
   }
 }

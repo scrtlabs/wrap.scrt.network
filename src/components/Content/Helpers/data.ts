@@ -3,6 +3,7 @@ import { Token } from "../../../types";
 import { getKeplrViewingKey } from "./keplr";
 import { SecretNetworkClient } from "secretjs";
 import React from "react";
+import { notification } from "../../../commons";
 
 export function getPrice(
   currentToken: Token,
@@ -83,13 +84,17 @@ export function getTokenBalance(
         (t: { denom: string; amount: string }) => t.denom === denom.from_denom
       );
       if (!balance) {
-        setLoadingTokenBalance(false);
         setTokenBalance("0");
         return;
       }
-      setLoadingTokenBalance(false);
       setTokenBalance(balance.amount);
       return;
+    })
+    .catch((err) => {
+      notification(`Error getting balance for ${currentToken.name}`, "error");
+    })
+    .finally(() => {
+      setLoadingTokenBalance(false);
     });
 }
 
@@ -101,8 +106,10 @@ export async function getSnipBalance(
   setViewKeyError: React.Dispatch<React.SetStateAction<boolean>>,
   setLoadingSnipBalance: React.Dispatch<React.SetStateAction<boolean>>
 ) {
-  if (!secretjs) return;
-
+  if (!secretjs) {
+    notification("Error no secret client found.", "error");
+    return;
+  }
   setLoadingSnipBalance(true);
 
   const key: any = await getKeplrViewingKey(currentToken.address);
@@ -111,29 +118,35 @@ export async function getSnipBalance(
     setViewKeyError(true);
     return;
   }
+
   setViewKeyError(false);
 
-  const result: { balance: { amount: string } } =
-    await secretjs.query.compute.queryContract({
-      contractAddress: currentToken.address,
-      codeHash: currentToken.code_hash,
-      query: {
-        balance: {
-          address: secretAddress,
-          key: key,
+  try {
+    const result: { balance: { amount: string } } =
+      await secretjs.query.compute.queryContract({
+        contractAddress: currentToken.address,
+        codeHash: currentToken.code_hash,
+        query: {
+          balance: {
+            address: secretAddress,
+            key: key,
+          },
         },
-      },
-    });
+      });
+    if (result.viewing_key_error) {
+      notification(result.viewing_key_error.msg, "error");
+      setViewKeyError(true);
+      return;
+    }
 
-  if (result.viewing_key_error) {
-    setLoadingSnipBalance(false);
-    setViewKeyError(true);
+    setSnipBalance(result.balance.amount);
+
     return;
+  } catch {
+    notification(`Error getting balance for s${currentToken.name}.`, "error");
+  } finally {
+    setLoadingSnipBalance(false);
   }
-  setLoadingSnipBalance(false);
-  setSnipBalance(result.balance.amount);
-
-  return;
 }
 
 export async function getIBCBalance(
@@ -153,14 +166,18 @@ export async function getIBCBalance(
       height: string;
       result: Array<{ denom: string; amount: string }>;
     } = await response.json();
-
     const balance =
       result.result.find(
         (c) => c.denom === currentToken.deposits[selectedChainIndex].from_denom
       )?.amount || "0";
     setBalanceIBC(balance);
-    setLoadingIBC(false);
   } catch (e) {
-    console.error(`Error while trying to query ${url}:`, e);
+    notification(
+      `Error getting token balance for ${currentToken.name}.`,
+      "error"
+    );
+    setBalanceIBC("0");
+  } finally {
+    setLoadingIBC(false);
   }
 }

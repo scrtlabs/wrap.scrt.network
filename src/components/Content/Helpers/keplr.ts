@@ -1,24 +1,34 @@
 import { SecretNetworkClient } from "secretjs";
 import React from "react";
 import { ChainList } from "../../../config";
+import { notification } from "../../../commons";
 
 export async function setKeplrViewingKey(
   token: string,
   setViewKeyError: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   if (!window.keplr) {
+    notification("Error: Keplr not found.", "error");
     return;
   }
-
-  await window.keplr.suggestToken(ChainList["Secret Network"].chain_id, token);
-  setViewKeyError(false);
-  return;
+  try {
+    await window.keplr.suggestToken(
+      ChainList["Secret Network"].chain_id,
+      token
+    );
+    setViewKeyError(false);
+    return;
+  } catch (err) {
+    notification("Error adding Viewing Key to Keplr.", "error");
+    return;
+  }
 }
 
 export async function getKeplrViewingKey(
   token: string
 ): Promise<string | null> {
   if (!window.keplr) {
+    notification("Error: Keplr not found.", "error");
     return null;
   }
 
@@ -27,7 +37,11 @@ export async function getKeplrViewingKey(
       ChainList["Secret Network"].chain_id,
       token
     );
-  } catch (e) {
+  } catch (err) {
+    notification(
+      "Error retrieving Viewing Key from Keplr. Set Viewing Key.",
+      "error"
+    );
     return null;
   }
 }
@@ -41,28 +55,31 @@ export async function setupKeplr(
     !window.getEnigmaUtils ||
     !window.getOfflineSignerOnlyAmino
   ) {
+    notification("Error: Keplr not found.", "error");
     return;
   }
 
-  await window.keplr.enable(ChainList["Secret Network"].chain_id);
-
-  const keplrOfflineSigner = window.getOfflineSignerOnlyAmino(
-    ChainList["Secret Network"].chain_id
-  );
-  const accounts = await keplrOfflineSigner.getAccounts();
-
-  const secretAddress = accounts[0].address;
-
-  const secretjs = await SecretNetworkClient.create({
-    grpcWebUrl: ChainList["Secret Network"].rpc,
-    chainId: ChainList["Secret Network"].chain_id,
-    wallet: keplrOfflineSigner,
-    walletAddress: secretAddress,
-    encryptionUtils: window.getEnigmaUtils(
+  try {
+    await window.keplr.enable(ChainList["Secret Network"].chain_id);
+    const keplrOfflineSigner = window.getOfflineSignerOnlyAmino(
       ChainList["Secret Network"].chain_id
-    ),
-  });
-
-  setSecretAddress(secretAddress);
-  setSecretjs(secretjs);
+    );
+    const accounts = await keplrOfflineSigner.getAccounts();
+    const secretAddress = accounts[0].address;
+    const secretjs = await SecretNetworkClient.create({
+      grpcWebUrl: ChainList["Secret Network"].rpc,
+      chainId: ChainList["Secret Network"].chain_id,
+      wallet: keplrOfflineSigner,
+      walletAddress: secretAddress,
+      encryptionUtils: window.getEnigmaUtils(
+        ChainList["Secret Network"].chain_id
+      ),
+    });
+    setSecretAddress(secretAddress);
+    setSecretjs(secretjs);
+    return;
+  } catch (err) {
+    notification("Error connecting to Keplr.", "error");
+    return;
+  }
 }
