@@ -61,7 +61,8 @@ export async function withdrawTx(
       {
         gasLimit: 50_000,
         gasPriceInFeeDenom: 0.0125,
-        feeDenom: "uosmo",
+        feeDenom: "uscrt",
+        memo: "",
       }
     );
     if (tx.code === 0) {

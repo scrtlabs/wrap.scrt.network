@@ -18,7 +18,6 @@ export function Content({ mergeState, currentToken }: ContentProps) {
   const [secretAddress, setSecretAddress] = useState<string>("");
 
   useEffect(() => {
-    console.log("test");
     window.addEventListener("keplr_keystorechange", () => {
       notification("Keplr Account changed.", "success");
       setSecretjs(null);
