@@ -384,11 +384,10 @@ export const ChainList: { [chain_name: string]: Chain } = {
     withdraw_gas: 0,
     chain_id: "secret-4",
     bech32_prefix: "secret",
-    lcd: "https://api.scrt.network/",
-    rpc: "https://grpc-web.scrt.network", // gRPC-web
-    chain_image: tokenIcons.scrt,
-    explorer_account:
-      "https://secretnodes.com/secret/chains/secret-4/accounts/",
+    lcd: "https://api.roninventures.io",
+    rpc: "https://web-rpc.roninventures.io", // gRPC-web
+    chain_image: "/scrt.svg",
+    explorer_account: "https://www.mintscan.io/secret/account/",
   },
   "Cosmos Hub": {
     chain_name: "Cosmos Hub",
@@ -399,8 +398,8 @@ export const ChainList: { [chain_name: string]: Chain } = {
     chain_id: "cosmoshub-4",
     bech32_prefix: "cosmos",
     lcd: "https://lcd-cosmoshub.keplr.app",
-    rpc: "https://rpc.atomscan.com/",
-    chain_image: tokenIcons.atom,
+    rpc: "https://cosmoshub.validator.network",
+    chain_image: "/atom.jpg",
     explorer_account: "https://www.mintscan.io/cosmos/account/",
   },
   "Terra Classic": {
@@ -463,9 +462,9 @@ export const ChainList: { [chain_name: string]: Chain } = {
     withdraw_gas: 30_000,
     chain_id: "chihuahua-1",
     bech32_prefix: "chihuahua",
-    lcd: "https://api.chihuahua.wtf/",
-    rpc: "https://rpc.chihuahua.wtf/",
-    chain_image: tokenIcons.huahua,
+    lcd: "https://api.chihuahua.wtf",
+    rpc: "https://rpc.chihuahua.wtf",
+    chain_image: "/huahua.jpg",
     explorer_account: "https://ping.pub/chihuahua/account/",
   },
 };
