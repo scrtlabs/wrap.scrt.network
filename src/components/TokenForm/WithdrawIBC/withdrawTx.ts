@@ -1,8 +1,7 @@
 import { SecretNetworkClient, MsgTransfer } from "secretjs";
 import { BigNumber } from "bignumber.js";
 import { Token, Chain } from "../../../types";
-import { gasToFee } from "../../../commons";
-import { getIBCBalance, getTokenBalance } from "../../Helpers/data";
+import { getTokenBalance } from "../../Helpers/data";
 import React from "react";
 import { notification } from "../../../commons";
 
@@ -62,6 +61,7 @@ export async function withdrawTx(
       {
         gasLimit: 50_000,
         gasPriceInFeeDenom: 0.0125,
+        feeDenom: "uosmo",
       }
     );
     if (tx.code === 0) {
