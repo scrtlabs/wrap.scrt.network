@@ -4,7 +4,6 @@ import { TokensList } from "./config";
 import { Token, TokenOptions } from "./types";
 import { ChainInfo } from "@keplr-wallet/types";
 import { toast, ToastOptions } from "react-toastify";
-import React from "react";
 export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
