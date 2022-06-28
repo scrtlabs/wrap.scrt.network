@@ -12,6 +12,7 @@ export const StyledToken = styled.div`
     width: 32px;
     height: 32px;
     transition: 0.1s;
+    cursor: pointer;
     &:hover ~ .soon {
       visibility: visible;
     }
