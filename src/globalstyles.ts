@@ -102,6 +102,7 @@ export const GlobalStyle = createGlobalStyle`
     --toastify-color-info: ${theme.colors.active_bg};
     --toastify-color-success: ${theme.colors.blue};
     --toastify-color-error: ${theme.colors.orange};
+    --swiper-navigation-color: ${theme.colors.orange}
   }
 
   p.toastify-err{

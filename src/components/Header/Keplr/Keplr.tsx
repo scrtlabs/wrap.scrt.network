@@ -1,11 +1,10 @@
 import React, { useRef, useState } from "react";
 import { SecretNetworkClient } from "secretjs";
 import { StyledKeplr } from "./styled";
-import { rootIcons } from "../../../../assets/images";
+import { rootIcons } from "../../../assets/images";
 import { cutString, handleCopyClick } from "../../Helpers/format";
-import copy from "../../../../assets/images/copy.svg";
+import copy from "../../../assets/images/copy.svg";
 import { setupKeplr } from "../../Helpers/keplr";
-import { toast } from "react-toastify";
 
 export interface KeplrProps {
   secretjs: SecretNetworkClient | null;

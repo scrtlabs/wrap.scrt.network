@@ -1,6 +1,6 @@
-import { rootIcons, tokenIcons } from "../../../../assets/images";
+import { rootIcons, tokenIcons } from "../../../assets/images";
 import { StyledWrapElem } from "./styled";
-import { Token, TokenOptions } from "../../../../types";
+import { Token } from "../../../types";
 import { useEffect, useState } from "react";
 import { SecretNetworkClient } from "secretjs";
 import { getTokenBalance, getSnipBalance } from "../../Helpers/data";

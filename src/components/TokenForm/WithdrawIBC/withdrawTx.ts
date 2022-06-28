@@ -1,10 +1,10 @@
 import { SecretNetworkClient, MsgTransfer } from "secretjs";
 import { BigNumber } from "bignumber.js";
-import { Token, Chain } from "../../../../types";
-import { gasToFee } from "../../../../commons";
+import { Token, Chain } from "../../../types";
+import { gasToFee } from "../../../commons";
 import { getIBCBalance, getTokenBalance } from "../../Helpers/data";
 import React from "react";
-import { notification } from "../../../../commons";
+import { notification } from "../../../commons";
 
 export async function withdrawTx(
   secretjs: SecretNetworkClient | null,
@@ -19,7 +19,17 @@ export async function withdrawTx(
   setTokenBalance: React.Dispatch<React.SetStateAction<string>>,
   setLoadingTokenBalance: React.Dispatch<React.SetStateAction<boolean>>
 ) {
-  if (!secretjs || loadingWithdrawal || inputRef?.current?.value === "") {
+  if (!secretjs) {
+    notification(`Error no ${currentToken.name} client found.`, "error");
+    return;
+  }
+  if (loadingWithdrawal) {
+    notification("Waiting for prior Tx to finish.", "error");
+    return;
+  }
+
+  if (inputRef?.current?.value === "") {
+    notification("Amount field is empty.", "error");
     return;
   }
   const normalizedAmount = (inputRef.current.value as string).replace(/,/g, "");
@@ -50,9 +60,8 @@ export async function withdrawTx(
         }),
       ],
       {
-        gasLimit: withdraw_gas,
-        gasPriceInFeeDenom: 0.25,
-        feeDenom: "uscrt",
+        gasLimit: 50_000,
+        gasPriceInFeeDenom: 0.0125,
       }
     );
     if (tx.code === 0) {

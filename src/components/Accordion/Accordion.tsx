@@ -17,19 +17,11 @@ export const Accordion: FC<AccordionProps> = ({
   isOpen,
 }) => {
   const contentRef = useRef<HTMLDivElement>(null);
-  const [contentHeight, setContentHeight] = useState<number>(0);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      setContentHeight(contentRef.current.offsetHeight);
-    }
-  }, []);
 
   return (
     <StyledAccordionWrapper
       onClick={() => toggleAccordion(idx)}
       isOpenAccordion={isOpen}
-      contentHeight={contentHeight}
     >
       <div className="accordion">
         <div className="question-wrapper">
@@ -40,10 +32,10 @@ export const Accordion: FC<AccordionProps> = ({
         </div>
       </div>
       <div className="content">
-        <span className="divider" />
-        <p className="answer" ref={contentRef}>
-          {answer}
-        </p>
+        <div ref={contentRef}>
+          <span className="divider" />
+          <p className="answer">{answer}</p>
+        </div>
       </div>
     </StyledAccordionWrapper>
   );

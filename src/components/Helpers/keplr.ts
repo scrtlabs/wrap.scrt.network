@@ -1,7 +1,7 @@
 import { SecretNetworkClient } from "secretjs";
 import React from "react";
-import { ChainList } from "../../../config";
-import { notification } from "../../../commons";
+import { ChainList } from "../../config";
+import { notification } from "../../commons";
 
 export async function setKeplrViewingKey(
   token: string,

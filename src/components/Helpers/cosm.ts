@@ -1,7 +1,7 @@
 import { SigningStargateClient } from "@cosmjs/stargate";
-import { Chain, Token } from "../../../types";
-import { gasToFee, sleep, SuggestedChains } from "../../../commons";
-import { notification } from "../../../commons";
+import { Chain, Token } from "../../types";
+import { gasToFee, sleep, SuggestedChains } from "../../commons";
+import { notification } from "../../commons";
 
 export async function setupCosmjs(
   setCosmjs: React.Dispatch<React.SetStateAction<SigningStargateClient | null>>,

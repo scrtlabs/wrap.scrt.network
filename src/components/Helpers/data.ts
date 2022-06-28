@@ -1,9 +1,9 @@
-import { ChainList } from "../../../config";
-import { Token } from "../../../types";
+import { ChainList } from "../../config";
+import { Token } from "../../types";
 import { getKeplrViewingKey } from "./keplr";
 import { SecretNetworkClient } from "secretjs";
 import React from "react";
-import { notification } from "../../../commons";
+import { notification } from "../../commons";
 
 export function getPrice(
   currentToken: Token,

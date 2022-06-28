@@ -1,5 +1,5 @@
 import { StyledButton } from "./styled";
-import { Loader } from "../Content/Loader/Loader";
+import { Loader } from "../Loader/Loader";
 
 interface ButtonProps {
   text: string;

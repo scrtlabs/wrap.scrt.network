@@ -1,5 +1,5 @@
 import { StyledFooter } from "./styled";
-import { socialIcons } from "../../../assets/images";
+import { socialIcons } from "../../assets/images";
 
 export function Footer() {
   return (

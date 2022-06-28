@@ -1,47 +1,38 @@
-import { ChainList } from "../../../../config";
-import { Token, Chain } from "../../../../types";
-import { SecretNetworkClient } from "secretjs";
-import { DropDownMenu } from "../../../DropDownMenu/DropDownMenu";
+import { DropDownMenu } from "../../DropDownMenu/DropDownMenu";
+import { Token, Chain } from "../../../types";
+import { ChainList } from "../../../config";
 import { CopyableAddress } from "../CopyableAddress/CopyableAddress";
-import { SigningStargateClient } from "@cosmjs/stargate";
-import { Button } from "../../../Button/Button";
+import { Button } from "../../Button/Button";
 import { useEffect, useRef, useState } from "react";
+import { SigningStargateClient } from "@cosmjs/stargate";
+import { depositTx } from "./depositTx";
+import { getIBCBalance } from "../../Helpers/data";
 import { fixedBalance } from "../../Helpers/format";
-import { getIBCBalance, getTokenBalance } from "../../Helpers/data";
 import { setupCosmjs } from "../../Helpers/cosm";
-import { withdrawTx } from "./withdrawTx";
 import { Loader } from "../../Loader/Loader";
 
-interface WithdrawProps {
-  currentToken: Token;
-  secretjs: SecretNetworkClient | null;
+interface DepositProps {
   secretAddress: string;
+  currentToken: Token;
 }
 
-export const WithdrawIBC = ({
-  currentToken,
-  secretjs,
-  secretAddress,
-}: WithdrawProps) => {
+export const DepositIBC = ({ secretAddress, currentToken }: DepositProps) => {
   const [addressIBC, setAdressIBC] = useState<string>("");
   const [balanceIBC, setBalanceIBC] = useState<string>("0");
-  const [tokenBalance, setTokenBalance] = useState<string>("0");
 
-  const [loadingWithdrawal, setLoadingWithdrawal] = useState<boolean>(false);
-  const [loadingTokenBalance, setLoadingTokenBalance] =
-    useState<boolean>(false);
+  const [loadingDeposit, setLoadingDeposit] = useState<boolean>(false);
+  const [loadingBalanceIBC, setLoadingBalanceIBC] = useState<boolean>(false);
+
   const [cosmjs, setCosmjs] = useState<SigningStargateClient | null>(null);
   const [selectedChainIndex, setSelectedChainIndex] = useState<number>(0);
-
-  const inputRef = useRef<any>();
 
   const [targetChain, setTargetChain] = useState<Chain>(
     ChainList[currentToken.deposits[0].source_chain_name]
   );
+  const inputRef = useRef<any>();
 
   useEffect(() => {
     setBalanceIBC("0");
-    currentToken;
     if (currentToken.name !== "SCRT") {
       setSelectedChainIndex(0);
       setupCosmjs(
@@ -49,12 +40,6 @@ export const WithdrawIBC = ({
         setAdressIBC,
         ChainList[currentToken.deposits[0].source_chain_name],
         currentToken
-      );
-      getTokenBalance(
-        currentToken,
-        secretAddress,
-        setTokenBalance,
-        setLoadingTokenBalance
       );
     } else {
       setupCosmjs(
@@ -70,49 +55,55 @@ export const WithdrawIBC = ({
   }, [currentToken, targetChain]);
 
   useEffect(() => {
-    getTokenBalance(
-      currentToken,
-      secretAddress,
-      setTokenBalance,
-      setLoadingTokenBalance
-    );
+    if (addressIBC) {
+      getIBCBalance(
+        addressIBC,
+        currentToken,
+        selectedChainIndex,
+        setBalanceIBC,
+        setLoadingBalanceIBC
+      );
+    }
   }, [addressIBC]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div className="deposit-block">
-        <p>Withdraw {currentToken.name} to</p>
+        <p>Deposit {currentToken.name} from</p>
         {currentToken.name === "SCRT" ? (
           <DropDownMenu
             currentToken={currentToken}
             selectedChainIndex={selectedChainIndex}
             setSelectedChainIndex={setSelectedChainIndex}
             setTargetChain={setTargetChain}
-            tab={"withdrawals"}
+            tab={"deposits"}
           />
         ) : (
-          <span className="one">{targetChain!.chain_name}</span>
+          <span className="one">
+            {ChainList[currentToken.deposits[0].source_chain_name].chain_name}
+          </span>
         )}
       </div>
 
       <CopyableAddress
         title="From"
-        address={secretAddress}
-        prefix={ChainList["Secret Network"].explorer_account}
-      />
-      <CopyableAddress
-        title="To"
         address={addressIBC}
         prefix={targetChain!.explorer_account}
       />
+      <CopyableAddress
+        title="To"
+        address={secretAddress}
+        prefix={ChainList["Secret Network"].explorer_account}
+      />
+
       <div className="available">
         <span className="title">Available Balance:</span>
         <span className="cash">
-          {loadingTokenBalance ? (
+          {loadingBalanceIBC ? (
             <Loader />
           ) : (
-            <span className="available-withdrawal">
-              {`${fixedBalance(tokenBalance, currentToken.decimals)} ${
+            <span className="available-deposit">
+              {`${fixedBalance(balanceIBC, currentToken.decimals)} ${
                 currentToken.name
               }`}
             </span>
@@ -121,28 +112,28 @@ export const WithdrawIBC = ({
       </div>
 
       <div className="amount">
-        <input ref={inputRef} placeholder="Amount to Withdraw" />
+        <input ref={inputRef} placeholder="Amount to Deposit" />
         <img src={currentToken.image} alt="amount" />
       </div>
 
       <Button
         action={() => {
           currentToken.name === "SCRT"
-            ? withdrawTx(
-                secretjs,
+            ? depositTx(
+                cosmjs,
                 inputRef,
                 targetChain,
                 addressIBC,
                 secretAddress,
                 currentToken,
                 selectedChainIndex,
-                loadingWithdrawal,
-                setLoadingWithdrawal,
-                setTokenBalance,
-                setLoadingTokenBalance
+                loadingDeposit,
+                setLoadingDeposit,
+                setBalanceIBC,
+                setLoadingBalanceIBC
               )
-            : withdrawTx(
-                secretjs,
+            : depositTx(
+                cosmjs,
                 inputRef,
                 ChainList[
                   currentToken.deposits[selectedChainIndex].source_chain_name
@@ -151,14 +142,14 @@ export const WithdrawIBC = ({
                 secretAddress,
                 currentToken,
                 selectedChainIndex,
-                loadingWithdrawal,
-                setLoadingWithdrawal,
-                setTokenBalance,
-                setLoadingTokenBalance
+                loadingDeposit,
+                setLoadingDeposit,
+                setBalanceIBC,
+                setLoadingBalanceIBC
               );
         }}
-        text={"withdraw"}
-        isLoading={loadingWithdrawal}
+        text={"deposit"}
+        isLoading={loadingDeposit}
       />
     </div>
   );

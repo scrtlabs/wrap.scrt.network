@@ -1,7 +1,7 @@
 import { MsgExecuteContract, SecretNetworkClient } from "secretjs";
-import { Token } from "../../../../types";
+import { Token } from "../../../types";
 import { BigNumber } from "bignumber.js";
-import { notification } from "../../../../commons";
+import { notification } from "../../../commons";
 
 interface wrappedProps {
   secretjs: SecretNetworkClient;
@@ -69,12 +69,13 @@ export async function wrap({
     );
     if (tx.code === 0) {
       wrapInputRef.current.value = "";
-      setLoadingWrap(false);
       notification(`Succesfully wrapped ${currentToken.name}`, "success");
       return;
     }
   } catch (err) {
     notification(`Error wrapping ${currentToken.name}`, "error");
+  } finally {
+    setLoadingWrap(false);
   }
 }
 
@@ -139,11 +140,13 @@ export async function unwrap({
     );
     if (tx.code === 0) {
       wrapInputRef.current.value = "";
-      setLoadingUnwrap(false);
+
       notification(`Succesfully unwrapped ${currentToken.name}`, "success");
       return;
     }
   } catch (err) {
     notification(`Error unwrapping ${currentToken.name}`, "error");
+  } finally {
+    setLoadingUnwrap(false);
   }
 }

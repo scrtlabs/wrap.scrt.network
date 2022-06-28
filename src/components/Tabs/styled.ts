@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-
+import styled from "styled-components";
 
 export const StyledTabs = styled.div`
   width: 100%;
@@ -26,7 +25,7 @@ export const StyledTabs = styled.div`
     white-space: nowrap;
     display: flex;
     font-family: ${({ theme }) => theme.fonts.hind_regular};
-    margin-bottom: 24px;
+    margin-bottom: 18px;
     @media (max-width: 576px) {
       margin-bottom: 15px;
     }
@@ -40,7 +39,7 @@ export const StyledTabs = styled.div`
       border-radius: 10px;
       cursor: pointer;
       width: 50%;
-      transition: .3s;
+      transition: 0.3s;
 
       & span {
         margin-top: 2px;
@@ -52,7 +51,7 @@ export const StyledTabs = styled.div`
       height: 100%;
     }
   }
-  
+
   .tab-content {
     width: 100%;
   }

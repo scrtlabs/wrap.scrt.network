@@ -13,6 +13,50 @@ export const StyledTokenForm = styled.div`
     padding: 15px;
   }
 
+  & .swiper {
+    & .swiper-pagination {
+      & .swiper-pagination-bullet {
+        opacity: 1;
+        background: ${({ theme }) => theme.colors.active_bg};
+      }
+      & .swiper-pagination-bullet-active {
+        opacity: 1;
+        background: ${({ theme }) => theme.colors.orange};
+      }
+    }
+    & .swiper-wrapper {
+      & .swiper-slide {
+        justify-content: center;
+        align-items: flex-start;
+        display: flex;
+      }
+    }
+    & .swiper-button-prev {
+      top: 4px;
+      left: 0;
+      width: auto;
+      height: auto;
+      margin: 0;
+
+      :after {
+        font-size: 24px;
+        line-height: 24px;
+      }
+    }
+    & .swiper-button-next {
+      right: 0;
+      width: auto;
+      height: auto;
+      margin: 0;
+      top: 4px;
+      order: 2;
+
+      :after {
+        font-size: 24px;
+        line-height: 24px;
+      }
+    }
+  }
   & .wrapped-elems {
     display: flex;
     justify-content: space-between;

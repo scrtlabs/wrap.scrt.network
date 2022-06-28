@@ -1,10 +1,10 @@
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { BigNumber } from "bignumber.js";
-import { Token, Chain } from "../../../../types";
-import { gasToFee } from "../../../../commons";
+import { Token, Chain } from "../../../types";
+import { gasToFee } from "../../../commons";
 import { getIBCBalance } from "../../Helpers/data";
 import React from "react";
-import { notification } from "../../../../commons";
+import { notification } from "../../../commons";
 
 export async function depositTx(
   cosmjs: SigningStargateClient | null,

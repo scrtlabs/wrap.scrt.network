@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { SecretNetworkClient } from "secretjs";
 import { StyledContent } from "./styled";
-import { Header } from "./Header/Header";
-import { GetPrivacy } from "./GetPrivacy/GetPrivacy";
-import { TokenForm } from "./TokenForm/TokenForm";
-import { Footer } from "./Footer/Footer";
+import { Header } from "../Header/Header";
+import { GetPrivacy } from "../GetPrivacy/GetPrivacy";
+import { TokenForm } from "../TokenForm/TokenForm";
+import { Footer } from "../Footer/Footer";
 import { mergeStateType, Token } from "../../types";
 
 interface ContentProps {

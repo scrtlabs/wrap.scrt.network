@@ -1,33 +1,43 @@
-import React, { useState } from 'react';
-import { StyledTabs } from './styled';
+import React, { useState } from "react";
+import { StyledTabs } from "./styled";
 
 interface TabsProps {
-  children: JSX.Element[],
-  currentTab?: string,
-  isDivider?: boolean,
-  disableTabsOnchange?: boolean,
-  setErrorBtnClass?: (er: string) => void,
+  children: JSX.Element[];
+  currentTab?: string;
+  isDivider?: boolean;
+  disableTabsOnchange?: boolean;
+  setErrorBtnClass?: (er: string) => void;
 }
 
-export const Tabs = ({ children, currentTab, isDivider = false, disableTabsOnchange = false, setErrorBtnClass = () => {} }: TabsProps) => {
-  const [activeTab, setActiveTab] = useState<string>(currentTab || children[0].props.tabKey);
+export const Tabs = ({
+  children,
+  currentTab,
+  isDivider = false,
+  disableTabsOnchange = false,
+  setErrorBtnClass = () => {},
+}: TabsProps) => {
+  const [activeTab, setActiveTab] = useState<string>(
+    currentTab || children[0].props.tabKey
+  );
   const onClickTabItem = (tab: string) => {
-    if (disableTabsOnchange){
-      setErrorBtnClass('error')
+    if (disableTabsOnchange) {
+      setErrorBtnClass("error");
       setTimeout(() => {
-        setErrorBtnClass('')
-      }, 500)
-      return
+        setErrorBtnClass("");
+      }, 500);
+      return;
     }
     setActiveTab(tab);
-  }
+  };
 
   return (
     <StyledTabs>
       <ul className="tab-list">
         {children.map(({ props: { tabKey, title } }) => (
           <li
-            className={`tab-list-item ${activeTab === tabKey ? 'tab-list-active' : ''}`}
+            className={`tab-list-item ${
+              activeTab === tabKey ? "tab-list-active" : ""
+            }`}
             key={tabKey}
             onClick={() => onClickTabItem(tabKey)}
           >
@@ -36,7 +46,7 @@ export const Tabs = ({ children, currentTab, isDivider = false, disableTabsOncha
         ))}
       </ul>
 
-      {isDivider && <div className="divider"/>}
+      {isDivider && <div className="divider" />}
 
       <div className="tab-content">
         {children.map((child) => {
@@ -48,9 +58,9 @@ export const Tabs = ({ children, currentTab, isDivider = false, disableTabsOncha
 };
 
 interface TabProps {
-  children: JSX.Element | JSX.Element[],
-  tabKey: string,
-  title: string,
+  children: JSX.Element | JSX.Element[];
+  tabKey: string;
+  title: string;
 }
 
 export const Tab = ({ children, tabKey, title }: TabProps) => <>{children}</>;

@@ -14,7 +14,8 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-toastify": "^9.0.5",
-    "secretjs": "^1.3.0-beta.6"
+    "secretjs": "^1.3.0-beta.6",
+    "swiper": "^8.2.5"
   },
   "devDependencies": {
     "@keplr-wallet/types": "0.8.13",

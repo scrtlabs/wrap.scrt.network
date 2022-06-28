@@ -1,5 +1,5 @@
 import { StyledHeader } from "./styled";
-import { rootIcons } from "../../../assets/images";
+import { rootIcons } from "../../assets/images";
 import { Keplr, KeplrProps } from "./Keplr/Keplr";
 
 export function Header({

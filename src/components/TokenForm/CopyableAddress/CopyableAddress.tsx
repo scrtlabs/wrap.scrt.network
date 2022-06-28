@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { StyledExchange } from "./styled";
 import { handleCopyClick } from "../../Helpers/format";
-import copy from "../../../../assets/images/copy.svg";
+import copy from "../../../assets/images/copy.svg";
 
 interface ExchangeProps {
   title: string;

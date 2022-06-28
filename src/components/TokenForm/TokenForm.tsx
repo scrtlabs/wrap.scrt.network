@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { StyledTokenForm } from "./styled";
-import { Tab, Tabs } from "../../Tabs/Tabs";
+import { Tab, Tabs } from "../Tabs/Tabs";
 import { UnwrappedToken, WrappedToken } from "./WrappedTokens/WrappedTokens";
 
-import { Button } from "../../Button/Button";
+import { Button } from "../Button/Button";
 import { Indicators } from "./Indicators/Indicators";
 
 import { TokenList } from "./TokenList/TokenList";
-import { TokensList } from "../../../config";
-import { mergeStateType, TokensMarketData, Token } from "../../../types";
-import { rootIcons } from "../../../assets/images";
+import { TokensList } from "../../config";
+import { mergeStateType, TokensMarketData, Token } from "../../types";
+import { rootIcons } from "../../assets/images";
 import { SecretNetworkClient } from "secretjs";
 import { setupKeplr } from "../Helpers/keplr";
 import { getPrice, getMarketData } from "../Helpers/data";

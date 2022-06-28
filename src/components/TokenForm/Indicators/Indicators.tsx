@@ -1,5 +1,5 @@
 import { StyledIndicators } from "./styled";
-import { rootIcons } from "../../../../assets/images";
+import { rootIcons } from "../../../assets/images";
 import { formatNumber, usdString } from "../../Helpers/format";
 import { Loader } from "../../Loader/Loader";
 
