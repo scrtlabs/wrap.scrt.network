@@ -48,7 +48,7 @@ export async function depositTx(
   const { deposit_channel_id, deposit_gas } = targetChain;
 
   try {
-    const tx = await cosmjs.sendIbcTokens(
+    const tx: any = await cosmjs.sendIbcTokens(
       addressIBC,
       secretAddress,
       {
@@ -58,7 +58,7 @@ export async function depositTx(
       "transfer",
       deposit_channel_id,
       undefined,
-      Math.floor(Date.now() / 1000) + 15 * 60, // 15 minute timeout
+      Math.floor(Date.now() / 1000) + 10 * 60, // 10 minute timeout
       gasToFee(deposit_gas)
     );
 

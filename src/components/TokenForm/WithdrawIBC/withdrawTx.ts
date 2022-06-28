@@ -56,7 +56,7 @@ export async function withdrawTx(
             amount,
             denom: currentToken.withdrawals[selectedChainIndex].from_denom,
           },
-          timeoutTimestampSec: String(Math.floor(Date.now() / 1000) + 15 * 60), // 15 minute timeout
+          timeoutTimestampSec: String(Math.floor(Date.now() / 1000) + 10 * 60), // 15 minute timeout
         }),
       ],
       {

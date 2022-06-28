@@ -122,17 +122,19 @@ export async function getSnipBalance(
   setViewKeyError(false);
 
   try {
-    const result: { balance: { amount: string } } =
-      await secretjs.query.compute.queryContract({
-        contractAddress: currentToken.address,
-        codeHash: currentToken.code_hash,
-        query: {
-          balance: {
-            address: secretAddress,
-            key: key,
-          },
+    const result: {
+      balance: { amount: string };
+      viewing_key_error: { msg: string };
+    } = await secretjs.query.compute.queryContract({
+      contractAddress: currentToken.address,
+      codeHash: currentToken.code_hash,
+      query: {
+        balance: {
+          address: secretAddress,
+          key: key,
         },
-      });
+      },
+    });
     if (result.viewing_key_error) {
       notification(result.viewing_key_error.msg, "error");
       setViewKeyError(true);

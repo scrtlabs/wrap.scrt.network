@@ -1,8 +1,9 @@
 import { StdFee } from "@cosmjs/stargate";
 import { Bech32Address } from "@keplr-wallet/cosmos";
 import { TokensList } from "./config";
-import { Token, TokenOptions, SuggestedChain } from "./types";
-import { toast, ToastOptions, ToastContent } from "react-toastify";
+import { Token, TokenOptions } from "./types";
+import { ChainInfo } from "@keplr-wallet/types";
+import { toast, ToastOptions } from "react-toastify";
 import React from "react";
 export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -41,7 +42,7 @@ export function getCurrentToken(tokenOptions: TokenOptions): Token {
   )!;
 }
 
-export const SuggestedChains: { [chain_name: string]: SuggestedChain } = {
+export const SuggestedChains: { [chain_name: string]: ChainInfo } = {
   TERRA: {
     rpc: "https://rpc-columbus.keplr.app",
     rest: "https://lcd-columbus.keplr.app",

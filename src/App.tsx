@@ -6,7 +6,7 @@ import { mergeStateType, TokenNames, TokenOptions, Token } from "./types";
 import { tokenIcons } from "./assets/images";
 import { getCurrentToken } from "./commons";
 import "react-toastify/dist/ReactToastify.min.css";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 declare global {
   interface Window extends KeplrWindow {}
