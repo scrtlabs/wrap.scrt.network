@@ -22,6 +22,7 @@ export const StyledWrapElem = styled.div`
     }
 
     & .big-img {
+      border-radius: 50%;
       width: 45px;
       height: 45px;
       @media (max-width: 576px) {

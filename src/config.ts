@@ -62,31 +62,6 @@ export const TokensList: Token[] = [
         from_denom:
           "ibc/EB2CED20AB0466F18BE49285E56B31306D4C60438A022EA995BA65D5E3CF7E09", // SCRT denom on Chihuahua
       },
-      // {
-      //   source_chain_name: "Akash",
-      //   from_denom:
-      //     "ibc/", // SCRT denom on Akash
-      // },
-      // {
-      //   source_chain_name: "EVMOS",
-      //   from_denom:
-      //     "ibc/DC74BE775F57FF32C3C6E14ACD86339DB50632246F6482C81CF5FCE64C0AC5C7", // SCRT denom on EVMOS
-      // },
-      // {
-      //   source_chain_name: "STARS",
-      //   from_denom:
-      //     "ibc/B55B08EF3667B0C6F029C2CC9CAA6B00788CF639EBB84B34818C85CBABA33ABD", // SCRT denom on Stargaze
-      // },
-      // {
-      //   source_chain_name: "GRAV",
-      //   from_denom:
-      //     "ibc/7907EA1A11FD4FC2A815FCAA54948C42F08E3F3C874EE48861386286FEB80160", // SCRT denom on Gravity Bridge
-      // },
-      // {
-      //   source_chain_name: "LUNA",
-      //   from_denom:
-      //     "ibc/10BD6ED30BA132AB96F146D71A23B46B2FC19E7D79F52707DC91F2F3A45040AD", // SCRT denom on Terra 2
-      // },
     ],
     withdrawals: [
       {
@@ -129,26 +104,6 @@ export const TokensList: Token[] = [
         target_chain_name: "Chihuahua",
         from_denom: "uscrt",
       },
-      // {
-      //   target_chain_name: "Akash",
-      //   from_denom: "uscrt",
-      // },
-      // {
-      //   target_chain_name: "Evmos",
-      //   from_denom: "uscrt",
-      // },
-      // {
-      //   target_chain_name: "Stargaze",
-      //   from_denom: "uscrt",
-      // },
-      // {
-      //   target_chain_name: "Gravity Bridge",
-      //   from_denom: "uscrt",
-      // },
-      // {
-      //   target_chain_name: "Terra 2",
-      //   from_denom: "uscrt",
-      // },
     ],
   },
   {
@@ -196,6 +151,96 @@ export const TokensList: Token[] = [
       },
     ],
   },
+
+  {
+    name: TokenNames.juno,
+    address: "secret1smmc5k24lcn4j2j8f3w0yaeafga6wmzl0qct03",
+    code_hash:
+      "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
+    image: tokenIcons.juno,
+    decimals: 6,
+    coingecko_id: "juno-network",
+    deposits: [
+      {
+        source_chain_name: "Juno",
+        from_denom: "ujuno",
+      },
+    ],
+    withdrawals: [
+      {
+        target_chain_name: "Juno",
+        from_denom:
+          "ibc/DF8D00B4B31B55AFCA9BAF192BC36C67AA06D9987DCB96490661BCAB63C27006", // JUNO denom on Secret
+      },
+    ],
+  },
+
+  {
+    name: TokenNames.luna,
+    address: "secret1w8d0ntrhrys4yzcfxnwprts7gfg5gfw86ccdpf",
+    code_hash:
+      "5a085bd8ed89de92b35134ddd12505a602c7759ea25fb5c089ba03c8535b3042",
+    image: tokenIcons.luna,
+    decimals: 6,
+    coingecko_id: "terra-luna-2",
+    deposits: [
+      {
+        source_chain_name: "Terra",
+        from_denom: "uluna",
+      },
+    ],
+    withdrawals: [
+      {
+        target_chain_name: "Terra",
+        from_denom:
+          "ibc/28DECFA7FB7E3AB58DC3B3AEA9B11C6C6B6E46356DCC26505205DAD3379984F5", // LUNA denom on Secret
+      },
+    ],
+  },
+  {
+    name: TokenNames.stars,
+    address: "secret1x0dqckf2khtxyrjwhlkrx9lwwmz44k24vcv2vv",
+    code_hash:
+      "5a085bd8ed89de92b35134ddd12505a602c7759ea25fb5c089ba03c8535b3042",
+    image: tokenIcons.stars,
+    decimals: 6,
+    coingecko_id: "stargaze",
+    deposits: [
+      {
+        source_chain_name: "Stargaze",
+        from_denom: "ustars",
+      },
+    ],
+    withdrawals: [
+      {
+        target_chain_name: "Stargaze",
+        from_denom:
+          "ibc/7EAE5BEF3A26B64AFBD89828AFDDB1DC7024A0276D22745201632C40E6E634D0", // STARS denom on Secret
+      },
+    ],
+  },
+  {
+    name: TokenNames.gravity,
+    address: "secret1x0dqckf2khtxyrjwhlkrx9lwwmz44k24vcv2vv",
+    code_hash:
+      "5a085bd8ed89de92b35134ddd12505a602c7759ea25fb5c089ba03c8535b3042",
+    image: tokenIcons.grav,
+    decimals: 6,
+    coingecko_id: "graviton",
+    deposits: [
+      {
+        source_chain_name: "Gravity Bridge",
+        from_denom: "ugraviton",
+      },
+    ],
+    withdrawals: [
+      {
+        target_chain_name: "Gravity Bridge",
+        from_denom:
+          "ibc/DEEF987757F80419CC651C8323ACD21D6C3D664E51B5E5A29B2663F5AD132A67", // GRAVITON denom on Secret
+      },
+    ],
+  },
   {
     name: TokenNames.dvpn,
     address: "secret1k8cge73c3nh32d4u0dsd5dgtmk63shtlrfscj5",
@@ -215,96 +260,6 @@ export const TokensList: Token[] = [
         target_chain_name: "Sentinel",
         from_denom:
           "ibc/E83107E876FF194B54E9AC3099E49DBB7728156F250ABD3E997D2B7E89E0810B",
-      },
-    ],
-  },
-
-  {
-    name: "JUNO",
-    address: "secret1smmc5k24lcn4j2j8f3w0yaeafga6wmzl0qct03",
-    code_hash:
-      "ad91060456344fc8d8e93c0600a3957b8158605c044b3bef7048510b3157b807",
-    image: "/juno.svg",
-    decimals: 6,
-    coingecko_id: "juno-network",
-    deposits: [
-      {
-        source_chain_name: "Juno",
-        from_denom: "ujuno",
-      },
-    ],
-    withdrawals: [
-      {
-        target_chain_name: "Juno",
-        from_denom:
-          "ibc/DF8D00B4B31B55AFCA9BAF192BC36C67AA06D9987DCB96490661BCAB63C27006", // JUNO denom on Secret
-      },
-    ],
-  },
-
-  {
-    name: "LUNA",
-    address: "secret1w8d0ntrhrys4yzcfxnwprts7gfg5gfw86ccdpf",
-    code_hash:
-      "5a085bd8ed89de92b35134ddd12505a602c7759ea25fb5c089ba03c8535b3042",
-    image: "/luna2.svg",
-    decimals: 6,
-    coingecko_id: "terra-luna-2",
-    deposits: [
-      {
-        source_chain_name: "Terra",
-        from_denom: "uluna",
-      },
-    ],
-    withdrawals: [
-      {
-        target_chain_name: "Terra",
-        from_denom:
-          "ibc/28DECFA7FB7E3AB58DC3B3AEA9B11C6C6B6E46356DCC26505205DAD3379984F5", // LUNA denom on Secret
-      },
-    ],
-  },
-  {
-    name: "STARS",
-    address: "secret1x0dqckf2khtxyrjwhlkrx9lwwmz44k24vcv2vv",
-    code_hash:
-      "5a085bd8ed89de92b35134ddd12505a602c7759ea25fb5c089ba03c8535b3042",
-    image: "/stars.webp",
-    decimals: 6,
-    coingecko_id: "stargaze",
-    deposits: [
-      {
-        source_chain_name: "Stargaze",
-        from_denom: "ustars",
-      },
-    ],
-    withdrawals: [
-      {
-        target_chain_name: "Stargaze",
-        from_denom:
-          "ibc/7EAE5BEF3A26B64AFBD89828AFDDB1DC7024A0276D22745201632C40E6E634D0", // STARS denom on Secret
-      },
-    ],
-  },
-  {
-    name: "GRAVITON",
-    address: "secret1x0dqckf2khtxyrjwhlkrx9lwwmz44k24vcv2vv",
-    code_hash:
-      "5a085bd8ed89de92b35134ddd12505a602c7759ea25fb5c089ba03c8535b3042",
-    image: "/grav.svg",
-    decimals: 6,
-    coingecko_id: "graviton",
-    deposits: [
-      {
-        source_chain_name: "Gravity Bridge",
-        from_denom: "ugraviton",
-      },
-    ],
-    withdrawals: [
-      {
-        target_chain_name: "Gravity Bridge",
-        from_denom:
-          "ibc/DEEF987757F80419CC651C8323ACD21D6C3D664E51B5E5A29B2663F5AD132A67", // GRAVITON denom on Secret
       },
     ],
   },
@@ -353,11 +308,11 @@ export const TokensList: Token[] = [
     ],
   },
   {
-    name: "HUAHUA",
+    name: TokenNames.huahua,
     address: "secret1ntvxnf5hzhzv8g87wn76ch6yswdujqlgmjh32w",
     code_hash:
       "182d7230c396fa8f548220ff88c34cb0291a00046df9ff2686e407c3b55692e9",
-    image: "/huahua.jpg",
+    image: tokenIcons.huahua,
     decimals: 6,
     coingecko_id: "chihuahua-chain",
     deposits: [
@@ -375,11 +330,11 @@ export const TokensList: Token[] = [
     ],
   },
   {
-    name: "EVMOS",
+    name: TokenNames.evmos,
     address: "", // "secret1grg9unv2ue8cf98t50ea45prce7gcrj2n232kq",
     code_hash:
       "5a085bd8ed89de92b35134ddd12505a602c7759ea25fb5c089ba03c8535b3042",
-    image: "/evmos.jpg",
+    image: tokenIcons.evmos,
     decimals: 18,
     coingecko_id: "evmos",
     deposits: [

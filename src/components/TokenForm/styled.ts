@@ -12,7 +12,30 @@ export const StyledTokenForm = styled.div`
   @media (max-width: 576px) {
     padding: 15px;
   }
+  & .swiper-button-prev {
+    top: 6px;
+    left: 0;
+    width: auto;
+    height: auto;
+    margin: 0;
+    :after {
+      font-size: 20px;
+      line-height: 20px;
+    }
+  }
+  & .swiper-button-next {
+    right: 0;
+    width: auto;
+    height: auto;
+    margin: 0;
+    top: 6px;
+    order: 2;
 
+    :after {
+      font-size: 20px;
+      line-height: 20px;
+    }
+  }
   & .swiper {
     & .swiper-pagination {
       & .swiper-pagination-bullet {
@@ -29,31 +52,6 @@ export const StyledTokenForm = styled.div`
         justify-content: center;
         align-items: flex-start;
         display: flex;
-      }
-    }
-    & .swiper-button-prev {
-      top: 4px;
-      left: 0;
-      width: auto;
-      height: auto;
-      margin: 0;
-
-      :after {
-        font-size: 24px;
-        line-height: 24px;
-      }
-    }
-    & .swiper-button-next {
-      right: 0;
-      width: auto;
-      height: auto;
-      margin: 0;
-      top: 4px;
-      order: 2;
-
-      :after {
-        font-size: 24px;
-        line-height: 24px;
       }
     }
   }
@@ -210,5 +208,13 @@ export const StyledTokenForm = styled.div`
       margin-top: 20px;
       max-width: 220px;
     }
+  }
+
+  .TokenList {
+    margin-top: 36px;
+    padding: 0 32px;
+    flex-grow: 1;
+    display: flex;
+    position: relative;
   }
 `;

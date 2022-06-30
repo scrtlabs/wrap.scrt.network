@@ -15,8 +15,6 @@ interface TokenListProps {
 const SwiperStyle = {
   width: "100%",
   height: "100%",
-  marginTop: "24px",
-  padding: "0px 24px",
 };
 
 export const TokenList = ({
@@ -25,33 +23,41 @@ export const TokenList = ({
   list,
 }: TokenListProps) => {
   return (
-    <Swiper
-      style={SwiperStyle}
-      navigation={true}
-      pagination={{
-        dynamicBullets: true,
-      }}
-      modules={[Navigation, Pagination]}
-      slidesPerView={7}
-      spaceBetween={40}
-    >
-      {list.map(({ name, image, address }) => {
-        const active = name === activeTokenName ? "active" : "";
-        return (
-          <SwiperSlide key={name}>
-            <StyledToken
-              className={`token-wrap ${active} ${address ? "" : "coming-soon"}`}
-              onClick={
-                address ? () => setTokenOptions({ name, image }) : () => {}
-              }
-            >
-              <img src={image} alt={name} />
-              <span className="name">{name}</span>
-              {!address && <span className="soon">soon 🤫</span>}
-            </StyledToken>
-          </SwiperSlide>
-        );
-      })}
-    </Swiper>
+    <div className="TokenList">
+      <div className="swiper-button-prev" />
+      <Swiper
+        style={SwiperStyle}
+        navigation={{
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        }}
+        pagination={{
+          dynamicBullets: true,
+        }}
+        modules={[Navigation, Pagination]}
+        slidesPerView={7}
+      >
+        {list.map(({ name, image, address }) => {
+          const active = name === activeTokenName ? "active" : "";
+          return (
+            <SwiperSlide key={name}>
+              <StyledToken
+                className={`token-wrap ${active} ${
+                  address ? "" : "coming-soon"
+                }`}
+                onClick={
+                  address ? () => setTokenOptions({ name, image }) : () => {}
+                }
+              >
+                <img src={image} alt={name} />
+                <span className="name">{name}</span>
+                {!address && <span className="soon">soon 🤫</span>}
+              </StyledToken>
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+      <div className="swiper-button-next" />
+    </div>
   );
 };

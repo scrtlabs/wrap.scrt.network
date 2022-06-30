@@ -16,11 +16,11 @@ export async function setKeplrViewingKey(
       ChainList["Secret Network"].chain_id,
       token
     );
-    setViewKeyError(false);
-    return;
   } catch (err) {
     notification("Error adding Viewing Key to Keplr.", "error");
     return;
+  } finally {
+    setViewKeyError(false);
   }
 }
 

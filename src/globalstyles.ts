@@ -73,11 +73,11 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   & .App {
-    min-height: 100vh;
+    height: 100vh;
     position: relative;
     background: ${theme.colors.main_bg};
+    overflow: hidden;
     @media (min-width: 1440px) {
-      width: 1440px;
       margin: 0 auto;
     }
   }

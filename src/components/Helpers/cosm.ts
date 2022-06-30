@@ -13,10 +13,10 @@ export async function setupCosmjs(
     notification("Error: Keplr not found.", "error");
     return;
   }
-
+  console.log(currentToken, SuggestedChains.hasOwnProperty(currentToken.name));
   try {
     if (["LUNC", "UST"].includes(currentToken.name.toUpperCase())) {
-      await window.keplr.experimentalSuggestChain(SuggestedChains.TERRA);
+      await window.keplr.experimentalSuggestChain(SuggestedChains.LUNC);
     } else if (SuggestedChains.hasOwnProperty(currentToken.name)) {
       await window.keplr.experimentalSuggestChain(
         SuggestedChains[currentToken.name]
