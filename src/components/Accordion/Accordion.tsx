@@ -5,6 +5,7 @@ interface AccordionProps {
   question: string;
   answer: string;
   idx: number;
+  link: string;
   toggleAccordion: (idx: number) => void;
   isOpen: boolean;
 }
@@ -13,6 +14,7 @@ export const Accordion: FC<AccordionProps> = ({
   question,
   answer,
   idx,
+  link,
   toggleAccordion,
   isOpen,
 }) => {
@@ -35,6 +37,9 @@ export const Accordion: FC<AccordionProps> = ({
         <div ref={contentRef}>
           <span className="divider" />
           <p className="answer">{answer}</p>
+          <a href={link} target="_blank">
+            Learn More
+          </a>
         </div>
       </div>
     </StyledAccordionWrapper>

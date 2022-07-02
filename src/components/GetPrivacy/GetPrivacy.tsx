@@ -27,13 +27,14 @@ export function GetPrivacy() {
       </div>
 
       <div className="questions-list">
-        {accordion.map(({ question, answer, isOpen }, idx) => (
+        {accordion.map(({ question, answer, isOpen, link }, idx) => (
           <Accordion
             question={question}
             answer={answer}
             isOpen={isOpen}
             key={idx}
             idx={idx}
+            link={link}
             toggleAccordion={toggleAccordion}
           />
         ))}

@@ -48,7 +48,7 @@ export const StyledAccordionWrapper = styled.div<{
       transition: max-height 0.35s ease-out;
       cursor: pointer;
       overflow: hidden;
-      max-height: ${({ isOpenAccordion }) => (isOpenAccordion ? "300px" : "0")};
+      max-height: ${({ isOpenAccordion }) => (isOpenAccordion ? "325px" : "0")};
       background: ${({ theme }) => theme.colors.bg};
       @media (max-width: 992px) {
         transition: height 0s;
@@ -64,10 +64,19 @@ export const StyledAccordionWrapper = styled.div<{
       }
 
       & .answer {
-        padding: 20px;
+        padding: 20px 20px 10px 20px;
         font-family: ${({ theme }) => theme.fonts.hind_regular};
         font-size: 16px;
         line-height: 24px;
+      }
+
+      & a {
+        color: ${({ theme }) => theme.colors.orange};
+        padding: 10px 20px 20px 20px;
+        font-family: Hind Regular;
+        font-size: 16px;
+        line-height: 24px;
+        display: block;
       }
     }
   }
