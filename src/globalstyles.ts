@@ -63,8 +63,6 @@ export const GlobalStyle = createGlobalStyle`
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-y: scroll;
-    overflow-x: hidden;
     min-height: 100vh;
   }
 

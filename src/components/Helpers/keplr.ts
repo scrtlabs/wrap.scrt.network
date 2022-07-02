@@ -5,7 +5,7 @@ import { notification } from "../../commons";
 
 export async function setKeplrViewingKey(
   token: string,
-  setViewKeyError: React.Dispatch<React.SetStateAction<boolean>>
+  setViewKeyError: React.Dispatch<React.SetStateAction<string>>
 ) {
   if (!window.keplr) {
     notification("Error: Keplr not found.", "error");
@@ -16,11 +16,12 @@ export async function setKeplrViewingKey(
       ChainList["Secret Network"].chain_id,
       token
     );
+    setViewKeyError("");
   } catch (err) {
     notification("Error adding Viewing Key to Keplr.", "error");
-    return;
+    setViewKeyError("Click to Set Viewing Key");
   } finally {
-    setViewKeyError(false);
+    return;
   }
 }
 

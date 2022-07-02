@@ -25,9 +25,13 @@ export const StyledTabs = styled.div`
     white-space: nowrap;
     display: flex;
     font-family: ${({ theme }) => theme.fonts.hind_regular};
-    margin-bottom: 18px;
+    margin-bottom: 12px;
     @media (max-width: 576px) {
       margin-bottom: 15px;
+    }
+
+    &[data-type="wrap"] {
+      margin-bottom: 18px;
     }
 
     & .tab-list-item {

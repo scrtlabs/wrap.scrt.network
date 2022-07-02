@@ -32,8 +32,12 @@ export async function wrap({
     return;
   }
 
-  if (wrapInputRef?.current?.value === "") {
-    notification("Amount field is empty.", "error");
+  console.log(wrapInputRef?.current?.value);
+  if (
+    wrapInputRef?.current?.value === "" ||
+    wrapInputRef?.current?.value === "0"
+  ) {
+    notification("Amount field is empty or 0.", "error");
     return;
   }
 

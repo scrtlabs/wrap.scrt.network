@@ -75,7 +75,7 @@ export const StyledWrapElem = styled.div`
       font-size: 14px;
       line-height: 22px;
       color: ${({ theme }) => theme.colors.grey};
-      cursor: pointer;
+
       @media (max-width: 576px) {
         font-size: 12px;
       }
@@ -91,7 +91,11 @@ export const StyledWrapElem = styled.div`
     }
 
     & .set-key {
-      color: ${({ theme }) => theme.colors.orange};
+      color: #ba363c;
+      cursor: pointer;
+    }
+    & .wrong-key {
+      color: #ba363c;
     }
   }
 `;

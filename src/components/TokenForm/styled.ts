@@ -9,6 +9,9 @@ export const StyledTokenForm = styled.div`
   background: ${({ theme }) => theme.colors.main_bg};
   display: flex;
   flex-direction: column;
+
+
+  }
   @media (max-width: 576px) {
     padding: 15px;
   }
@@ -69,16 +72,11 @@ export const StyledTokenForm = styled.div`
   & .count {
     height: 44px;
     width: 220px;
-    padding: 9px 0;
-    margin-top: 24px;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    background: ${({ theme }) => theme.colors.bg};
-    font-family: ${({ theme }) => theme.fonts.hind_regular};
-    font-size: 16px;
-    line-height: 26px;
-    border-radius: 10px;
+
     margin: 24px auto 0px auto;
     @media (max-width: 576px) {
       width: 100%;
@@ -86,9 +84,17 @@ export const StyledTokenForm = styled.div`
 
     & input {
       background: ${({ theme }) => theme.colors.bg};
-      color: ${({ theme }) => theme.colors.grey};
+      color: white;
       border: none;
       text-align: center;
+      background: ${({ theme }) => theme.colors.bg};
+      font-family: ${({ theme }) => theme.fonts.hind_regular};
+      font-size: 16px;
+      line-height: 26px;
+      border-radius: 10px;
+      height: 100%;
+      width: 100%;
+
       &:focus,
       &:hover {
         outline: none;
@@ -99,6 +105,7 @@ export const StyledTokenForm = styled.div`
   & .deposit-withdraw-tabs {
     & .tab-list {
       background: none;
+      margin-bottom: 6px;
 
       & .tab-list-item {
         width: auto;
@@ -110,6 +117,7 @@ export const StyledTokenForm = styled.div`
 
       & .tab-list-active {
         background: none;
+        text
       }
 
       & .tab-list-active span {
@@ -119,6 +127,7 @@ export const StyledTokenForm = styled.div`
 
     & .deposit-block {
       display: flex;
+      min-height: 44px;
       align-items: center;
       margin-bottom: 16px;
       white-space: nowrap;
@@ -167,7 +176,7 @@ export const StyledTokenForm = styled.div`
       padding: 10px;
       justify-content: space-between;
       align-items: center;
-      margin-top: 18px;
+      margin-top: 12px;
       align-self: center;
       width: 220px;
       & input {
@@ -205,7 +214,7 @@ export const StyledTokenForm = styled.div`
     }
 
     & button {
-      margin-top: 20px;
+      margin-top:16px;
       max-width: 220px;
     }
   }
@@ -216,5 +225,6 @@ export const StyledTokenForm = styled.div`
     flex-grow: 1;
     display: flex;
     position: relative;
+    z-index: 0;
   }
 `;

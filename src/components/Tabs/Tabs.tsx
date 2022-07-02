@@ -20,6 +20,7 @@ export const Tabs = ({
     currentTab || children[0].props.tabKey
   );
   const onClickTabItem = (tab: string) => {
+    console.log(tab);
     if (disableTabsOnchange) {
       setErrorBtnClass("error");
       setTimeout(() => {
@@ -32,7 +33,7 @@ export const Tabs = ({
 
   return (
     <StyledTabs>
-      <ul className="tab-list">
+      <ul className="tab-list" data-type={currentTab}>
         {children.map(({ props: { tabKey, title } }) => (
           <li
             className={`tab-list-item ${

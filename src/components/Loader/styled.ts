@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledLoader = styled.span`
   margin-left: 5px;
@@ -22,12 +22,16 @@ export const StyledLoader = styled.span`
 
   /* Indeterminate */
   .pure-material-progress-circular:indeterminate {
-    -webkit-mask-image: linear-gradient(transparent 50%, black 50%), linear-gradient(to right, transparent 50%, black 50%);
-    mask-image: linear-gradient(transparent 50%, black 50%), linear-gradient(to right, transparent 50%, black 50%);
-    animation: pure-material-progress-circular 6s infinite cubic-bezier(0.3, 0.6, 1, 1);
+    -webkit-mask-image: linear-gradient(transparent 50%, black 50%),
+      linear-gradient(to right, transparent 50%, black 50%);
+    mask-image: linear-gradient(transparent 50%, black 50%),
+      linear-gradient(to right, transparent 50%, black 50%);
+    animation: pure-material-progress-circular 6s infinite
+      cubic-bezier(0.3, 0.6, 1, 1);
   }
 
-  :-ms-lang(x), .pure-material-progress-circular:indeterminate {
+  :-ms-lang(x),
+  .pure-material-progress-circular:indeterminate {
     animation: none;
   }
 
@@ -43,7 +47,8 @@ export const StyledLoader = styled.span`
     width: 100% !important;
     height: 100%;
     background-color: transparent;
-    animation: pure-material-progress-circular-pseudo 0.75s infinite linear alternate;
+    animation: pure-material-progress-circular-pseudo 0.75s infinite linear
+      alternate;
   }
 
   .pure-material-progress-circular:indeterminate::-moz-progress-bar {
@@ -54,7 +59,8 @@ export const StyledLoader = styled.span`
     width: 100%;
     height: 100%;
     background-color: transparent;
-    animation: pure-material-progress-circular-pseudo 0.75s infinite linear alternate;
+    animation: pure-material-progress-circular-pseudo 0.75s infinite linear
+      alternate;
   }
 
   .pure-material-progress-circular:indeterminate::-ms-fill {
@@ -117,5 +123,4 @@ export const StyledLoader = styled.span`
       transform: rotate(225deg);
     }
   }
-
-`
+`;

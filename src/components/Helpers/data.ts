@@ -103,7 +103,7 @@ export async function getSnipBalance(
   secretjs: SecretNetworkClient | null,
   secretAddress: string,
   setSnipBalance: React.Dispatch<React.SetStateAction<string>>,
-  setViewKeyError: React.Dispatch<React.SetStateAction<boolean>>,
+  setViewKeyError: React.Dispatch<React.SetStateAction<string>>,
   setLoadingSnipBalance: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   if (!secretjs) {
@@ -113,13 +113,14 @@ export async function getSnipBalance(
   setLoadingSnipBalance(true);
 
   const key: any = await getKeplrViewingKey(currentToken.address);
+  console.log(key);
   if (!key) {
     setLoadingSnipBalance(false);
-    setViewKeyError(true);
+    setViewKeyError("Click to Set Viewing Key");
     return;
   }
 
-  setViewKeyError(false);
+  setViewKeyError("");
 
   try {
     const result: {
@@ -137,7 +138,11 @@ export async function getSnipBalance(
     });
     if (result.viewing_key_error) {
       notification(result.viewing_key_error.msg, "error");
-      setViewKeyError(true);
+      notification(
+        "Fix Viewing Key in Keplr or delete old viewing key. Then refresh.",
+        "error"
+      );
+      setViewKeyError("Wrong Viewing Key");
       return;
     }
 

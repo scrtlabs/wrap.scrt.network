@@ -90,7 +90,7 @@ export const WrappedToken = ({
 }: WrappedTokenProps) => {
   const [snipBalance, setSnipBalance] = useState<string>("0");
   const [loadingSnipBalance, setLoadingSnipBalances] = useState<boolean>(false);
-  const [viewKeyError, setViewKeyError] = useState<boolean>(false);
+  const [viewKeyError, setViewKeyError] = useState<string>("");
 
   useEffect(() => {
     // let interval: ReturnType<typeof setInterval>;
@@ -124,7 +124,10 @@ export const WrappedToken = ({
 
   const viewKeyHandler = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.preventDefault();
-    setKeplrViewingKey(currentToken.address, setViewKeyError);
+    if (viewKeyError === "Click to Set Viewing Key") {
+      setKeplrViewingKey(currentToken.address, setViewKeyError);
+    }
+    return;
   };
 
   return (
@@ -143,7 +146,16 @@ export const WrappedToken = ({
           </p>
           <div className="content">
             {viewKeyError ? (
-              <span onClick={viewKeyHandler}>Set Viewing Key</span>
+              <span
+                className={
+                  viewKeyError == "Click to Set Viewing Key"
+                    ? "set-key"
+                    : "wrong-key"
+                }
+                onClick={viewKeyHandler}
+              >
+                {viewKeyError}
+              </span>
             ) : (
               <span>
                 {usdString.format(

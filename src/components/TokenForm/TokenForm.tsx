@@ -123,7 +123,12 @@ export function TokenForm({
           </div>
 
           <div className="count">
-            <input type="number" placeholder="Amount" ref={wrapInputRef} />
+            <input
+              autoFocus
+              type="number"
+              placeholder="Amount"
+              ref={wrapInputRef}
+            />
           </div>
 
           {secretjs ? (
