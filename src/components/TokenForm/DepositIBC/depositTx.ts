@@ -35,7 +35,6 @@ export async function depositTx(
 
   const normalizedAmount = (inputRef.current.value as string).replace(/,/g, "");
   if (!(Number(normalizedAmount) > 0)) {
-    console.error();
     notification(`${normalizedAmount} not bigger than 0`, "error");
     return;
   }

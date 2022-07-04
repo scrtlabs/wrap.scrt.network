@@ -113,7 +113,6 @@ export async function getSnipBalance(
   setLoadingSnipBalance(true);
 
   const key: any = await getKeplrViewingKey(currentToken.address);
-  console.log(key);
   if (!key) {
     setLoadingSnipBalance(false);
     setViewKeyError("Click to Set Viewing Key");

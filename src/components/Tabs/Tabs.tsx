@@ -20,7 +20,6 @@ export const Tabs = ({
     currentTab || children[0].props.tabKey
   );
   const onClickTabItem = (tab: string) => {
-    console.log(tab);
     if (disableTabsOnchange) {
       setErrorBtnClass("error");
       setTimeout(() => {

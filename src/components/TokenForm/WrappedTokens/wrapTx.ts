@@ -31,8 +31,6 @@ export async function wrap({
     notification("Waiting for prior Tx to finish.", "error");
     return;
   }
-
-  console.log(wrapInputRef?.current?.value);
   if (
     wrapInputRef?.current?.value === "" ||
     wrapInputRef?.current?.value === "0"

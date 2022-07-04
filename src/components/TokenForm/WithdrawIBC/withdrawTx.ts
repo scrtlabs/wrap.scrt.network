@@ -33,7 +33,7 @@ export async function withdrawTx(
   }
   const normalizedAmount = (inputRef.current.value as string).replace(/,/g, "");
   if (!(Number(normalizedAmount) > 0)) {
-    console.error(`${normalizedAmount} not bigger than 0`);
+    notification(`Amount ${normalizedAmount} not bigger than 0`, "error");
     return;
   }
   setLoadingWithdrawal(true);
