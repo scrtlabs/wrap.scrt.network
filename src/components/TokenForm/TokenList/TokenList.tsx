@@ -26,6 +26,7 @@ export const TokenList = ({
     <div className="TokenList">
       <div className="swiper-button-prev" />
       <Swiper
+        allowTouchMove={false}
         style={SwiperStyle}
         navigation={{
           nextEl: ".swiper-button-next",

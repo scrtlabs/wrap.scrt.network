@@ -25,6 +25,6 @@ export const faqList = [
     answer:
       "Secret wrapped tokens (sTokens) are private, which means that only the owner may see and interact with their balances. A 'viewing key' is used to unencrypt Secret Wrapped tokens so that they may be viewed and interacted with. The wallet manages Viewing Keys, which may be imported or regenerated.",
     isOpen: false,
-    link: "https://docs.scrt.network/docs/development/secret-contracts/permissioned-viewing/viewing-keys",
+    link: "https://docs.scrt.network/docs/secret-network-overview/privacy-technology#viewing-keys",
   },
 ];

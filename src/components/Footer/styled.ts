@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledFooter = styled.div`
   display: flex;
@@ -12,8 +12,8 @@ export const StyledFooter = styled.div`
   @media (max-width: 576px) {
     margin: 30px 0;
   }
-  
+
   & a:nth-child(2) {
     margin: 0 20px;
   }
-`
+`;

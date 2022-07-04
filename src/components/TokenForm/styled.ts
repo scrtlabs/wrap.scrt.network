@@ -70,36 +70,51 @@ export const StyledTokenForm = styled.div`
   }
 
   & .count {
-    height: 44px;
-    width: 220px;
-
+    background: #1A2128;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    border-radius: 10px;
+    padding: 10px;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
-
     margin: 24px auto 0px auto;
+    -webkit-align-self: center;
+    -ms-flex-item-align: center;
+    align-self: center;
+    width: 220px;
     @media (max-width: 576px) {
       width: 100%;
     }
 
     & input {
-      background: ${({ theme }) => theme.colors.bg};
-      color: white;
-      border: none;
-      text-align: center;
-      background: ${({ theme }) => theme.colors.bg};
-      font-family: ${({ theme }) => theme.fonts.hind_regular};
-      font-size: 16px;
-      line-height: 26px;
-      border-radius: 10px;
-      height: 100%;
-      width: 100%;
+    background: #1A2128;
+    color: #B2BFCD;
+    font-size: 16px;
+    line-height: 24px;
+    font-family: Hind Regular;
+    max-width: 150px;
+    white-space: nowrap;
+    border: none;
 
       &:focus,
       &:hover {
         outline: none;
       }
     }
+  }
+
+  & img{
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
   }
 
   & .deposit-withdraw-tabs {
@@ -210,6 +225,7 @@ export const StyledTokenForm = styled.div`
       & img {
         width: 22px;
         height: 22px;
+        border-radius: 50%;
       }
     }
 

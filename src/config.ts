@@ -410,11 +410,11 @@ export const ChainList: { [chain_name: string]: Chain } = {
     bech32_prefix: "terra",
     lcd: "https://lcd.terra.dev",
     rpc: "http://terra-mainnet-rpc-node.allthatnode.com:26657/",
-    chain_image: tokenIcons.terra,
+    chain_image: tokenIcons.lunc,
     explorer_account: "https://finder.terra.money/mainnet/address/",
   },
   Terra: {
-    chain_name: "Terra",
+    chain_name: "Terra 2",
     deposit_channel_id: "channel-3",
     deposit_gas: 110_000,
     withdraw_channel_id: "channel-16",
@@ -423,7 +423,7 @@ export const ChainList: { [chain_name: string]: Chain } = {
     bech32_prefix: "terra",
     lcd: "https://terra-api.polkachu.com",
     rpc: "https://terra-rpc.polkachu.com",
-    chain_image: "/luna2.svg",
+    chain_image: tokenIcons.luna,
     explorer_account: "https://finder.terra.money/mainnet/address/",
   },
   Osmosis: {
@@ -488,7 +488,7 @@ export const ChainList: { [chain_name: string]: Chain } = {
     bech32_prefix: "evmos",
     lcd: "https://lcd.evmos.ezstaking.io",
     rpc: "https://rpc.evmos.ezstaking.io",
-    chain_image: "/evmos.jpg",
+    chain_image: tokenIcons.evmos,
     explorer_account: "https://www.mintscan.io/evmos/account/",
   },
   Stargaze: {
@@ -501,7 +501,7 @@ export const ChainList: { [chain_name: string]: Chain } = {
     bech32_prefix: "stars",
     lcd: "https://rest.stargaze-apis.com",
     rpc: "https://rpc.stargaze-apis.com",
-    chain_image: "/stars.webp",
+    chain_image: tokenIcons.stars,
     explorer_account: "https://www.mintscan.io/stargaze/account/",
   },
   "Gravity Bridge": {
@@ -514,7 +514,7 @@ export const ChainList: { [chain_name: string]: Chain } = {
     bech32_prefix: "gravity",
     lcd: "https://lcd.gravity-bridge.ezstaking.io",
     rpc: "https://rpc.gravity-bridge.ezstaking.io",
-    chain_image: "/grav.svg",
+    chain_image: tokenIcons.grav,
     explorer_account: "https://www.mintscan.io/gravity-bridge/account/",
   },
 };

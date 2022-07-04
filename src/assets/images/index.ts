@@ -22,7 +22,6 @@ import lunc from "./tokens/lunc.svg";
 import osmo from "./tokens/osmo.svg";
 import scrt from "./tokens/scrt.svg";
 import ustc from "./tokens/ust.svg";
-import terra from "./tokens/terra.png";
 import stars from "./tokens/stars.png";
 
 export const rootIcons = { grow, fall, keplr, logo, refresh, swap, copy };
@@ -40,6 +39,5 @@ export const tokenIcons = {
   osmo,
   scrt,
   ustc,
-  terra,
   stars,
 };

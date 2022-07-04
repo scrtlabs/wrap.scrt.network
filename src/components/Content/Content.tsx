@@ -7,6 +7,7 @@ import { TokenForm } from "../TokenForm/TokenForm";
 import { Footer } from "../Footer/Footer";
 import { mergeStateType, Token } from "../../types";
 import { notification } from "../../commons";
+import { setupKeplr } from "../Helpers/keplr";
 
 interface ContentProps {
   mergeState: mergeStateType;
@@ -19,9 +20,8 @@ export function Content({ mergeState, currentToken }: ContentProps) {
 
   useEffect(() => {
     window.addEventListener("keplr_keystorechange", () => {
-      notification("Keplr Account changed.", "success");
-      setSecretjs(null);
-      setSecretAddress("");
+      notification("Keplr account changed.", "success");
+      setupKeplr(setSecretjs, setSecretAddress);
     });
 
     return () =>

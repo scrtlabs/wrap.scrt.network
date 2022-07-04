@@ -94,6 +94,7 @@ export const StyledList = styled.div`
         width: 18px;
         height: 18px;
         margin-right: 10px;
+        border-radius: 50%;
       }
 
       &:first-child {
