@@ -10,6 +10,7 @@ import { getIBCBalance } from "../../Helpers/data";
 import { fixedBalance } from "../../Helpers/format";
 import { setupCosmjs } from "../../Helpers/cosm";
 import { Loader } from "../../Loader/Loader";
+import { rootIcons } from "../../../assets/images";
 
 interface DepositProps {
   secretAddress: string;
@@ -32,6 +33,7 @@ export const DepositIBC = ({ secretAddress, currentToken }: DepositProps) => {
   const inputRef = useRef<any>();
 
   useEffect(() => {
+    setAdressIBC("");
     setBalanceIBC("0");
     if (currentToken.name !== "SCRT") {
       setSelectedChainIndex(0);
@@ -109,6 +111,20 @@ export const DepositIBC = ({ secretAddress, currentToken }: DepositProps) => {
             </span>
           )}
         </span>
+        <img
+          className="refresh"
+          src={rootIcons.refresh}
+          alt="refresh"
+          onClick={() =>
+            getIBCBalance(
+              addressIBC,
+              currentToken,
+              selectedChainIndex,
+              setBalanceIBC,
+              setLoadingBalanceIBC
+            )
+          }
+        />
       </div>
 
       <div className="amount">

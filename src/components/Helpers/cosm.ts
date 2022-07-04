@@ -6,7 +6,7 @@ import { notification } from "../../commons";
 export async function setupCosmjs(
   setCosmjs: React.Dispatch<React.SetStateAction<SigningStargateClient | null>>,
   setAdressIBC: React.Dispatch<React.SetStateAction<string>>,
-  targetChain: Chain | null,
+  targetChain: Chain,
   currentToken: Token
 ) {
   if (!window.keplr || !window.getOfflineSignerOnlyAmino) {
@@ -14,12 +14,17 @@ export async function setupCosmjs(
     return;
   }
   try {
-    if (["LUNC", "USTC"].includes(currentToken.name.toUpperCase())) {
+    if (
+      ["LUNC", "USTC"].includes(currentToken.name.toUpperCase()) ||
+      targetChain?.chain_name === "Terra Classic"
+    ) {
       await window.keplr.experimentalSuggestChain(SuggestedChains.LUNC);
     } else if (SuggestedChains.hasOwnProperty(currentToken.name)) {
       await window.keplr.experimentalSuggestChain(
         SuggestedChains[currentToken.name]
       );
+    } else if (["Terra 2"].includes(targetChain.chain_name)) {
+      await window.keplr.experimentalSuggestChain(SuggestedChains.LUNA);
     }
   } catch (err) {
     notification("Error adding new network to Keplr", "error");

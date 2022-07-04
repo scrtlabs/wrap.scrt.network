@@ -174,9 +174,14 @@ export const StyledTokenForm = styled.div`
     }
 
     & .available {
+      display:flex;
       font-size: 16px;
       line-height: 24px;
       margin-top: 12px;
+      & .refresh{
+        margin-left: 12px;
+        cursor:pointer;
+      }
       & .title {
         font-family: ${({ theme }) => theme.fonts.hind_regular};
         margin-right: 12px;
