@@ -409,7 +409,7 @@ export const ChainList: { [chain_name: string]: Chain } = {
     chain_id: "columbus-5",
     bech32_prefix: "terra",
     lcd: "https://lcd.terra.dev",
-    rpc: "http://terra-mainnet-rpc-node.allthatnode.com:26657/",
+    rpc: "https://rpc-terra-ia.notional.ventures/",
     chain_image: tokenIcons.lunc,
     explorer_account: "https://finder.terra.money/mainnet/address/",
   },

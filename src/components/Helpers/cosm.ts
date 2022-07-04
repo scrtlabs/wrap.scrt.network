@@ -15,7 +15,7 @@ export async function setupCosmjs(
   }
   console.log(currentToken, SuggestedChains.hasOwnProperty(currentToken.name));
   try {
-    if (["LUNC", "UST"].includes(currentToken.name.toUpperCase())) {
+    if (["LUNC", "USTC"].includes(currentToken.name.toUpperCase())) {
       await window.keplr.experimentalSuggestChain(SuggestedChains.LUNC);
     } else if (SuggestedChains.hasOwnProperty(currentToken.name)) {
       await window.keplr.experimentalSuggestChain(
