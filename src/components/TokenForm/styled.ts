@@ -66,6 +66,9 @@ export const StyledTokenForm = styled.div`
     & .swap {
       margin: 0 12px;
       cursor: pointer;
+      width: inherit;
+      height: inherit;
+      border-radius: 0;
     }
   }
 
@@ -114,7 +117,6 @@ export const StyledTokenForm = styled.div`
   & img{
     width: 22px;
     height: 22px;
-    border-radius: 50%;
   }
 
   & .deposit-withdraw-tabs {
@@ -206,9 +208,6 @@ export const StyledTokenForm = styled.div`
         &:focus {
           outline: none;
         }
-        ::placeholder {
-          color: ${({ theme }) => theme.colors.grey};
-        }
       }
       & div {
         margin: 0 0 0 auto;
@@ -222,11 +221,7 @@ export const StyledTokenForm = styled.div`
           }
         }
       }
-      & img {
-        width: 22px;
-        height: 22px;
-        border-radius: 50%;
-      }
+
     }
 
     & button {

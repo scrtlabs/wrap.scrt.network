@@ -84,6 +84,7 @@ export const StyledWrapElem = styled.div`
     & .refresh {
       position: absolute;
       right: 0;
+      top: 0;
       width: 16px;
       height: 16px;
       margin-left: auto;

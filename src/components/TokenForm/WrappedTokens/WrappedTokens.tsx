@@ -66,6 +66,19 @@ export const UnwrappedToken = ({
           <p className="scrt">
             {fixedBalance(tokenBalance, currentToken.decimals)}
             <span>{` ${currentToken.name}`}</span>
+            <img
+              className="refresh"
+              src={rootIcons.refresh}
+              alt="refresh"
+              onClick={() =>
+                getTokenBalance(
+                  currentToken,
+                  secretAddress,
+                  setTokenBalance,
+                  setLoadingTokenBalance
+                )
+              }
+            />
           </p>
           <div className="content">
             <p>
@@ -143,6 +156,21 @@ export const WrappedToken = ({
           <p className="scrt">
             {fixedBalance(snipBalance, currentToken.decimals)} s
             <span>{currentToken.name}</span>
+            <img
+              className="refresh"
+              src={rootIcons.refresh}
+              alt="refresh"
+              onClick={async () =>
+                getSnipBalance(
+                  currentToken,
+                  secretjs,
+                  secretAddress,
+                  setSnipBalance,
+                  setViewKeyError,
+                  setLoadingSnipBalances
+                )
+              }
+            />
           </p>
           <div className="content">
             {viewKeyError ? (

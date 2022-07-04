@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledIndicators = styled.div`
   background: ${({ theme }) => theme.colors.bg};
@@ -32,6 +32,9 @@ export const StyledIndicators = styled.div`
     & .grow-img {
       margin-bottom: 1px;
       margin-left: 5px;
+      width: 12px;
+      height: 8px;
+      border-radius: 0;
     }
 
     & .fall {
@@ -44,4 +47,4 @@ export const StyledIndicators = styled.div`
       transform: rotate(180deg);
     }
   }
-`
+`;
