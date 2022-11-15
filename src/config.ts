@@ -560,6 +560,33 @@ export const tokens: Token[] = [
     ],
   },
   {
+    name: "stkd-SCRT",
+    is_snip20: true,
+    address: "secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4",
+    code_hash:
+      "f6be719b3c6feb498d3554ca0398eb6b7e7db262acb33f84a8f12106da6bbb09",
+    image: "/stkd-scrt.jpg",
+    decimals: 6,
+    coingecko_id: "stkd-scrt",
+    deposits: [
+      {
+        source_chain_name: "Osmosis",
+        from_denom:
+          "ibc/D0E5BF2940FB58D9B283A339032DE88111407AAD7D94A7F1F3EB78874F8616D4", // stkd-SCRT denom on Osmosis
+        channel_id: "channel-476",
+        gas: 130_000,
+      },
+    ],
+    withdrawals: [
+      {
+        target_chain_name: "Osmosis",
+        from_denom: "secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4",
+        channel_id: "channel-44",
+        gas: 350_000,
+      },
+    ],
+  },
+  {
     name: "SIENNA",
     is_snip20: true,
     address: "secret1rgm2m5t530tdzyd99775n6vzumxa5luxcllml4",
