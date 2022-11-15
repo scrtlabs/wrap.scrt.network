@@ -565,7 +565,7 @@ export const tokens: Token[] = [
     address: "secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4",
     code_hash:
       "f6be719b3c6feb498d3554ca0398eb6b7e7db262acb33f84a8f12106da6bbb09",
-    image: "/stkd-scrt.jpg",
+    image: "/stkd-scrt.svg",
     decimals: 6,
     coingecko_id: "stkd-scrt",
     deposits: [
