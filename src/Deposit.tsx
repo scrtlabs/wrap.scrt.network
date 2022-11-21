@@ -1,3 +1,4 @@
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import LoadingButton from "@mui/lab/LoadingButton";
 import {
@@ -51,8 +52,8 @@ export default function Deposit({
   const [sourceAddress, setSourceAddress] = useState<string>("");
   const [availableBalance, setAvailableBalance] = useState<string>("");
   const [loadingTx, setLoading] = useState<boolean>(false);
-  const [sourceCosmJs, setSourceCosmJs] =
-    useState<SigningStargateClient | null>(null);
+  const sourceCosmJsRef = useRef<
+		SigningCosmWasmClient | SigningStargateClient | null>(null);
   const [selectedChainIndex, setSelectedChainIndex] = useState<number>(0);
   const [fetchBalanceInterval, setFetchBalanceInterval] = useState<any>(null);
   const inputRef = useRef<any>();
@@ -67,18 +68,32 @@ export default function Deposit({
       chains[token.deposits[selectedChainIndex].source_chain_name].lcd
     }/cosmos/bank/v1beta1/balances/${sourceAddress}`;
     try {
-      const {
-        balances,
-      }: {
-        balances: Array<{ denom: string; amount: string }>;
-      } = await (await fetch(url)).json();
+      if ((token.deposits[selectedChainIndex].from_denom).startsWith('juno1')) {
+        if (!sourceCosmJsRef.current) {
+          return;
+        }
 
-      const balance =
-        balances.find(
-          (c) => c.denom === token.deposits[selectedChainIndex].from_denom
-        )?.amount || "0";
+        const result = await (sourceCosmJsRef.current as SigningCosmWasmClient).queryContractSmart(
+          token.deposits[selectedChainIndex].from_denom,
+          {
+            balance: { address: sourceAddress },
+          }
+        );
+        setAvailableBalance(result.balance);
+      } else {
+        const {
+          balances,
+        }: {
+          balances: Array<{ denom: string; amount: string }>;
+        } = await (await fetch(url)).json();
 
-      setAvailableBalance(balance);
+        const balance =
+          balances.find(
+            (c) => c.denom === token.deposits[selectedChainIndex].from_denom
+          )?.amount || "0";
+
+        setAvailableBalance(balance);
+      }
     } catch (e) {
       console.error(`Error while trying to query ${url}:`, e);
       setAvailableBalance("Error");
@@ -99,7 +114,7 @@ export default function Deposit({
     fetchSourceBalance(sourceAddress);
     const interval = setInterval(
       () => fetchSourceBalance(sourceAddress),
-      10_000
+      2_000
     );
     setFetchBalanceInterval(interval);
 
@@ -135,12 +150,22 @@ export default function Deposit({
       const sourceOfflineSigner = window.getOfflineSignerOnlyAmino(chain_id);
       const depositFromAccounts = await sourceOfflineSigner.getAccounts();
       setSourceAddress(depositFromAccounts[0].address);
-      const cosmjs = await SigningStargateClient.connectWithSigner(
-        rpc,
-        sourceOfflineSigner,
-        { prefix: bech32_prefix, broadcastPollIntervalMs: 10_000 }
-      );
-      setSourceCosmJs(cosmjs);
+
+      if ((token.deposits[selectedChainIndex].from_denom).startsWith('juno1')) {
+        const cosmjs = await SigningCosmWasmClient.connectWithSigner(
+          rpc,
+          sourceOfflineSigner,
+          { prefix: bech32_prefix, broadcastPollIntervalMs: 10_000 }
+        );
+        sourceCosmJsRef.current = cosmjs;
+      } else {
+        const cosmjs = await SigningStargateClient.connectWithSigner(
+          rpc,
+          sourceOfflineSigner,
+          { prefix: bech32_prefix, broadcastPollIntervalMs: 10_000 }
+        );
+        sourceCosmJsRef.current = cosmjs;
+      }
     })();
   }, [selectedChainIndex]);
 
@@ -343,7 +368,7 @@ export default function Deposit({
           }}
           loading={loadingTx}
           onClick={async () => {
-            if (!sourceCosmJs) {
+            if (!sourceCosmJsRef.current) {
               console.error("No cosmjs");
               return;
             }
@@ -398,20 +423,45 @@ export default function Deposit({
                 )
               ) {
                 // Regular cosmos chain (not ethermint signing)
-                const txResponse = await sourceCosmJs.sendIbcTokens(
-                  sourceAddress,
-                  secretAddress,
-                  {
-                    amount,
-                    denom: token.deposits[selectedChainIndex].from_denom,
-                  },
-                  "transfer",
-                  deposit_channel_id,
-                  undefined,
-                  Math.floor(Date.now() / 1000) + 10 * 60, // 10 minute timeout (sec)
-                  gasToFee(deposit_gas)
-                );
-                transactionHash = txResponse.transactionHash;
+                if ((token.deposits[selectedChainIndex].from_denom).startsWith('juno1')) {
+                  if (!sourceCosmJsRef.current) {
+                    return;
+                  }
+
+                  const txResponse = await (sourceCosmJsRef.current as SigningCosmWasmClient).execute(
+                    sourceAddress,
+                    token.deposits[selectedChainIndex].from_denom,
+                    {
+                      send: {
+                        contract: "juno105pfttgc76dcrw44jl5067we23q7he85k5893aaaek09rdz0srlqydutp0", // ics20 on Juno (Juno<>Scrt)
+                        amount: amount,
+                        msg: Buffer.from(JSON.stringify({
+                          channel: deposit_channel_id,
+                          remote_address: secretAddress,
+                          // 15 min
+                          timeout: 900,
+                        })).toString("base64"),
+                      },
+                    },
+                    gasToFee(deposit_gas)
+                  );
+                  transactionHash = txResponse.transactionHash;
+                } else {
+                  const txResponse = await (sourceCosmJsRef.current as SigningStargateClient).sendIbcTokens(
+                    sourceAddress,
+                    secretAddress,
+                    {
+                      amount,
+                      denom: token.deposits[selectedChainIndex].from_denom,
+                    },
+                    "transfer",
+                    deposit_channel_id,
+                    undefined,
+                    Math.floor(Date.now() / 1000) + 10 * 60, // 10 minute timeout (sec)
+                    gasToFee(deposit_gas)
+                  );
+                  transactionHash = txResponse.transactionHash;
+                }
               } else {
                 // Handle IBC transfers from Ethermint chains like Evmos & Injective
 
@@ -513,7 +563,7 @@ export default function Deposit({
                 // cosmjs can broadcast to Ethermint but cannot handle the response
 
                 // Broadcast the tx to Evmos
-                sourceCosmJs.broadcastTx(txBytes);
+                sourceCosmJsRef.current.broadcastTx(txBytes);
                 transactionHash = toHex(sha256(txBytes));
               }
 
