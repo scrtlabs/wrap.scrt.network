@@ -522,7 +522,7 @@ export const tokens: Token[] = [
           "ibc/CE591002C567BE4B8C4EC3F3F3D18AF7A1CA9FADBF5876C8413F8B2BD83CE8FF", // STRD denom on Secret
       },
     ],
-  }
+  },
 ];
 
 // These are snip 20 tokens that are IBC compatible (no need to wrap them manually)
@@ -557,7 +557,7 @@ export const snips: Token[] = [
           "ibc/8301F2E358BBCBF0E44DFFCA61889BF21B086B57AC39D48BE3164E68E443CCEF", // ALTER denom on Juno
         channel_id: "channel-163",
         gas: 130_000,
-      }
+      },
     ],
     withdrawals: [
       {
@@ -578,7 +578,6 @@ export const snips: Token[] = [
         channel_id: "channel-45",
         gas: 350_000,
       },
-
     ],
   },
   {
@@ -612,7 +611,6 @@ export const snips: Token[] = [
         channel_id: "channel-163",
         gas: 130_000,
       },
-      
     ],
     withdrawals: [
       {
@@ -666,7 +664,6 @@ export const snips: Token[] = [
         channel_id: "channel-163",
         gas: 130_000,
       },
-      
     ],
     withdrawals: [
       {
@@ -684,60 +681,6 @@ export const snips: Token[] = [
       {
         target_chain_name: "Juno",
         from_denom: "secret1qfql357amn448duf5gvp9gr48sxx9tsnhupu3d",
-        channel_id: "channel-45",
-        gas: 350_000,
-      },
-    ],
-  },
-  {
-    name: "stkd-SCRT",
-    is_snip20: true,
-    address: "secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4",
-    code_hash:
-      "f6be719b3c6feb498d3554ca0398eb6b7e7db262acb33f84a8f12106da6bbb09",
-    image: "/stkd-scrt.svg",
-    decimals: 6,
-    coingecko_id: "stkd-scrt",
-    deposits: [
-      {
-        source_chain_name: "Osmosis",
-        from_denom:
-          "ibc/D0E5BF2940FB58D9B283A339032DE88111407AAD7D94A7F1F3EB78874F8616D4", // stkd-SCRT denom on Osmosis
-        channel_id: "channel-476",
-        gas: 130_000,
-      },
-      {
-        source_chain_name: "Kujira",
-        from_denom:
-          "ibc/A81564DE9A1F0D66D715B508601E27AB89E0FADDE6A3706FC15F8C80BB774563", // stkd-scrt denom on Kujira
-        channel_id: "channel-44",
-        gas: 130_000,
-      },
-      {
-        source_chain_name: "Juno",
-        from_denom:
-          "ibc/D16A9D5D85BCF482A389BA74C5B6E71B9E731CD5C97885C343DC0D64037FE688", // stkd-scrt denom on Juno
-        channel_id: "channel-163",
-        gas: 130_000,
-      },
-      
-    ],
-    withdrawals: [
-      {
-        target_chain_name: "Osmosis",
-        from_denom: "secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4",
-        channel_id: "channel-44",
-        gas: 350_000,
-      },
-      {
-        target_chain_name: "Kujira",
-        from_denom: "secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4",
-        channel_id: "channel-46",
-        gas: 350_000,
-      },
-      {
-        target_chain_name: "Juno",
-        from_denom: "secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4",
         channel_id: "channel-45",
         gas: 350_000,
       },
@@ -795,7 +738,60 @@ export const snips: Token[] = [
         gas: 350_000,
       },
     ],
-  }
+  },
+  {
+    name: "stkd-SCRT",
+    is_snip20: true,
+    address: "secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4",
+    code_hash:
+      "f6be719b3c6feb498d3554ca0398eb6b7e7db262acb33f84a8f12106da6bbb09",
+    image: "/stkd-scrt.svg",
+    decimals: 6,
+    coingecko_id: "stkd-scrt",
+    deposits: [
+      {
+        source_chain_name: "Osmosis",
+        from_denom:
+          "ibc/D0E5BF2940FB58D9B283A339032DE88111407AAD7D94A7F1F3EB78874F8616D4", // stkd-SCRT denom on Osmosis
+        channel_id: "channel-476",
+        gas: 130_000,
+      },
+      {
+        source_chain_name: "Kujira",
+        from_denom:
+          "ibc/A81564DE9A1F0D66D715B508601E27AB89E0FADDE6A3706FC15F8C80BB774563", // stkd-scrt denom on Kujira
+        channel_id: "channel-44",
+        gas: 130_000,
+      },
+      {
+        source_chain_name: "Juno",
+        from_denom:
+          "ibc/D16A9D5D85BCF482A389BA74C5B6E71B9E731CD5C97885C343DC0D64037FE688", // stkd-scrt denom on Juno
+        channel_id: "channel-163",
+        gas: 130_000,
+      },
+    ],
+    withdrawals: [
+      {
+        target_chain_name: "Osmosis",
+        from_denom: "secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4",
+        channel_id: "channel-44",
+        gas: 350_000,
+      },
+      {
+        target_chain_name: "Kujira",
+        from_denom: "secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4",
+        channel_id: "channel-46",
+        gas: 350_000,
+      },
+      {
+        target_chain_name: "Juno",
+        from_denom: "secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4",
+        channel_id: "channel-45",
+        gas: 350_000,
+      },
+    ],
+  },
 ];
 
 export type Chain = {
