@@ -3,6 +3,8 @@ export type Token = {
   name: string;
   /** a snip20 token that's originated from Secret Network */
   is_snip20?: boolean;
+  /** a cw20 token that's originated from Juno Network */
+  is_cw20?: boolean;
   /** secret contract address of the token */
   address: string;
   /** secret contract code hash of the token */
@@ -789,6 +791,38 @@ export const snips: Token[] = [
         from_denom: "secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4",
         channel_id: "channel-45",
         gas: 350_000,
+      },
+    ],
+  },
+];
+
+// These are cw20 tokens that are IBC compatible originating from Juno
+export const cw20s: Token[] = [
+  {
+    name: "SEASY",
+    is_cw20: true,
+    address: "secret17gg8xcx04ldqkvkrd7r9w60rdae4ck8aslt9cf", // TODO: update this
+    code_hash:
+      "5a085bd8ed89de92b35134ddd12505a602c7759ea25fb5c089ba03c8535b3042", // TODO: update this
+    image: "/seasy.png",
+    decimals: 6,
+    coingecko_id: "seasy",
+    deposits: [
+      {
+        source_chain_name: "Juno",
+        from_denom:
+          "juno19rqljkh95gh40s7qdx40ksx3zq5tm4qsmsrdz9smw668x9zdr3lqtg33mf", // SEASY cw20 address on Juno
+        channel_id: "channel-161",
+        gas: 350_000,
+      }
+    ],
+    withdrawals: [
+      {
+        target_chain_name: "Juno",
+        from_denom:
+          "ibc/70FF6A895E39F2EF8C679684215830B138B97222C615DADB8D8B0EDF9A27966F", // SEASY IBC asset denom on Secret
+        channel_id: "channel-40",
+        gas: 130_000,
       },
     ],
   },

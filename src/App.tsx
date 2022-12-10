@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Breakpoint, BreakpointProvider } from "react-socks";
 import { SecretNetworkClient } from "secretjs";
-import { chains, tokens, snips } from "./config";
+import { chains, tokens, snips, cw20s } from "./config";
 import { faucetURL } from "./commons";
 import "./index.css";
 import { KeplrPanel } from "./KeplrStuff";
@@ -110,7 +110,7 @@ export default function App() {
 
       const denoms = Array.from(
         new Set(
-          tokens.map((t) => t.withdrawals.map((w) => w.from_denom)).flat()
+          (tokens.concat(cw20s)).map((t) => t.withdrawals.map((w) => w.from_denom)).flat(), 
         )
       );
 
@@ -311,6 +311,29 @@ export default function App() {
             balances={balances}
             price={prices.get(t.name) || 0}
             useFeegrant={useFeegrant}
+          />
+        </ErrorBoundary>
+      ))}
+      <Divider variant="middle"/>
+      <Typography
+          component="div"
+          align="center"
+          sx={{
+            marginBottom: "0.5rem",
+          }}
+        >
+          CW20s via IBC from JUNO
+        </Typography>
+      {cw20s.map((t) => (
+        <ErrorBoundary key={t.name}>
+          <TokenRow
+            token={t}
+            loadingCoinBalances={loadingCoinBalances}
+            secretAddress={secretAddress}
+            secretjs={secretjs}
+            balances={balances}
+            price={prices.get(t.name) || 0}
+            useFeegrant = {useFeegrant}
           />
         </ErrorBoundary>
       ))}
