@@ -296,78 +296,183 @@ export const tokens: Token[] = [
     deposits: [
       {
         source_chain_name: "Akash",
-        from_denom:
-          "ibc/13BD0905CFB705ABF84B60209C44071878C9F07A0A2CAC5EDBE315AD3CFD1DF2", // SCRT denom on Akash
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Akash"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
       {
         source_chain_name: "Chihuahua",
-        from_denom:
-          "ibc/EB2CED20AB0466F18BE49285E56B31306D4C60438A022EA995BA65D5E3CF7E09", // SCRT denom on Chihuahua
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Chihuahua"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
       {
         source_chain_name: "Cosmos Hub",
-        from_denom:
-          "ibc/1542F8DC70E7999691E991E1EDEB1B47E65E3A217B1649D347098EE48ACB580F", // SCRT denom on Cosmos
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Cosmos Hub"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
       {
         source_chain_name: "Crescent",
-        from_denom:
-          "ibc/A358D7F19237777AF6D8AD0E0F53268F8B18AE8A53ED318095C14D6D7F3B2DB5", // SCRT denom on Crescent
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Crescent"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
       {
         source_chain_name: "Evmos",
-        from_denom:
-          "ibc/DC74BE775F57FF32C3C6E14ACD86339DB50632246F6482C81CF5FCE64C0AC5C7", // SCRT denom on Evmos
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Evmos"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
       {
         source_chain_name: "Gravity Bridge",
-        from_denom:
-          "ibc/7907EA1A11FD4FC2A815FCAA54948C42F08E3F3C874EE48861386286FEB80160", // SCRT denom on Gravity Bridge
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Gravity Bridge"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
       {
         source_chain_name: "Injective",
-        from_denom:
-          "ibc/0954E1C28EB7AF5B72D24F3BC2B47BBB2FDF91BDDFD57B74B99E133AED40972A", // SCRT denom on Injective
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Injective"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
       {
         source_chain_name: "Juno",
-        from_denom:
-          "ibc/B55B08EF3667B0C6F029C2CC9CAA6B00788CF639EBB84B34818C85CBABA33ABD", // SCRT denom on Juno
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Juno"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
       {
         source_chain_name: "Kujira",
-        from_denom:
-          "ibc/A358D7F19237777AF6D8AD0E0F53268F8B18AE8A53ED318095C14D6D7F3B2DB5", // SCRT denom on Kujira
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Kujira"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
       {
         source_chain_name: "Osmosis",
-        from_denom:
-          "ibc/0954E1C28EB7AF5B72D24F3BC2B47BBB2FDF91BDDFD57B74B99E133AED40972A", // SCRT denom on Osmosis
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Osmosis"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
       {
         source_chain_name: "Sentinel",
-        from_denom:
-          "ibc/31FEE1A2A9F9C01113F90BD0BBCCE8FD6BBB8585FAF109A2101827DD1D5B95B8", // SCRT denom on Sentinel
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Sentinel"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
       {
         source_chain_name: "Sifchain",
-        from_denom:
-          "ibc/345D30E8ED06B47FC538ED131D99D16126F07CD6F8B35DE96AAF4C1E445AF466", // SCRT denom on Sifchain
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Sifchain"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
       {
         source_chain_name: "Stargaze",
-        from_denom:
-          "ibc/B55B08EF3667B0C6F029C2CC9CAA6B00788CF639EBB84B34818C85CBABA33ABD", // SCRT denom on Stargaze
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Stargaze"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
       {
         source_chain_name: "Stride",
-        from_denom:
-          "ibc/563C6CB7E0423BE8B9FD1DAB9EAC201A6C2413D96F73618240B114CE4896734C", // SCRT denom on Stride
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Stride"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
       {
         source_chain_name: "Terra",
-        from_denom:
-          "ibc/10BD6ED30BA132AB96F146D71A23B46B2FC19E7D79F52707DC91F2F3A45040AD", // SCRT denom on Terra
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Terra"].deposit_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uscrt"
+        ),
       },
     ],
     withdrawals: [
@@ -478,9 +583,16 @@ export const tokens: Token[] = [
     ],
     withdrawals: [
       {
-        target_chain_name: "Cosmos Hub",
-        from_denom:
-          "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2",
+        target_chain_name: "",
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Cosmos Hub"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uatom"
+        ),
       },
     ],
   },
@@ -500,9 +612,16 @@ export const tokens: Token[] = [
     ],
     withdrawals: [
       {
-        target_chain_name: "Crescent",
-        from_denom:
-          "ibc/34BFFD88FD2A4ED8C4D227A7A3CE966A4D514F5F07823FFABC4CC3DBC9D8CCDE",
+        target_chain_name: "",
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Crescent"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "ucre"
+        ),
       },
     ],
   },
@@ -523,8 +642,15 @@ export const tokens: Token[] = [
     withdrawals: [
       {
         target_chain_name: "Sentinel",
-        from_denom:
-          "ibc/E83107E876FF194B54E9AC3099E49DBB7728156F250ABD3E997D2B7E89E0810B",
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Sentinel"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "udvpn"
+        ),
       },
     ],
   },
@@ -603,8 +729,15 @@ export const tokens: Token[] = [
     withdrawals: [
       {
         target_chain_name: "Chihuahua",
-        from_denom:
-          "ibc/630E7B10690ADEC9E9CEEE904CE78C522BBCDDC6A081B23FA26A55F6EF40E41E", // HUAHUA denom on Secret
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Chihuahua"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uhuahua"
+        ),
       },
     ],
   },
@@ -625,8 +758,15 @@ export const tokens: Token[] = [
     withdrawals: [
       {
         target_chain_name: "Injective",
-        from_denom:
-          "ibc/5A76568E079A31FA12165E4559BA9F1E9D4C97F9C2060B538C84DCD503815E30", // INJ denom on Secret
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Injective"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "inj"
+        ),
       },
     ],
   },
@@ -647,8 +787,15 @@ export const tokens: Token[] = [
     withdrawals: [
       {
         target_chain_name: "Juno",
-        from_denom:
-          "ibc/DF8D00B4B31B55AFCA9BAF192BC36C67AA06D9987DCB96490661BCAB63C27006", // JUNO denom on Secret
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Juno"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "ujuno"
+        ),
       },
     ],
   },
@@ -669,8 +816,15 @@ export const tokens: Token[] = [
     withdrawals: [
       {
         target_chain_name: "Kujira",
-        from_denom:
-          "ibc/FFA324A40F82EF430CF78D498CE04FF634D2091FCDC04EFEC8841B86011F307A", // KUJI denom on Secret
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Kujira"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "ukuji"
+        ),
       },
     ],
   },
@@ -691,8 +845,15 @@ export const tokens: Token[] = [
     withdrawals: [
       {
         target_chain_name: "Terra",
-        from_denom:
-          "ibc/28DECFA7FB7E3AB58DC3B3AEA9B11C6C6B6E46356DCC26505205DAD3379984F5", // LUNA denom on Secret
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Terra"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uluna"
+        ),
       },
     ],
   },
@@ -713,8 +874,15 @@ export const tokens: Token[] = [
     withdrawals: [
       {
         target_chain_name: "Osmosis",
-        from_denom:
-          "ibc/0471F1C4E7AFD3F07702BEF6DC365268D64570F7C1FDC98EA6098DD6DE59817B",
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Osmosis"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uosmo"
+        ),
       },
     ],
   },
@@ -735,8 +903,15 @@ export const tokens: Token[] = [
     withdrawals: [
       {
         target_chain_name: "Sifchain",
-        from_denom:
-          "ibc/901E9F1199A9EB947C83F2903B0B062888758D5853C6B762CD15B9FFD55FF1BC", // ROWAN denom on Secret
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Sifchain"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "rowan"
+        ),
       },
     ],
   },
@@ -757,8 +932,15 @@ export const tokens: Token[] = [
     withdrawals: [
       {
         target_chain_name: "Stargaze",
-        from_denom:
-          "ibc/7EAE5BEF3A26B64AFBD89828AFDDB1DC7024A0276D22745201632C40E6E634D0", // STARS denom on Secret
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Stargaze"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "ustars"
+        ),
       },
     ],
   },
@@ -779,8 +961,15 @@ export const tokens: Token[] = [
     withdrawals: [
       {
         target_chain_name: "Stride",
-        from_denom:
-          "ibc/CE591002C567BE4B8C4EC3F3F3D18AF7A1CA9FADBF5876C8413F8B2BD83CE8FF", // STRD denom on Secret
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Stride"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "ustrd"
+        ),
       },
     ],
   },
@@ -800,22 +989,28 @@ export const snips: Token[] = [
     deposits: [
       {
         source_chain_name: "Osmosis",
-        from_denom:
-          "ibc/A6383B6CF5EA23E067666C06BC34E2A96869927BD9744DC0C1643E589C710AA3", // ALTER denom on Osmosis
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-476", incomingPortId: "transfer" }],
+          "cw20:secret12rcvz0umvk875kd6a803txhtlu7y0pnd73kcej"
+        ),
         channel_id: "channel-476",
         gas: 200_000,
       },
       {
         source_chain_name: "Kujira",
-        from_denom:
-          "ibc/7D366323A7EE9B278763F78734FDE3F6309CCC132707A85EA1C0C31617EF63D8", // ALTER denom on Kujira
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-44", incomingPortId: "transfer" }],
+          "cw20:secret12rcvz0umvk875kd6a803txhtlu7y0pnd73kcej"
+        ),
         channel_id: "channel-44",
         gas: 200_000,
       },
       {
         source_chain_name: "Juno",
-        from_denom:
-          "ibc/8301F2E358BBCBF0E44DFFCA61889BF21B086B57AC39D48BE3164E68E443CCEF", // ALTER denom on Juno
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-163", incomingPortId: "transfer" }],
+          "cw20:secret12rcvz0umvk875kd6a803txhtlu7y0pnd73kcej"
+        ),
         channel_id: "channel-163",
         gas: 200_000,
       },
@@ -912,22 +1107,28 @@ export const snips: Token[] = [
     deposits: [
       {
         source_chain_name: "Osmosis",
-        from_denom:
-          "ibc/1FBA9E763B8679BEF7BAAAF2D16BCA78C3B297D226C3F31312C769D7B8F992D8", // BUTT denom on Osmosis
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-476", incomingPortId: "transfer" }],
+          "cw20:secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt"
+        ),
         channel_id: "channel-476",
         gas: 200_000,
       },
       {
         source_chain_name: "Kujira",
-        from_denom:
-          "ibc/115373976C7BA066D7612C0FBFB64504D807770FF8248DE005942B7FDD4DAADC", // BUTT denom on Kujira
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-44", incomingPortId: "transfer" }],
+          "cw20:secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt"
+        ),
         channel_id: "channel-44",
         gas: 200_000,
       },
       {
         source_chain_name: "Juno",
-        from_denom:
-          "ibc/15996DE9D2D6B5DFB9A01C2095320D96FB5A3A2D5ACCC1E773338D748CA9C175", // BUTT denom on Juno
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-163", incomingPortId: "transfer" }],
+          "cw20:secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt"
+        ),
         channel_id: "channel-163",
         gas: 200_000,
       },
@@ -965,22 +1166,28 @@ export const snips: Token[] = [
     deposits: [
       {
         source_chain_name: "Osmosis",
-        from_denom:
-          "ibc/71055835C7639739EAE03AACD1324FE162DBA41D09F197CB72D966D014225B1C", // SHD denom on Osmosis
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-476", incomingPortId: "transfer" }],
+          "cw20:secret1qfql357amn448duf5gvp9gr48sxx9tsnhupu3d"
+        ),
         channel_id: "channel-476",
         gas: 200_000,
       },
       {
         source_chain_name: "Kujira",
-        from_denom:
-          "ibc/21038E447A2D4A1183628C0EC366FE79C2E0B0BD91F9A85E6C906CD911FD676E", // SHD denom on Kujira
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-44", incomingPortId: "transfer" }],
+          "cw20:secret1qfql357amn448duf5gvp9gr48sxx9tsnhupu3d"
+        ),
         channel_id: "channel-44",
         gas: 200_000,
       },
       {
         source_chain_name: "Juno",
-        from_denom:
-          "ibc/8D34BDDD6C534FEABA8BBAD7894E1793D3097E9147E94FC516FAB464AA598C23", // SHD denom on Juno
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-163", incomingPortId: "transfer" }],
+          "cw20:secret1qfql357amn448duf5gvp9gr48sxx9tsnhupu3d"
+        ),
         channel_id: "channel-163",
         gas: 200_000,
       },
@@ -1018,22 +1225,28 @@ export const snips: Token[] = [
     deposits: [
       {
         source_chain_name: "Osmosis",
-        from_denom:
-          "ibc/9A8A93D04917A149C8AC7C16D3DA8F470D59E8D867499C4DA97450E1D7363213", // SIENNA denom on Osmosis
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-476", incomingPortId: "transfer" }],
+          "cw20:secret1rgm2m5t530tdzyd99775n6vzumxa5luxcllml4"
+        ),
         channel_id: "channel-476",
         gas: 200_000,
       },
       {
         source_chain_name: "Kujira",
-        from_denom:
-          "ibc/ED487C9513A933BECB5ABA64CAE441C15E5AF66C3383061FB5A8BC0F671B933F", // SIENNA denom on Kujira
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-44", incomingPortId: "transfer" }],
+          "cw20:secret1rgm2m5t530tdzyd99775n6vzumxa5luxcllml4"
+        ),
         channel_id: "channel-44",
         gas: 200_000,
       },
       {
         source_chain_name: "Juno",
-        from_denom:
-          "ibc/C1197A19D70157ABE9E7058D5494CA9317E3BA374A2720FDAAAFF6F9548FF084", // SIENNA denom on Juno
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-163", incomingPortId: "transfer" }],
+          "cw20:secret1rgm2m5t530tdzyd99775n6vzumxa5luxcllml4"
+        ),
         channel_id: "channel-163",
         gas: 200_000,
       },
@@ -1071,22 +1284,28 @@ export const snips: Token[] = [
     deposits: [
       {
         source_chain_name: "Osmosis",
-        from_denom:
-          "ibc/D0E5BF2940FB58D9B283A339032DE88111407AAD7D94A7F1F3EB78874F8616D4", // stkd-SCRT denom on Osmosis
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-476", incomingPortId: "transfer" }],
+          "cw20:secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4"
+        ),
         channel_id: "channel-476",
         gas: 200_000,
       },
       {
         source_chain_name: "Kujira",
-        from_denom:
-          "ibc/A81564DE9A1F0D66D715B508601E27AB89E0FADDE6A3706FC15F8C80BB774563", // stkd-scrt denom on Kujira
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-44", incomingPortId: "transfer" }],
+          "cw20:secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4"
+        ),
         channel_id: "channel-44",
         gas: 200_000,
       },
       {
         source_chain_name: "Juno",
-        from_denom:
-          "ibc/D16A9D5D85BCF482A389BA74C5B6E71B9E731CD5C97885C343DC0D64037FE688", // stkd-scrt denom on Juno
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-163", incomingPortId: "transfer" }],
+          "cw20:secret1k6u0cy4feepm6pehnz804zmwakuwdapm69tuc4"
+        ),
         channel_id: "channel-163",
         gas: 200_000,
       },
