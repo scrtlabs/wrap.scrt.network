@@ -803,21 +803,21 @@ export const snips: Token[] = [
         from_denom:
           "ibc/A6383B6CF5EA23E067666C06BC34E2A96869927BD9744DC0C1643E589C710AA3", // ALTER denom on Osmosis
         channel_id: "channel-476",
-        gas: 130_000,
+        gas: 200_000,
       },
       {
         source_chain_name: "Kujira",
         from_denom:
           "ibc/7D366323A7EE9B278763F78734FDE3F6309CCC132707A85EA1C0C31617EF63D8", // ALTER denom on Kujira
         channel_id: "channel-44",
-        gas: 130_000,
+        gas: 200_000,
       },
       {
         source_chain_name: "Juno",
         from_denom:
           "ibc/8301F2E358BBCBF0E44DFFCA61889BF21B086B57AC39D48BE3164E68E443CCEF", // ALTER denom on Juno
         channel_id: "channel-163",
-        gas: 130_000,
+        gas: 200_000,
       },
     ],
     withdrawals: [
@@ -855,28 +855,28 @@ export const snips: Token[] = [
         source_chain_name: "Osmosis",
         from_denom: ibcDenom(
           [{ incomingChannelId: "channel-476", incomingPortId: "transfer" }],
-          "cw20.secret1s09x2xvfd2lp2skgzm29w2xtena7s8fq98v852"
+          "cw20:secret1s09x2xvfd2lp2skgzm29w2xtena7s8fq98v852"
         ),
         channel_id: "channel-476",
-        gas: 130_000,
+        gas: 200_000,
       },
       {
         source_chain_name: "Kujira",
         from_denom: ibcDenom(
           [{ incomingChannelId: "channel-44", incomingPortId: "transfer" }],
-          "cw20.secret1s09x2xvfd2lp2skgzm29w2xtena7s8fq98v852"
+          "cw20:secret1s09x2xvfd2lp2skgzm29w2xtena7s8fq98v852"
         ),
         channel_id: "channel-44",
-        gas: 130_000,
+        gas: 200_000,
       },
       {
         source_chain_name: "Juno",
         from_denom: ibcDenom(
           [{ incomingChannelId: "channel-163", incomingPortId: "transfer" }],
-          "cw20.secret1s09x2xvfd2lp2skgzm29w2xtena7s8fq98v852"
+          "cw20:secret1s09x2xvfd2lp2skgzm29w2xtena7s8fq98v852"
         ),
         channel_id: "channel-163",
-        gas: 130_000,
+        gas: 200_000,
       },
     ],
     withdrawals: [
@@ -915,21 +915,21 @@ export const snips: Token[] = [
         from_denom:
           "ibc/1FBA9E763B8679BEF7BAAAF2D16BCA78C3B297D226C3F31312C769D7B8F992D8", // BUTT denom on Osmosis
         channel_id: "channel-476",
-        gas: 130_000,
+        gas: 200_000,
       },
       {
         source_chain_name: "Kujira",
         from_denom:
           "ibc/115373976C7BA066D7612C0FBFB64504D807770FF8248DE005942B7FDD4DAADC", // BUTT denom on Kujira
         channel_id: "channel-44",
-        gas: 130_000,
+        gas: 200_000,
       },
       {
         source_chain_name: "Juno",
         from_denom:
           "ibc/15996DE9D2D6B5DFB9A01C2095320D96FB5A3A2D5ACCC1E773338D748CA9C175", // BUTT denom on Juno
         channel_id: "channel-163",
-        gas: 130_000,
+        gas: 200_000,
       },
     ],
     withdrawals: [
@@ -968,21 +968,21 @@ export const snips: Token[] = [
         from_denom:
           "ibc/71055835C7639739EAE03AACD1324FE162DBA41D09F197CB72D966D014225B1C", // SHD denom on Osmosis
         channel_id: "channel-476",
-        gas: 130_000,
+        gas: 200_000,
       },
       {
         source_chain_name: "Kujira",
         from_denom:
           "ibc/21038E447A2D4A1183628C0EC366FE79C2E0B0BD91F9A85E6C906CD911FD676E", // SHD denom on Kujira
         channel_id: "channel-44",
-        gas: 130_000,
+        gas: 200_000,
       },
       {
         source_chain_name: "Juno",
         from_denom:
           "ibc/8D34BDDD6C534FEABA8BBAD7894E1793D3097E9147E94FC516FAB464AA598C23", // SHD denom on Juno
         channel_id: "channel-163",
-        gas: 130_000,
+        gas: 200_000,
       },
     ],
     withdrawals: [
@@ -1021,21 +1021,21 @@ export const snips: Token[] = [
         from_denom:
           "ibc/9A8A93D04917A149C8AC7C16D3DA8F470D59E8D867499C4DA97450E1D7363213", // SIENNA denom on Osmosis
         channel_id: "channel-476",
-        gas: 130_000,
+        gas: 200_000,
       },
       {
         source_chain_name: "Kujira",
         from_denom:
           "ibc/ED487C9513A933BECB5ABA64CAE441C15E5AF66C3383061FB5A8BC0F671B933F", // SIENNA denom on Kujira
         channel_id: "channel-44",
-        gas: 130_000,
+        gas: 200_000,
       },
       {
         source_chain_name: "Juno",
         from_denom:
           "ibc/C1197A19D70157ABE9E7058D5494CA9317E3BA374A2720FDAAAFF6F9548FF084", // SIENNA denom on Juno
         channel_id: "channel-163",
-        gas: 130_000,
+        gas: 200_000,
       },
     ],
     withdrawals: [
@@ -1074,21 +1074,21 @@ export const snips: Token[] = [
         from_denom:
           "ibc/D0E5BF2940FB58D9B283A339032DE88111407AAD7D94A7F1F3EB78874F8616D4", // stkd-SCRT denom on Osmosis
         channel_id: "channel-476",
-        gas: 130_000,
+        gas: 200_000,
       },
       {
         source_chain_name: "Kujira",
         from_denom:
           "ibc/A81564DE9A1F0D66D715B508601E27AB89E0FADDE6A3706FC15F8C80BB774563", // stkd-scrt denom on Kujira
         channel_id: "channel-44",
-        gas: 130_000,
+        gas: 200_000,
       },
       {
         source_chain_name: "Juno",
         from_denom:
           "ibc/D16A9D5D85BCF482A389BA74C5B6E71B9E731CD5C97885C343DC0D64037FE688", // stkd-scrt denom on Juno
         channel_id: "channel-163",
-        gas: 130_000,
+        gas: 200_000,
       },
     ],
     withdrawals: [
