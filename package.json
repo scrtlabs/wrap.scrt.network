@@ -29,7 +29,7 @@
     "react-if": "4.1.1",
     "react-socks": "2.2.0",
     "react-toastify": "9.0.8",
-    "secretjs": "1.4.4",
+    "secretjs": "1.5.1",
     "vite": "3.2.4"
   },
   "devDependencies": {

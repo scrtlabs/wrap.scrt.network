@@ -16,7 +16,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Else, If, Then } from "react-if";
 import { useCurrentBreakpointName } from "react-socks";
 import { toast } from "react-toastify";
-import { SecretNetworkClient, toBase64, toUtf8, Tx } from "secretjs";
+import { SecretNetworkClient, toBase64, toUtf8, TxResponse } from "secretjs";
 import {
   sleep,
   suggestCrescentToKeplr,
@@ -342,13 +342,13 @@ export default function Withdraw({
             try {
               onSuccess("");
 
-              let tx: Tx;
+              let tx: TxResponse;
 
               if (token.is_snip20) {
                 tx = await secretjs.tx.compute.executeContract(
                   {
-                    contractAddress: token.address,
-                    codeHash: token.code_hash,
+                    contract_address: token.address,
+                    code_hash: token.code_hash,
                     sender: secretAddress,
                     msg: {
                       send: {
@@ -380,13 +380,13 @@ export default function Withdraw({
                   {
                     sender: secretAddress,
                     receiver: targetAddress,
-                    sourceChannel: withdraw_channel_id,
-                    sourcePort: "transfer",
+                    source_channel: withdraw_channel_id,
+                    source_port: "transfer",
                     token: {
                       amount,
                       denom: token.withdrawals[selectedChainIndex].from_denom,
                     },
-                    timeoutTimestampSec: String(
+                    timeout_timestamp: String(
                       Math.floor(Date.now() / 1000) + 10 * 60
                     ), // 10 minute timeout
                   },

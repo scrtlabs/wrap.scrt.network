@@ -14,7 +14,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Else, If, Then, When } from "react-if";
 import { Breakpoint } from "react-socks";
 import { MsgExecuteContract, SecretNetworkClient } from "secretjs";
-import { sleep, viewingKeyErrorString ,faucetAddress} from "./commons";
+import { sleep, viewingKeyErrorString, faucetAddress } from "./commons";
 import { Token } from "./config";
 import DepositWithdrawDialog from "./DepositWithdrawDialog";
 import { getKeplrViewingKey, setKeplrViewingKey } from "./KeplrStuff";
@@ -71,8 +71,8 @@ export default function TokenRow({
           amount: string;
         };
       } = await secretjs.query.compute.queryContract({
-        contractAddress: token.address,
-        codeHash: token.code_hash,
+        contract_address: token.address,
+        code_hash: token.code_hash,
         query: {
           balance: { address: secretAddress, key },
         },
@@ -301,20 +301,17 @@ export default function TokenRow({
             return;
           }
           setLoadingUnwrap(true);
-          const toastId = toast.loading(
-            `Unwrapping ${token.name}`,
-            {
-              closeButton: true,
-            }
-          );
+          const toastId = toast.loading(`Unwrapping ${token.name}`, {
+            closeButton: true,
+          });
           try {
             const tx = await secretjs.tx.broadcast(
               [
                 new MsgExecuteContract({
                   sender: secretAddress,
-                  contractAddress: token.address,
-                  codeHash: token.code_hash,
-                  sentFunds: [],
+                  contract_address: token.address,
+                  code_hash: token.code_hash,
+                  sent_funds: [],
                   msg: {
                     redeem: {
                       amount,
@@ -403,20 +400,17 @@ export default function TokenRow({
             return;
           }
           setLoadingWrap(true);
-          const toastId = toast.loading(
-            `Wrapping ${token.name}`,
-            {
-              closeButton: true,
-            }
-          );
+          const toastId = toast.loading(`Wrapping ${token.name}`, {
+            closeButton: true,
+          });
           try {
             const tx = await secretjs.tx.broadcast(
               [
                 new MsgExecuteContract({
                   sender: secretAddress,
-                  contractAddress: token.address,
-                  codeHash: token.code_hash,
-                  sentFunds: [
+                  contract_address: token.address,
+                  code_hash: token.code_hash,
+                  sent_funds: [
                     { denom: token.withdrawals[0].from_denom, amount },
                   ],
                   msg: { deposit: {} },

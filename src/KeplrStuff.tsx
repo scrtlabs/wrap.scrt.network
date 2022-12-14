@@ -8,7 +8,7 @@ import { SecretNetworkClient } from "secretjs";
 import { chains } from "./config";
 
 const SECRET_CHAIN_ID = chains["Secret Network"].chain_id;
-const SECRET_RPC = chains["Secret Network"].rpc;
+const SECRET_LCD = chains["Secret Network"].lcd;
 
 export function KeplrPanel({
   secretjs,
@@ -119,8 +119,8 @@ async function setupKeplr(
 
   const secretAddress = accounts[0].address;
 
-  const secretjs = await SecretNetworkClient.create({
-    grpcWebUrl: SECRET_RPC,
+  const secretjs = new SecretNetworkClient({
+    url: SECRET_LCD,
     chainId: SECRET_CHAIN_ID,
     wallet: keplrOfflineSigner,
     walletAddress: secretAddress,
@@ -136,7 +136,7 @@ export async function setKeplrViewingKey(token: string) {
     console.error("Keplr not present");
     return;
   }
-  
+
   await window.keplr.suggestToken(SECRET_CHAIN_ID, token);
 }
 
@@ -147,7 +147,6 @@ export async function getKeplrViewingKey(
     console.error("Keplr not present");
     return null;
   }
-
 
   try {
     return await window.keplr.getSecret20ViewingKey(SECRET_CHAIN_ID, token);

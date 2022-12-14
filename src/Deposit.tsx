@@ -13,8 +13,8 @@ import {
   Typography,
 } from "@mui/material";
 import { sha256 } from "@noble/hashes/sha256";
-import { createTxIBCMsgTransfer } from "@tharsis/transactions";
 import { cosmos } from "@tharsis/proto/dist/proto/cosmos/tx/v1beta1/tx";
+import { createTxIBCMsgTransfer } from "@tharsis/transactions";
 import BigNumber from "bignumber.js";
 import Long from "long";
 import React, { useEffect, useRef, useState } from "react";
@@ -30,11 +30,11 @@ import {
 import { chains, Token } from "./config";
 import CopyableAddress from "./CopyableAddress";
 
-import { fromBase64, toBase64, toHex } from "secretjs";
-import { TxRaw } from "secretjs/dist/protobuf_stuff/cosmos/tx/v1beta1/tx";
 import { useCurrentBreakpointName } from "react-socks";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { fromBase64, toBase64, toHex } from "secretjs";
+import { TxRaw } from "secretjs/dist/protobuf/cosmos/tx/v1beta1/tx";
 
 export default function Deposit({
   token,
@@ -504,7 +504,9 @@ export default function Deposit({
 
                 // Encode the Evmos tx to a TxRaw protobuf binary
                 const txRaw = TxRaw.fromPartial({
+                  //@ts-ignore
                   bodyBytes: sig!.signed.bodyBytes,
+                  //@ts-ignore
                   authInfoBytes: sig!.signed.authInfoBytes,
                   signatures: [fromBase64(sig!.signature.signature)],
                 });
