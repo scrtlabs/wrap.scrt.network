@@ -1,3 +1,243 @@
+import { ibcDenom } from "./commons";
+
+export type Chain = {
+  /** display name of the chain */
+  chain_name: string;
+  /** channel_id on the chain */
+  deposit_channel_id: string;
+  /** gas limit for ibc transfer from the chain to Secret Network */
+  deposit_gas: number;
+  /** channel_id on Secret Network */
+  withdraw_channel_id: string;
+  /** gas limit for ibc transfer from Secret Network to the chain */
+  withdraw_gas: number;
+  /** bech32 prefix of addresses on the chain */
+  bech32_prefix: string;
+  /** logo of the chain */
+  chain_image: string;
+  /** chain-id of the chain */
+  chain_id: string;
+  /** lcd url of the chain */
+  lcd: string;
+  /** rpc url of the chain */
+  rpc: string;
+  /** explorer link for accounts */
+  explorer_account: string;
+  /** explorer link for txs */
+  explorer_tx?: string;
+};
+
+export const chains: { [chain_name: string]: Chain } = {
+  "Secret Network": {
+    chain_name: "Secret Network",
+    deposit_channel_id: "",
+    deposit_gas: 0,
+    withdraw_channel_id: "",
+    withdraw_gas: 0,
+    chain_id: "secret-4",
+    bech32_prefix: "secret",
+    lcd: "https://lcd.mainnet.secretsaturn.net",
+    rpc: "https://grpc.mainnet.secretsaturn.net", // gRPC-web
+    chain_image: "/scrt.svg",
+    explorer_account: "https://www.mintscan.io/secret/account/",
+  },
+  Akash: {
+    chain_name: "Akash",
+    deposit_channel_id: "channel-43",
+    deposit_gas: 110_000,
+    withdraw_channel_id: "channel-21",
+    withdraw_gas: 30_000,
+    chain_id: "akashnet-2",
+    bech32_prefix: "akash",
+    lcd: "https://akash-api.lavenderfive.com:443",
+    rpc: "https://rpc.akash.forbole.com",
+    chain_image: "/akt.svg",
+    explorer_account: "https://www.mintscan.io/akash/account/",
+  },
+  Chihuahua: {
+    chain_name: "Chihuahua",
+    deposit_channel_id: "channel-16",
+    deposit_gas: 110_000,
+    withdraw_channel_id: "channel-11",
+    withdraw_gas: 30_000,
+    chain_id: "chihuahua-1",
+    bech32_prefix: "chihuahua",
+    lcd: "https://api.chihuahua.wtf",
+    rpc: "https://rpc.chihuahua.wtf",
+    chain_image: "/huahua.jpg",
+    explorer_account: "https://ping.pub/chihuahua/account/",
+  },
+  "Cosmos Hub": {
+    chain_name: "Cosmos Hub",
+    deposit_channel_id: "channel-235",
+    deposit_gas: 110_000,
+    withdraw_channel_id: "channel-0",
+    withdraw_gas: 30_000,
+    chain_id: "cosmoshub-4",
+    bech32_prefix: "cosmos",
+    lcd: "https://lcd-cosmoshub.keplr.app",
+    rpc: "https://rpc.cosmoshub.strange.love",
+    chain_image: "/atom.jpg",
+    explorer_account: "https://www.mintscan.io/cosmos/account/",
+  },
+  Crescent: {
+    chain_name: "Crescent",
+    deposit_channel_id: "channel-10",
+    deposit_gas: 110_000,
+    withdraw_channel_id: "channel-24",
+    withdraw_gas: 30_000,
+    chain_id: "crescent-1",
+    bech32_prefix: "cre",
+    lcd: "https://mainnet.crescent.network:1317",
+    rpc: "https://mainnet.crescent.network:26657",
+    chain_image: "/cre.svg",
+    explorer_account: "https://www.mintscan.io/crescent/account/",
+  },
+  Evmos: {
+    chain_name: "Evmos",
+    deposit_channel_id: "channel-15",
+    deposit_gas: 350_000,
+    withdraw_channel_id: "channel-18",
+    withdraw_gas: 30_000,
+    chain_id: "evmos_9001-2",
+    bech32_prefix: "evmos",
+    lcd: "https://rest.bd.evmos.org:1317",
+    rpc: "https://tendermint.bd.evmos.org:26657",
+    chain_image: "/evmos.jpg",
+    explorer_account: "https://www.mintscan.io/evmos/account/",
+  },
+  "Gravity Bridge": {
+    chain_name: "Gravity Bridge",
+    deposit_channel_id: "channel-79",
+    deposit_gas: 110_000,
+    withdraw_channel_id: "channel-17",
+    withdraw_gas: 30_000,
+    chain_id: "gravity-bridge-3",
+    bech32_prefix: "gravity",
+    lcd: "https://lcd.gravity-bridge.ezstaking.io",
+    rpc: "https://rpc.gravity-bridge.ezstaking.io",
+    chain_image: "/grav.svg",
+    explorer_account: "https://www.mintscan.io/gravity-bridge/account/",
+  },
+  Injective: {
+    chain_name: "Injective",
+    deposit_channel_id: "channel-88",
+    deposit_gas: 350_000,
+    withdraw_channel_id: "channel-23",
+    withdraw_gas: 30_000,
+    chain_id: "injective-1",
+    bech32_prefix: "inj",
+    lcd: "https://public.lcd.injective.network",
+    rpc: "https://tm.injective.network",
+    chain_image: "/inj.svg",
+    explorer_account: "https://www.mintscan.io/injective/account/",
+  },
+  Juno: {
+    chain_name: "Juno",
+    deposit_channel_id: "channel-48",
+    deposit_gas: 110_000,
+    withdraw_channel_id: "channel-8",
+    withdraw_gas: 30_000,
+    chain_id: "juno-1",
+    bech32_prefix: "juno",
+    lcd: "https://lcd-juno.itastakers.com",
+    rpc: "https://rpc-juno.itastakers.com",
+    chain_image: "/juno.svg",
+    explorer_account: "https://www.mintscan.io/juno/account/",
+  },
+  Kujira: {
+    chain_name: "Kujira",
+    deposit_channel_id: "channel-10",
+    deposit_gas: 110_000,
+    withdraw_channel_id: "channel-22",
+    withdraw_gas: 30_000,
+    chain_id: "kaiyo-1",
+    bech32_prefix: "kujira",
+    lcd: "https://lcd.kaiyo.kujira.setten.io",
+    rpc: "https://rpc.kaiyo.kujira.setten.io",
+    chain_image: "/kuji.png",
+    explorer_account: "https://kujira.explorers.guru/account/",
+  },
+  Osmosis: {
+    chain_name: "Osmosis",
+    deposit_channel_id: "channel-88",
+    deposit_gas: 1_500_000,
+    withdraw_channel_id: "channel-1",
+    withdraw_gas: 30_000,
+    chain_id: "osmosis-1",
+    bech32_prefix: "osmo",
+    lcd: "https://lcd.osmosis.zone",
+    rpc: "https://rpc.osmosis.zone",
+    chain_image: "/osmo.jpeg",
+    explorer_account: "https://www.mintscan.io/osmosis/account/",
+  },
+  Sentinel: {
+    chain_name: "Sentinel",
+    deposit_channel_id: "channel-50",
+    deposit_gas: 110_000,
+    withdraw_channel_id: "channel-3",
+    withdraw_gas: 30_000,
+    chain_id: "sentinelhub-2",
+    bech32_prefix: "sent",
+    lcd: "https://api-sentinel-ia.cosmosia.notional.ventures",
+    rpc: "https://rpc-sentinel-ia.cosmosia.notional.ventures",
+    chain_image: "/dvpn.jpeg",
+    explorer_account: "https://www.mintscan.io/sentinel/account/",
+  },
+  Sifchain: {
+    chain_name: "Sifchain",
+    deposit_channel_id: "channel-65",
+    deposit_gas: 150_000,
+    withdraw_channel_id: "channel-15",
+    withdraw_gas: 30_000,
+    chain_id: "sifchain-1",
+    bech32_prefix: "sif",
+    lcd: "https://api.sifchain.finance",
+    rpc: "https://rpc.sifchain.finance",
+    chain_image: "/rowan.svg",
+    explorer_account: "https://www.mintscan.io/sifchain/account/",
+  },
+  Stargaze: {
+    chain_name: "Stargaze",
+    deposit_channel_id: "channel-48",
+    deposit_gas: 110_000,
+    withdraw_channel_id: "channel-19",
+    withdraw_gas: 30_000,
+    chain_id: "stargaze-1",
+    bech32_prefix: "stars",
+    lcd: "https://rest.stargaze-apis.com",
+    rpc: "https://rpc.stargaze-apis.com",
+    chain_image: "/stars.webp",
+    explorer_account: "https://www.mintscan.io/stargaze/account/",
+  },
+  Stride: {
+    chain_name: "Stride",
+    deposit_channel_id: "channel-40",
+    deposit_gas: 150_000,
+    withdraw_channel_id: "channel-37",
+    withdraw_gas: 30_000,
+    chain_id: "stride-1",
+    bech32_prefix: "stride",
+    lcd: "https://stride-api.lavenderfive.com",
+    rpc: "https://stride-rpc.lavenderfive.com",
+    chain_image: "/stride.svg",
+    explorer_account: "https://www.mintscan.io/stride/account/",
+  },
+  Terra: {
+    chain_name: "Terra",
+    deposit_channel_id: "channel-3",
+    deposit_gas: 110_000,
+    withdraw_channel_id: "channel-16",
+    withdraw_gas: 30_000,
+    chain_id: "phoenix-1",
+    bech32_prefix: "terra",
+    lcd: "https://phoenix-lcd.terra.dev",
+    rpc: "https://terra-rpc.lavenderfive.com",
+    chain_image: "/luna2.svg",
+    explorer_account: "https://finder.terra.money/mainnet/address/",
+  },
+};
+
 export type Token = {
   /** display name of the token */
   name: string;
@@ -210,8 +450,15 @@ export const tokens: Token[] = [
     withdrawals: [
       {
         target_chain_name: "Akash",
-        from_denom:
-          "ibc/448B29AB9766D29CC09944EDF6A08573B45A37C55746A45FA3CF53F1B58DF98D", // AKT denom on Secret
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Akash"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "uakt"
+        ),
       },
     ],
   },
@@ -298,8 +545,15 @@ export const tokens: Token[] = [
     withdrawals: [
       {
         target_chain_name: "Evmos",
-        from_denom:
-          "ibc/23A8E16C655512DD4AA83769BA695FB8CCA4D1CA220652B894FAB44E53462C59", // EVMOS denom on Secret
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Evmos"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "aevmos"
+        ),
       },
     ],
   },
@@ -320,8 +574,15 @@ export const tokens: Token[] = [
     withdrawals: [
       {
         target_chain_name: "Gravity Bridge",
-        from_denom:
-          "ibc/DEEF987757F80419CC651C8323ACD21D6C3D664E51B5E5A29B2663F5AD132A67", // GRAV denom on Secret
+        from_denom: ibcDenom(
+          [
+            {
+              incomingChannelId: chains["Gravity Bridge"].withdraw_channel_id,
+              incomingPortId: "transfer",
+            },
+          ],
+          "ugraviton"
+        ),
       },
     ],
   },
@@ -581,6 +842,65 @@ export const snips: Token[] = [
     ],
   },
   {
+    name: "AMBER",
+    is_snip20: true,
+    address: "secret1s09x2xvfd2lp2skgzm29w2xtena7s8fq98v852",
+    code_hash:
+      "5a085bd8ed89de92b35134ddd12505a602c7759ea25fb5c089ba03c8535b3042",
+    image: "/amber.jpg",
+    decimals: 6,
+    coingecko_id: "",
+    deposits: [
+      {
+        source_chain_name: "Osmosis",
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-476", incomingPortId: "transfer" }],
+          "cw20.secret1s09x2xvfd2lp2skgzm29w2xtena7s8fq98v852"
+        ),
+        channel_id: "channel-476",
+        gas: 130_000,
+      },
+      {
+        source_chain_name: "Kujira",
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-44", incomingPortId: "transfer" }],
+          "cw20.secret1s09x2xvfd2lp2skgzm29w2xtena7s8fq98v852"
+        ),
+        channel_id: "channel-44",
+        gas: 130_000,
+      },
+      {
+        source_chain_name: "Juno",
+        from_denom: ibcDenom(
+          [{ incomingChannelId: "channel-163", incomingPortId: "transfer" }],
+          "cw20.secret1s09x2xvfd2lp2skgzm29w2xtena7s8fq98v852"
+        ),
+        channel_id: "channel-163",
+        gas: 130_000,
+      },
+    ],
+    withdrawals: [
+      {
+        target_chain_name: "Osmosis",
+        from_denom: "secret1s09x2xvfd2lp2skgzm29w2xtena7s8fq98v852",
+        channel_id: "channel-44",
+        gas: 350_000,
+      },
+      {
+        target_chain_name: "Kujira",
+        from_denom: "secret1s09x2xvfd2lp2skgzm29w2xtena7s8fq98v852",
+        channel_id: "channel-46",
+        gas: 350_000,
+      },
+      {
+        target_chain_name: "Juno",
+        from_denom: "secret1s09x2xvfd2lp2skgzm29w2xtena7s8fq98v852",
+        channel_id: "channel-45",
+        gas: 350_000,
+      },
+    ],
+  },
+  {
     name: "BUTT",
     is_snip20: true,
     address: "secret1yxcexylwyxlq58umhgsjgstgcg2a0ytfy4d9lt",
@@ -793,241 +1113,3 @@ export const snips: Token[] = [
     ],
   },
 ];
-
-export type Chain = {
-  /** display name of the chain */
-  chain_name: string;
-  /** channel_id on the chain */
-  deposit_channel_id: string;
-  /** gas limit for ibc transfer from the chain to Secret Network */
-  deposit_gas: number;
-  /** channel_id on Secret Network */
-  withdraw_channel_id: string;
-  /** gas limit for ibc transfer from Secret Network to the chain */
-  withdraw_gas: number;
-  /** bech32 prefix of addresses on the chain */
-  bech32_prefix: string;
-  /** logo of the chain */
-  chain_image: string;
-  /** chain-id of the chain */
-  chain_id: string;
-  /** lcd url of the chain */
-  lcd: string;
-  /** rpc url of the chain */
-  rpc: string;
-  /** explorer link for accounts */
-  explorer_account: string;
-  /** explorer link for txs */
-  explorer_tx?: string;
-};
-
-export const chains: { [chain_name: string]: Chain } = {
-  "Secret Network": {
-    chain_name: "Secret Network",
-    deposit_channel_id: "",
-    deposit_gas: 0,
-    withdraw_channel_id: "",
-    withdraw_gas: 0,
-    chain_id: "secret-4",
-    bech32_prefix: "secret",
-    lcd: "https://lcd.mainnet.secretsaturn.net",
-    rpc: "https://grpc.mainnet.secretsaturn.net", // gRPC-web
-    chain_image: "/scrt.svg",
-    explorer_account: "https://www.mintscan.io/secret/account/",
-  },
-  Akash: {
-    chain_name: "Akash",
-    deposit_channel_id: "channel-43",
-    deposit_gas: 110_000,
-    withdraw_channel_id: "channel-21",
-    withdraw_gas: 30_000,
-    chain_id: "akashnet-2",
-    bech32_prefix: "akash",
-    lcd: "https://akash-api.lavenderfive.com:443",
-    rpc: "https://rpc.akash.forbole.com",
-    chain_image: "/akt.svg",
-    explorer_account: "https://www.mintscan.io/akash/account/",
-  },
-  Chihuahua: {
-    chain_name: "Chihuahua",
-    deposit_channel_id: "channel-16",
-    deposit_gas: 110_000,
-    withdraw_channel_id: "channel-11",
-    withdraw_gas: 30_000,
-    chain_id: "chihuahua-1",
-    bech32_prefix: "chihuahua",
-    lcd: "https://api.chihuahua.wtf",
-    rpc: "https://rpc.chihuahua.wtf",
-    chain_image: "/huahua.jpg",
-    explorer_account: "https://ping.pub/chihuahua/account/",
-  },
-  "Cosmos Hub": {
-    chain_name: "Cosmos Hub",
-    deposit_channel_id: "channel-235",
-    deposit_gas: 110_000,
-    withdraw_channel_id: "channel-0",
-    withdraw_gas: 30_000,
-    chain_id: "cosmoshub-4",
-    bech32_prefix: "cosmos",
-    lcd: "https://lcd-cosmoshub.keplr.app",
-    rpc: "https://rpc.cosmoshub.strange.love",
-    chain_image: "/atom.jpg",
-    explorer_account: "https://www.mintscan.io/cosmos/account/",
-  },
-  Crescent: {
-    chain_name: "Crescent",
-    deposit_channel_id: "channel-10",
-    deposit_gas: 110_000,
-    withdraw_channel_id: "channel-24",
-    withdraw_gas: 30_000,
-    chain_id: "crescent-1",
-    bech32_prefix: "cre",
-    lcd: "https://mainnet.crescent.network:1317",
-    rpc: "https://mainnet.crescent.network:26657",
-    chain_image: "/cre.svg",
-    explorer_account: "https://www.mintscan.io/crescent/account/",
-  },
-  Evmos: {
-    chain_name: "Evmos",
-    deposit_channel_id: "channel-15",
-    deposit_gas: 350_000,
-    withdraw_channel_id: "channel-18",
-    withdraw_gas: 30_000,
-    chain_id: "evmos_9001-2",
-    bech32_prefix: "evmos",
-    lcd: "https://rest.bd.evmos.org:1317",
-    rpc: "https://tendermint.bd.evmos.org:26657",
-    chain_image: "/evmos.jpg",
-    explorer_account: "https://www.mintscan.io/evmos/account/",
-  },
-  "Gravity Bridge": {
-    chain_name: "Gravity Bridge",
-    deposit_channel_id: "channel-79",
-    deposit_gas: 110_000,
-    withdraw_channel_id: "channel-17",
-    withdraw_gas: 30_000,
-    chain_id: "gravity-bridge-3",
-    bech32_prefix: "gravity",
-    lcd: "https://lcd.gravity-bridge.ezstaking.io",
-    rpc: "https://rpc.gravity-bridge.ezstaking.io",
-    chain_image: "/grav.svg",
-    explorer_account: "https://www.mintscan.io/gravity-bridge/account/",
-  },
-  Injective: {
-    chain_name: "Injective",
-    deposit_channel_id: "channel-88",
-    deposit_gas: 350_000,
-    withdraw_channel_id: "channel-23",
-    withdraw_gas: 30_000,
-    chain_id: "injective-1",
-    bech32_prefix: "inj",
-    lcd: "https://public.lcd.injective.network",
-    rpc: "https://tm.injective.network",
-    chain_image: "/inj.svg",
-    explorer_account: "https://www.mintscan.io/injective/account/",
-  },
-  Juno: {
-    chain_name: "Juno",
-    deposit_channel_id: "channel-48",
-    deposit_gas: 110_000,
-    withdraw_channel_id: "channel-8",
-    withdraw_gas: 30_000,
-    chain_id: "juno-1",
-    bech32_prefix: "juno",
-    lcd: "https://lcd-juno.itastakers.com",
-    rpc: "https://rpc-juno.itastakers.com",
-    chain_image: "/juno.svg",
-    explorer_account: "https://www.mintscan.io/juno/account/",
-  },
-  Kujira: {
-    chain_name: "Kujira",
-    deposit_channel_id: "channel-10",
-    deposit_gas: 110_000,
-    withdraw_channel_id: "channel-22",
-    withdraw_gas: 30_000,
-    chain_id: "kaiyo-1",
-    bech32_prefix: "kujira",
-    lcd: "https://lcd.kaiyo.kujira.setten.io",
-    rpc: "https://rpc.kaiyo.kujira.setten.io",
-    chain_image: "/kuji.png",
-    explorer_account: "https://kujira.explorers.guru/account/",
-  },
-  Osmosis: {
-    chain_name: "Osmosis",
-    deposit_channel_id: "channel-88",
-    deposit_gas: 1_500_000,
-    withdraw_channel_id: "channel-1",
-    withdraw_gas: 30_000,
-    chain_id: "osmosis-1",
-    bech32_prefix: "osmo",
-    lcd: "https://lcd.osmosis.zone",
-    rpc: "https://rpc.osmosis.zone",
-    chain_image: "/osmo.jpeg",
-    explorer_account: "https://www.mintscan.io/osmosis/account/",
-  },
-  Sentinel: {
-    chain_name: "Sentinel",
-    deposit_channel_id: "channel-50",
-    deposit_gas: 110_000,
-    withdraw_channel_id: "channel-3",
-    withdraw_gas: 30_000,
-    chain_id: "sentinelhub-2",
-    bech32_prefix: "sent",
-    lcd: "https://api-sentinel-ia.cosmosia.notional.ventures",
-    rpc: "https://rpc-sentinel-ia.cosmosia.notional.ventures",
-    chain_image: "/dvpn.jpeg",
-    explorer_account: "https://www.mintscan.io/sentinel/account/",
-  },
-  Sifchain: {
-    chain_name: "Sifchain",
-    deposit_channel_id: "channel-65",
-    deposit_gas: 150_000,
-    withdraw_channel_id: "channel-15",
-    withdraw_gas: 30_000,
-    chain_id: "sifchain-1",
-    bech32_prefix: "sif",
-    lcd: "https://api.sifchain.finance",
-    rpc: "https://rpc.sifchain.finance",
-    chain_image: "/rowan.svg",
-    explorer_account: "https://www.mintscan.io/sifchain/account/",
-  },
-  Stargaze: {
-    chain_name: "Stargaze",
-    deposit_channel_id: "channel-48",
-    deposit_gas: 110_000,
-    withdraw_channel_id: "channel-19",
-    withdraw_gas: 30_000,
-    chain_id: "stargaze-1",
-    bech32_prefix: "stars",
-    lcd: "https://rest.stargaze-apis.com",
-    rpc: "https://rpc.stargaze-apis.com",
-    chain_image: "/stars.webp",
-    explorer_account: "https://www.mintscan.io/stargaze/account/",
-  },
-  Stride: {
-    chain_name: "Stride",
-    deposit_channel_id: "channel-40",
-    deposit_gas: 150_000,
-    withdraw_channel_id: "channel-37",
-    withdraw_gas: 30_000,
-    chain_id: "stride-1",
-    bech32_prefix: "stride",
-    lcd: "https://stride-api.lavenderfive.com",
-    rpc: "https://stride-rpc.lavenderfive.com",
-    chain_image: "/stride.svg",
-    explorer_account: "https://www.mintscan.io/stride/account/",
-  },
-  Terra: {
-    chain_name: "Terra",
-    deposit_channel_id: "channel-3",
-    deposit_gas: 110_000,
-    withdraw_channel_id: "channel-16",
-    withdraw_gas: 30_000,
-    chain_id: "phoenix-1",
-    bech32_prefix: "terra",
-    lcd: "https://phoenix-lcd.terra.dev",
-    rpc: "https://terra-rpc.lavenderfive.com",
-    chain_image: "/luna2.svg",
-    explorer_account: "https://finder.terra.money/mainnet/address/",
-  },
-};

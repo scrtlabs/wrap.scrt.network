@@ -1,6 +1,8 @@
 import { StdFee } from "@cosmjs/stargate";
 import { Bech32Address } from "@keplr-wallet/cosmos";
 import { Keplr } from "@keplr-wallet/types";
+import { sha256 } from "@noble/hashes/sha256";
+import { toHex, toUtf8 } from "secretjs";
 
 export const viewingKeyErrorString = "🧐";
 
@@ -183,3 +185,21 @@ export async function suggestKujiraToKeplr(keplr: Keplr) {
     features: ["stargate", "ibc-transfer", "no-legacy-stdTx", "ibc-go"],
   });
 }
+
+export const ibcDenom = (
+  paths: {
+    incomingPortId: string;
+    incomingChannelId: string;
+  }[],
+  coinMinimalDenom: string
+): string => {
+  const prefixes = [];
+  for (const path of paths) {
+    prefixes.push(`${path.incomingPortId}/${path.incomingChannelId}`);
+  }
+
+  const prefix = prefixes.join("/");
+  const denom = `${prefix}/${coinMinimalDenom}`;
+
+  return "ibc/" + toHex(sha256(toUtf8(denom))).toUpperCase();
+};

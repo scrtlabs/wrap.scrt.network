@@ -84,10 +84,10 @@ export default function Withdraw({
       await window.keplr.enable(targetChainId);
       window.keplr.defaultOptions = {
         sign: {
-            preferNoSetFee: false,
-            disableBalanceCheck: true,
+          preferNoSetFee: false,
+          disableBalanceCheck: true,
         },
-      } 
+      };
       const targetOfflineSigner =
         window.getOfflineSignerOnlyAmino(targetChainId);
       const targetFromAccounts = await targetOfflineSigner.getAccounts();
@@ -400,7 +400,7 @@ export default function Withdraw({
 
               if (tx.code === 0) {
                 toast.update(toastId, {
-                  render: `Receiving ${normalizedAmount} ${token.name} from Secret on ${token.withdrawals[selectedChainIndex].target_chain_name}`,
+                  render: `Receiving ${normalizedAmount} ${token.name} on ${token.withdrawals[selectedChainIndex].target_chain_name}`,
                 });
 
                 const packetSrcChannel = tx.arrayLog?.find(
@@ -440,7 +440,7 @@ export default function Withdraw({
                       // );
 
                       toast.update(toastId, {
-                        render: `Received ${normalizedAmount} ${token.name} from Secret on ${token.withdrawals[selectedChainIndex].target_chain_name}`,
+                        render: `Received ${normalizedAmount} ${token.name} on ${token.withdrawals[selectedChainIndex].target_chain_name}`,
                         type: "success",
                         isLoading: false,
                         closeOnClick: true,
@@ -456,7 +456,7 @@ export default function Withdraw({
 
                 if (tries === 0) {
                   toast.update(toastId, {
-                    render: `Timed out while waiting to receive ${normalizedAmount} ${token.name} from Secret on ${token.withdrawals[selectedChainIndex].target_chain_name}`,
+                    render: `Timed out while waiting to receive ${normalizedAmount} ${token.name} on ${token.withdrawals[selectedChainIndex].target_chain_name} from Secret`,
                     type: "warning",
                     isLoading: false,
                   });

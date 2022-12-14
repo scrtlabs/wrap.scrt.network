@@ -128,10 +128,10 @@ export default function Deposit({
       await window.keplr.enable(chain_id);
       window.keplr.defaultOptions = {
         sign: {
-            preferNoSetFee: false,
-            disableBalanceCheck: true,
-        }
-      }
+          preferNoSetFee: false,
+          disableBalanceCheck: true,
+        },
+      };
       const sourceOfflineSigner = window.getOfflineSignerOnlyAmino(chain_id);
       const depositFromAccounts = await sourceOfflineSigner.getAccounts();
       setSourceAddress(depositFromAccounts[0].address);
@@ -556,7 +556,7 @@ export default function Deposit({
                     // console.log(`Original tx: ${sendTx.txhash}`);
 
                     toast.update(toastId, {
-                      render: `Receiving ${normalizedAmount} ${token.name} from ${token.deposits[selectedChainIndex].source_chain_name} on Secret`,
+                      render: `Receiving ${normalizedAmount} ${token.name} on Secret from ${token.deposits[selectedChainIndex].source_chain_name}`,
                     });
 
                     const packetSrcChannel = sendTx.logs[0].events
@@ -601,7 +601,7 @@ export default function Deposit({
                           // );
 
                           toast.update(toastId, {
-                            render: `Received ${normalizedAmount} ${token.name} from ${token.deposits[selectedChainIndex].source_chain_name} on Secret`,
+                            render: `Received ${normalizedAmount} ${token.name} on Secret from ${token.deposits[selectedChainIndex].source_chain_name}`,
                             type: "success",
                             isLoading: false,
                             closeOnClick: true,
@@ -617,7 +617,7 @@ export default function Deposit({
 
                     if (tries === 0) {
                       toast.update(toastId, {
-                        render: `Timed out while waiting to receive ${normalizedAmount} ${token.name} from ${token.deposits[selectedChainIndex].source_chain_name} on ${token.withdrawals[selectedChainIndex].target_chain_name}`,
+                        render: `Timed out while waiting to receive ${normalizedAmount} ${token.name} on ${token.withdrawals[selectedChainIndex].target_chain_name} from ${token.deposits[selectedChainIndex].source_chain_name}`,
                         type: "warning",
                         isLoading: false,
                       });
