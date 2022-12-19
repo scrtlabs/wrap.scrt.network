@@ -583,7 +583,7 @@ export const tokens: Token[] = [
     ],
     withdrawals: [
       {
-        target_chain_name: "",
+        target_chain_name: "Cosmos Hub",
         from_denom: ibcDenom(
           [
             {
@@ -612,7 +612,7 @@ export const tokens: Token[] = [
     ],
     withdrawals: [
       {
-        target_chain_name: "",
+        target_chain_name: "Crescent",
         from_denom: ibcDenom(
           [
             {
