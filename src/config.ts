@@ -630,7 +630,7 @@ export const tokens: Token[] = [
     address: "secret1rw2l7z22s3ed6dl5v70ktvnckhurldy23a3a58",
     code_hash:
       "5a085bd8ed89de92b35134ddd12505a602c7759ea25fb5c089ba03c8535b3042",
-    image: "/agoric.webp",
+    image: "/bld.webp",
     decimals: 6,
     coingecko_id: "agoric",
     deposits: [
