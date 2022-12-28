@@ -830,7 +830,7 @@ export const tokens: Token[] = [
   },
   {
     name: "IST",
-    address: "secret176fwt6frltj2gjuegtu70ge9652kch2amx5kf0",
+    address: "secret1kjqktuq2wq6mk7l0ecvk2cwcskjmv3ghpklctn",
     code_hash:
       "5a085bd8ed89de92b35134ddd12505a602c7759ea25fb5c089ba03c8535b3042",
     image: "/ist.webp",
