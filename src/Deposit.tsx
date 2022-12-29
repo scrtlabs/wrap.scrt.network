@@ -1,4 +1,3 @@
-import { SigningStargateClient } from "@cosmjs/stargate";
 import LoadingButton from "@mui/lab/LoadingButton";
 import {
   Avatar,
@@ -12,7 +11,6 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import { sha256 } from "@noble/hashes/sha256";
 import { cosmos } from "@tharsis/proto/dist/proto/cosmos/tx/v1beta1/tx";
 import { createTxIBCMsgTransfer } from "@tharsis/transactions";
 import BigNumber from "bignumber.js";
@@ -20,8 +18,8 @@ import Long from "long";
 import React, { useEffect, useRef, useState } from "react";
 import { Else, If, Then } from "react-if";
 import {
-  gasToFee,
   sleep,
+  suggestChihuahuaToKeplr,
   suggestCrescentToKeplr,
   suggestInjectiveToKeplr,
   suggestKujiraToKeplr,
@@ -33,7 +31,12 @@ import CopyableAddress from "./CopyableAddress";
 import { useCurrentBreakpointName } from "react-socks";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { fromBase64, toBase64, toHex } from "secretjs";
+import {
+  fromBase64,
+  SecretNetworkClient,
+  toBase64,
+  TxResponse,
+} from "secretjs";
 import { TxRaw } from "secretjs/dist/protobuf/cosmos/tx/v1beta1/tx";
 
 export default function Deposit({
@@ -51,8 +54,8 @@ export default function Deposit({
   const [sourceAddress, setSourceAddress] = useState<string>("");
   const [availableBalance, setAvailableBalance] = useState<string>("");
   const [loadingTx, setLoading] = useState<boolean>(false);
-  const [sourceCosmJs, setSourceCosmJs] =
-    useState<SigningStargateClient | null>(null);
+  const [sourceChainSecretjs, setSourceChainSecretjs] =
+    useState<SecretNetworkClient | null>(null);
   const [selectedChainIndex, setSelectedChainIndex] = useState<number>(0);
   const [fetchBalanceInterval, setFetchBalanceInterval] = useState<any>(null);
   const inputRef = useRef<any>();
@@ -120,10 +123,12 @@ export default function Deposit({
         await suggestCrescentToKeplr(window.keplr);
       } else if ("KUJI" === token.name.toUpperCase()) {
         await suggestKujiraToKeplr(window.keplr);
+      } else if ("HUAHUA" === token.name.toUpperCase()) {
+        await suggestChihuahuaToKeplr(window.keplr);
       }
 
       // Initialize cosmjs on the target chain, because it has sendIbcTokens()
-      const { chain_id, rpc, bech32_prefix } =
+      const { chain_id, lcd, bech32_prefix } =
         chains[token.deposits[selectedChainIndex].source_chain_name];
       await window.keplr.enable(chain_id);
       window.keplr.defaultOptions = {
@@ -135,12 +140,13 @@ export default function Deposit({
       const sourceOfflineSigner = window.getOfflineSignerOnlyAmino(chain_id);
       const depositFromAccounts = await sourceOfflineSigner.getAccounts();
       setSourceAddress(depositFromAccounts[0].address);
-      const cosmjs = await SigningStargateClient.connectWithSigner(
-        rpc,
-        sourceOfflineSigner,
-        { prefix: bech32_prefix, broadcastPollIntervalMs: 10_000 }
-      );
-      setSourceCosmJs(cosmjs);
+      const secretjs = new SecretNetworkClient({
+        url: lcd,
+        chainId: chain_id,
+        wallet: sourceOfflineSigner,
+        walletAddress: depositFromAccounts[0].address,
+      });
+      setSourceChainSecretjs(secretjs);
     })();
   }, [selectedChainIndex]);
 
@@ -343,7 +349,7 @@ export default function Deposit({
           }}
           loading={loadingTx}
           onClick={async () => {
-            if (!sourceCosmJs) {
+            if (!sourceChainSecretjs) {
               console.error("No cosmjs");
               return;
             }
@@ -390,7 +396,7 @@ export default function Deposit({
             onSuccess("");
 
             try {
-              let transactionHash: string = "";
+              let tx: TxResponse;
 
               if (
                 !["Evmos", "Injective"].includes(
@@ -398,20 +404,28 @@ export default function Deposit({
                 )
               ) {
                 // Regular cosmos chain (not ethermint signing)
-                const txResponse = await sourceCosmJs.sendIbcTokens(
-                  sourceAddress,
-                  secretAddress,
+                tx = await sourceChainSecretjs.tx.ibc.transfer(
                   {
-                    amount,
-                    denom: token.deposits[selectedChainIndex].from_denom,
+                    sender: sourceAddress,
+                    receiver: secretAddress,
+                    source_channel: deposit_channel_id,
+                    source_port: "transfer",
+                    token: {
+                      amount,
+                      denom: token.deposits[selectedChainIndex].from_denom,
+                    },
+                    timeout_timestamp: String(
+                      Math.floor(Date.now() / 1000) + 10 * 60
+                    ), // 10 minute timeout
                   },
-                  "transfer",
-                  deposit_channel_id,
-                  undefined,
-                  Math.floor(Date.now() / 1000) + 10 * 60, // 10 minute timeout (sec)
-                  gasToFee(deposit_gas)
+                  {
+                    gasLimit: deposit_gas,
+                    ibcTxsOptions: {
+                      resolveResponsesCheckIntervalMs: 10_000,
+                      resolveResponsesTimeoutMs: 10.25 * 60 * 1000,
+                    },
+                  }
                 );
-                transactionHash = txResponse.transactionHash;
               } else {
                 // Handle IBC transfers from Ethermint chains like Evmos & Injective
 
@@ -447,7 +461,7 @@ export default function Deposit({
                 const [{ pubkey }] = await evmosProtoSigner.getAccounts();
 
                 // Create IBC MsgTransfer tx
-                const tx = createTxIBCMsgTransfer(
+                const txIbcMsgTransfer = createTxIBCMsgTransfer(
                   {
                     chainId: 9001, // Evmos EIP155, this is ignored in Injective
                     cosmosChainId: sourceChain.chain_id,
@@ -480,11 +494,11 @@ export default function Deposit({
 
                 if (sourceChain.chain_name === "Injective") {
                   const signer_info =
-                    tx.signDirect.authInfo.signer_infos[0].toObject();
+                    txIbcMsgTransfer.signDirect.authInfo.signer_infos[0].toObject();
                   signer_info.public_key!.type_url =
                     "/injective.crypto.v1beta1.ethsecp256k1.PubKey";
 
-                  tx.signDirect.authInfo.signer_infos[0] =
+                  txIbcMsgTransfer.signDirect.authInfo.signer_infos[0] =
                     cosmos.tx.v1beta1.SignerInfo.fromObject(signer_info);
                 }
 
@@ -493,8 +507,10 @@ export default function Deposit({
                   sourceChain.chain_id,
                   sourceAddress,
                   {
-                    bodyBytes: tx.signDirect.body.serializeBinary(),
-                    authInfoBytes: tx.signDirect.authInfo.serializeBinary(),
+                    bodyBytes:
+                      txIbcMsgTransfer.signDirect.body.serializeBinary(),
+                    authInfoBytes:
+                      txIbcMsgTransfer.signDirect.authInfo.serializeBinary(),
                     chainId: sourceChain.chain_id,
                     accountNumber: new Long(Number(accountNumber)),
                   },
@@ -504,10 +520,8 @@ export default function Deposit({
 
                 // Encode the Evmos tx to a TxRaw protobuf binary
                 const txRaw = TxRaw.fromPartial({
-                  //@ts-ignore
-                  bodyBytes: sig!.signed.bodyBytes,
-                  //@ts-ignore
-                  authInfoBytes: sig!.signed.authInfoBytes,
+                  body_bytes: sig!.signed.bodyBytes,
+                  auth_info_bytes: sig!.signed.authInfoBytes,
                   signatures: [fromBase64(sig!.signature.signature)],
                 });
                 const txBytes = TxRaw.encode(txRaw).finish();
@@ -515,122 +529,45 @@ export default function Deposit({
                 // cosmjs can broadcast to Ethermint but cannot handle the response
 
                 // Broadcast the tx to Evmos
-                sourceCosmJs.broadcastTx(txBytes);
-                transactionHash = toHex(sha256(txBytes));
+                tx = await sourceChainSecretjs.tx.broadcastSignedTx(
+                  toBase64(txBytes),
+                  {
+                    ibcTxsOptions: {
+                      resolveResponsesCheckIntervalMs: 10_000,
+                      resolveResponsesTimeoutMs: 10.25 * 60 * 1000,
+                    },
+                  }
+                );
               }
 
-              // Try finding the send_packet every 5 seconds for 1 minute
-              let tries = 12;
-              while (tries > 0) {
-                const {
-                  tx_response: sendTx,
-                }: {
-                  tx_response?: {
-                    code: number;
-                    txhash: string;
-                    raw_log: string;
-                    logs: Array<{
-                      msg_index: number;
-                      events: Array<{
-                        type: string;
-                        attributes: Array<{
-                          key: string;
-                          value: string;
-                        }>;
-                      }>;
-                    }>;
-                  };
-                } = await (
-                  await fetch(
-                    `${lcdSrcChain}/cosmos/tx/v1beta1/txs/${transactionHash.toUpperCase()}`
-                  )
-                ).json();
+              if (tx.code !== 0) {
+                toast.update(toastId, {
+                  render: `Failed sending ${normalizedAmount} ${token.name} from ${token.deposits[selectedChainIndex].source_chain_name} to Secret: ${tx.rawLog}`,
+                  type: "error",
+                  isLoading: false,
+                });
+                return;
+              } else {
+                toast.update(toastId, {
+                  render: `Receiving ${normalizedAmount} ${token.name} on Secret from ${token.deposits[selectedChainIndex].source_chain_name}`,
+                });
 
-                if (sendTx) {
-                  if (sendTx.code !== 0) {
-                    toast.update(toastId, {
-                      render: `Failed sending ${normalizedAmount} ${token.name} from ${token.deposits[selectedChainIndex].source_chain_name} to Secret: ${sendTx.raw_log}`,
-                      type: "error",
-                      isLoading: false,
-                    });
-                    return;
-                  } else {
-                    // console.log(`Original tx: ${sendTx.txhash}`);
+                const ibcResp = await tx.ibcResponses[0];
 
-                    toast.update(toastId, {
-                      render: `Receiving ${normalizedAmount} ${token.name} on Secret from ${token.deposits[selectedChainIndex].source_chain_name}`,
-                    });
-
-                    const packetSrcChannel = sendTx.logs[0].events
-                      .find((e) => e.type === "send_packet")
-                      ?.attributes.find((a) => a.key === "packet_src_channel")
-                      ?.value!;
-                    const packetDstChannel = sendTx.logs[0].events
-                      .find((e) => e.type === "send_packet")
-                      ?.attributes.find((a) => a.key === "packet_dst_channel")
-                      ?.value!;
-                    const packetSequence = sendTx.logs[0].events
-                      .find((e) => e.type === "send_packet")
-                      ?.attributes.find((a) => a.key === "packet_sequence")
-                      ?.value!;
-
-                    // console.log(
-                    //   packetSrcChannel,
-                    //   packetDstChannel,
-                    //   packetSequence
-                    // );
-
-                    // Try finding the recv_packet every 15 seconds for 10 minutes
-                    let tries = 40;
-                    while (tries > 0) {
-                      const {
-                        tx_responses,
-                      }: {
-                        tx_responses?: Array<{ code: number; txhash: string }>;
-                      } = await (
-                        await fetch(
-                          `${chains["Secret Network"].lcd}/cosmos/tx/v1beta1/txs?events=recv_packet.packet_dst_channel%3D%27${packetDstChannel}%27&events=recv_packet.packet_sequence%3D%27${packetSequence}%27`
-                        )
-                      ).json();
-
-                      if (tx_responses) {
-                        const recvTx = tx_responses.find((x) => x.code === 0);
-
-                        if (recvTx) {
-                          // console.log(`Original tx: ${sendTx.txhash}`);
-                          // console.log(
-                          //   `IBC recv_packet on other chain tx: ${recvTx.txhash}`
-                          // );
-
-                          toast.update(toastId, {
-                            render: `Received ${normalizedAmount} ${token.name} on Secret from ${token.deposits[selectedChainIndex].source_chain_name}`,
-                            type: "success",
-                            isLoading: false,
-                            closeOnClick: true,
-                          });
-
-                          return;
-                        }
-                      }
-
-                      tries -= 1;
-                      await sleep(15000);
-                    }
-
-                    if (tries === 0) {
-                      toast.update(toastId, {
-                        render: `Timed out while waiting to receive ${normalizedAmount} ${token.name} on ${token.withdrawals[selectedChainIndex].target_chain_name} from ${token.deposits[selectedChainIndex].source_chain_name}`,
-                        type: "warning",
-                        isLoading: false,
-                      });
-                    }
-
-                    break;
-                  }
+                if (ibcResp.type === "ack") {
+                  toast.update(toastId, {
+                    render: `Received ${normalizedAmount} ${token.name} on Secret from ${token.deposits[selectedChainIndex].source_chain_name}`,
+                    type: "success",
+                    isLoading: false,
+                    closeOnClick: true,
+                  });
+                } else {
+                  toast.update(toastId, {
+                    render: `Timed out while waiting to receive ${normalizedAmount} ${token.name} on ${token.withdrawals[selectedChainIndex].target_chain_name} from ${token.deposits[selectedChainIndex].source_chain_name}`,
+                    type: "warning",
+                    isLoading: false,
+                  });
                 }
-
-                tries -= 1;
-                await sleep(15000);
               }
             } catch (e) {
               toast.update(toastId, {

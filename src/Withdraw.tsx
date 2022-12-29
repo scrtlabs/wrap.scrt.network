@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import { SecretNetworkClient, toBase64, toUtf8, TxResponse } from "secretjs";
 import {
   sleep,
+  suggestChihuahuaToKeplr,
   suggestCrescentToKeplr,
   suggestInjectiveToKeplr,
   suggestKujiraToKeplr,
@@ -79,6 +80,10 @@ export default function Withdraw({
         token.withdrawals[selectedChainIndex].target_chain_name === "Kujira"
       ) {
         await suggestKujiraToKeplr(window.keplr);
+      } else if (
+        token.withdrawals[selectedChainIndex].target_chain_name === "Chihuahua"
+      ) {
+        await suggestChihuahuaToKeplr(window.keplr);
       }
 
       await window.keplr.enable(targetChainId);
@@ -371,8 +376,10 @@ export default function Withdraw({
                   },
                   {
                     gasLimit: withdraw_gas,
-                    gasPriceInFeeDenom: 0.1,
-                    feeDenom: "uscrt",
+                    ibcTxsOptions: {
+                      resolveResponsesCheckIntervalMs: 10_000,
+                      resolveResponsesTimeoutMs: 10.25 * 60 * 1000,
+                    },
                   }
                 );
               } else {
@@ -392,101 +399,42 @@ export default function Withdraw({
                   },
                   {
                     gasLimit: withdraw_gas,
-                    gasPriceInFeeDenom: 0.1,
-                    feeDenom: "uscrt",
+                    ibcTxsOptions: {
+                      resolveResponsesCheckIntervalMs: 10_000,
+                      resolveResponsesTimeoutMs: 10.25 * 60 * 1000,
+                    },
                   }
                 );
               }
 
-              if (tx.code === 0) {
-                toast.update(toastId, {
-                  render: `Receiving ${normalizedAmount} ${token.name} on ${token.withdrawals[selectedChainIndex].target_chain_name}`,
-                });
-
-                const packetSrcChannel = tx.arrayLog?.find(
-                  (x) =>
-                    x.type === "send_packet" && x.key === "packet_src_channel"
-                )?.value!;
-                const packetDstChannel = tx.arrayLog?.find(
-                  (x) =>
-                    x.type === "send_packet" && x.key === "packet_dst_channel"
-                )?.value!;
-                const packetSequence = tx.arrayLog?.find(
-                  (x) => x.type === "send_packet" && x.key === "packet_sequence"
-                )?.value!;
-
-                // console.log(packetSrcChannel, packetDstChannel, packetSequence);
-
-                // Try finding the recv_packet every 15 seconds for 10 minutes
-                let tries = 40;
-                while (tries > 0) {
-                  const {
-                    tx_responses,
-                  }: {
-                    tx_responses?: Array<{ code: number; txhash: string }>;
-                  } = await (
-                    await fetch(
-                      `${lcdDstChain}/cosmos/tx/v1beta1/txs?events=recv_packet.packet_dst_channel%3D%27${packetDstChannel}%27&events=recv_packet.packet_sequence%3D%27${packetSequence}%27`
-                    )
-                  ).json();
-
-                  if (tx_responses) {
-                    const recvTx = tx_responses.find((x) => x.code === 0);
-
-                    if (recvTx) {
-                      // console.log(`Original tx: ${tx.transactionHash}`);
-                      // console.log(
-                      //   `IBC recv_packet on other chain tx: ${recvTx.txhash}`
-                      // );
-
-                      toast.update(toastId, {
-                        render: `Received ${normalizedAmount} ${token.name} on ${token.withdrawals[selectedChainIndex].target_chain_name}`,
-                        type: "success",
-                        isLoading: false,
-                        closeOnClick: true,
-                      });
-
-                      break;
-                    }
-                  }
-
-                  tries -= 1;
-                  await sleep(15000);
-                }
-
-                if (tries === 0) {
-                  toast.update(toastId, {
-                    render: `Timed out while waiting to receive ${normalizedAmount} ${token.name} on ${token.withdrawals[selectedChainIndex].target_chain_name} from Secret`,
-                    type: "warning",
-                    isLoading: false,
-                  });
-                }
-
-                // Try finding the ack every 15 seconds for 10 minutes
-                // tries = 40;
-                // while (tries > 0) {
-                //   const txs = await secretjs.query.txsQuery(
-                //     `acknowledge_packet.packet_sequence = '${packetSequence}' AND acknowledge_packet.packet_src_channel = '${packetSrcChannel}'`
-                //   );
-
-                //   const ackTx = txs.find((x) => x.code === 0);
-
-                //   if (ackTx) {
-                //     console.log(`Original tx: ${tx.transactionHash}`);
-                //     console.log(`IBC ack tx: ${ackTx.transactionHash}`);
-                //     break;
-                //   }
-
-                //   tries -= 1;
-                //   await sleep(15000);
-                // }
-              } else {
+              if (tx.code !== 0) {
                 toast.update(toastId, {
                   render: `Failed sending ${normalizedAmount} ${token.name} from Secret to ${token.withdrawals[selectedChainIndex].target_chain_name}: ${tx.rawLog}`,
                   type: "error",
                   isLoading: false,
                 });
                 onFailure(tx.rawLog);
+              } else {
+                toast.update(toastId, {
+                  render: `Receiving ${normalizedAmount} ${token.name} on ${token.withdrawals[selectedChainIndex].target_chain_name}`,
+                });
+
+                const ibcResp = await tx.ibcResponses[0];
+
+                if (ibcResp.type === "ack") {
+                  toast.update(toastId, {
+                    render: `Received ${normalizedAmount} ${token.name} on ${token.withdrawals[selectedChainIndex].target_chain_name}`,
+                    type: "success",
+                    isLoading: false,
+                    closeOnClick: true,
+                  });
+                } else {
+                  toast.update(toastId, {
+                    render: `Timed out while waiting to receive ${normalizedAmount} ${token.name} on ${token.withdrawals[selectedChainIndex].target_chain_name} from Secret`,
+                    type: "warning",
+                    isLoading: false,
+                  });
+                }
               }
             } catch (e) {
               onFailure(e);
