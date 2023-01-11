@@ -324,9 +324,7 @@ export default function TokenRow({
                 }),
               ],
               {
-                gasLimit: 150_000,
-                gasPriceInFeeDenom: 0.25,
-                feeDenom: "uscrt",
+                gasLimit: 50_000,
                 feeGranter: useFeegrant ? faucetAddress : "",
               }
             );
@@ -417,9 +415,7 @@ export default function TokenRow({
                 }),
               ],
               {
-                gasLimit: 150_000,
-                gasPriceInFeeDenom: 0.25,
-                feeDenom: "uscrt",
+                gasLimit: 50_000,
               }
             );
 
