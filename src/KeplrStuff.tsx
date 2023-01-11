@@ -40,13 +40,20 @@ export function KeplrPanel({
           <Then>
             <Breakpoint small down>{`${secretAddress.slice(
               0,
-              10
-            )}...${secretAddress.slice(-7)}`}</Breakpoint>
+              6
+            )}...${secretAddress.slice(-4)}`}</Breakpoint>
             <Breakpoint medium up>
               {secretAddress}
             </Breakpoint>
           </Then>
-          <Else>Connect wallet</Else>
+          <Else>
+            <Breakpoint small down>
+              Connect
+            </Breakpoint>
+            <Breakpoint medium up>
+              Connect wallet
+            </Breakpoint>
+          </Else>
         </If>
       </span>
     </div>

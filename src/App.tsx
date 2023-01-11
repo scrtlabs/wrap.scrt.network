@@ -244,7 +244,12 @@ export default function App() {
               });
           }}
         >
-          Grant Fee for unwrapping (0.1 SCRT)
+          <Breakpoint small down>
+            First time Fee Grant
+          </Breakpoint>
+          <Breakpoint medium up>
+            First time Fee Grant (0.1 SCRT)
+          </Breakpoint>
         </Button>
         <KeplrPanel
           secretjs={secretjs}
