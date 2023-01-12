@@ -1,3 +1,4 @@
+//@ts-nocheck
 import LoadingButton from "@mui/lab/LoadingButton";
 import {
   Avatar,
@@ -111,33 +112,34 @@ export default function Deposit({
 
   useEffect(() => {
     (async () => {
-      while (!window.keplr || !window.getOfflineSignerOnlyAmino) {
+      while (!window.leap || !window.leap.getOfflineSignerOnlyAmino) {
         await sleep(100);
       }
 
       if ("LUNA" === token.name.toUpperCase()) {
-        await suggestTerraToKeplr(window.keplr);
+        await suggestTerraToKeplr(window.leap);
       } else if ("INJ" === token.name.toUpperCase()) {
-        await suggestInjectiveToKeplr(window.keplr);
+        await suggestInjectiveToKeplr(window.leap);
       } else if ("CRE" === token.name.toUpperCase()) {
-        await suggestCrescentToKeplr(window.keplr);
+        await suggestCrescentToKeplr(window.leap);
       } else if ("KUJI" === token.name.toUpperCase()) {
-        await suggestKujiraToKeplr(window.keplr);
+        await suggestKujiraToKeplr(window.leap);
       } else if ("HUAHUA" === token.name.toUpperCase()) {
-        await suggestChihuahuaToKeplr(window.keplr);
+        await suggestChihuahuaToKeplr(window.leap);
       }
 
       // Initialize cosmjs on the target chain, because it has sendIbcTokens()
       const { chain_id, lcd, bech32_prefix } =
         chains[token.deposits[selectedChainIndex].source_chain_name];
-      await window.keplr.enable(chain_id);
-      window.keplr.defaultOptions = {
+      await window.leap.enable(chain_id);
+      window.leap.defaultOptions = {
         sign: {
           preferNoSetFee: false,
           disableBalanceCheck: true,
         },
       };
-      const sourceOfflineSigner = window.getOfflineSignerOnlyAmino(chain_id);
+      const sourceOfflineSigner =
+        window.leap.getOfflineSignerOnlyAmino(chain_id);
       const depositFromAccounts = await sourceOfflineSigner.getAccounts();
       setSourceAddress(depositFromAccounts[0].address);
       const secretjs = new SecretNetworkClient({
@@ -455,7 +457,7 @@ export default function Deposit({
 
                 // Get account pubkey
                 // Can't get it from the chain because an account without txs won't have its pubkey listed on-chain
-                const evmosProtoSigner = window.getOfflineSigner!(
+                const evmosProtoSigner = window.leap.getOfflineSigner!(
                   sourceChain.chain_id
                 );
                 const [{ pubkey }] = await evmosProtoSigner.getAccounts();

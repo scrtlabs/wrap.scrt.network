@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { FileCopyOutlined } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
@@ -33,7 +34,7 @@ export function KeplrPanel({
         <img src="/fina.webp" style={{ width: "1.8rem", borderRadius: 10 }} />
       </Breakpoint>
       <Breakpoint medium up style={{ display: "flex" }}>
-        <img src="/keplr.svg" style={{ width: "1.8rem", borderRadius: 10 }} />
+        <img src="/leap.png" style={{ width: "1.8rem", borderRadius: 10 }} />
       </Breakpoint>
       <span style={{ margin: "0 0.3rem" }}>
         <If condition={secretAddress.length > 0}>
@@ -106,22 +107,23 @@ async function setupKeplr(
     new Promise((resolve) => setTimeout(resolve, ms));
 
   while (
-    !window.keplr ||
-    !window.getEnigmaUtils ||
-    !window.getOfflineSignerOnlyAmino
+    !window.leap ||
+    !window.leap.getEnigmaUtils ||
+    !window.leap.getOfflineSignerOnlyAmino
   ) {
     await sleep(50);
   }
 
-  await window.keplr.enable(SECRET_CHAIN_ID);
-  window.keplr.defaultOptions = {
+  await window.leap.enable(SECRET_CHAIN_ID);
+  window.leap.defaultOptions = {
     sign: {
       preferNoSetFee: false,
       disableBalanceCheck: true,
     },
   };
 
-  const keplrOfflineSigner = window.getOfflineSignerOnlyAmino(SECRET_CHAIN_ID);
+  const keplrOfflineSigner =
+    window.leap.getOfflineSignerOnlyAmino(SECRET_CHAIN_ID);
   const accounts = await keplrOfflineSigner.getAccounts();
 
   const secretAddress = accounts[0].address;
@@ -139,24 +141,24 @@ async function setupKeplr(
 }
 
 export async function setKeplrViewingKey(token: string) {
-  if (!window.keplr) {
+  if (!window.leap) {
     console.error("Keplr not present");
     return;
   }
 
-  await window.keplr.suggestToken(SECRET_CHAIN_ID, token);
+  await window.leap.suggestToken(SECRET_CHAIN_ID, token);
 }
 
 export async function getKeplrViewingKey(
   token: string
 ): Promise<string | null> {
-  if (!window.keplr) {
+  if (!window.leap) {
     console.error("Keplr not present");
     return null;
   }
 
   try {
-    return await window.keplr.getSecret20ViewingKey(SECRET_CHAIN_ID, token);
+    return await window.leap.getSecret20ViewingKey(SECRET_CHAIN_ID, token);
   } catch (e) {
     return null;
   }
