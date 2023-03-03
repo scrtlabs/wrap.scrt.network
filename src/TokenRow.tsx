@@ -13,13 +13,13 @@ import BigNumber from "bignumber.js";
 import React, { useEffect, useRef, useState } from "react";
 import { Else, If, Then, When } from "react-if";
 import { Breakpoint } from "react-socks";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { MsgExecuteContract, SecretNetworkClient } from "secretjs";
-import { sleep, viewingKeyErrorString, faucetAddress } from "./commons";
+import { faucetAddress, sleep, viewingKeyErrorString } from "./commons";
 import { Token } from "./config";
 import DepositWithdrawDialog from "./DepositWithdrawDialog";
 import { getKeplrViewingKey, setKeplrViewingKey } from "./KeplrStuff";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export default function TokenRow({
   secretjs,
