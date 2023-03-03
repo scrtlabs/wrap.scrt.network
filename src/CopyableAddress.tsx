@@ -1,7 +1,7 @@
-import { CircularProgress, Button, Typography, Tooltip } from "@mui/material";
+import { FileCopyOutlined } from "@mui/icons-material";
+import { Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
-import { FileCopyOutlined } from "@mui/icons-material";
 import { Breakpoint } from "react-socks";
 
 export default function CopyableAddress({

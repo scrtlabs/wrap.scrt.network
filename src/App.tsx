@@ -1,17 +1,16 @@
 import { Window as KeplrWindow } from "@keplr-wallet/types";
-import { Avatar, Typography, Divider } from "@mui/material";
+import { Avatar, Button, Divider, Typography } from "@mui/material";
+import { Buffer } from "buffer";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Breakpoint, BreakpointProvider } from "react-socks";
+import { Flip, toast, ToastContainer } from "react-toastify";
 import { SecretNetworkClient } from "secretjs";
-import { chains, tokens, snips } from "./config";
 import { faucetURL } from "./commons";
+import { chains, snips, tokens } from "./config";
 import "./index.css";
 import { KeplrPanel } from "./KeplrStuff";
 import TokenRow from "./TokenRow";
-import { Buffer } from "buffer";
-import { Button } from "@mui/material";
-import { Flip, ToastContainer, toast } from "react-toastify";
 
 globalThis.Buffer = Buffer;
 declare global {
